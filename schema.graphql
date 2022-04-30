@@ -1,0 +1,6 @@
+type ExampleEntity @entity {
+  id: ID!
+  count: BigInt!
+  allocPoint: BigInt! # uint256
+  lpToken: Bytes! # address
+}
