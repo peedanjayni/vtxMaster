@@ -1,11 +1,21 @@
 import { Address, BigInt } from "@graphprotocol/graph-ts";
 import { masterChefVTX } from "../generated/vtxMaster/masterChefVTX";
 import { masterChefJOE } from "../generated/vtxMaster/masterChefJOE";
+import { masterChefPTP } from "../generated/vtxMaster/masterChefPTP";
 import { traderjoeLP } from "../generated/vtxMaster/traderjoeLP";
+import { ptpBonusRewarder } from "../generated/vtxMaster/ptpBonusRewarder";
+import { ustToken } from "../generated/vtxMaster/ustToken";
+import { usdcToken } from "../generated/vtxMaster/usdcToken";
+import { wavaxToken } from "../generated/vtxMaster/wavaxToken";
+import { savaxToken } from "../generated/vtxMaster/savaxToken";
 import { ALL_ADDRESSES } from "./constants";
 
 export function mvDecimals(_inputInt: BigInt, _decimal: u8): BigInt {
   return _inputInt.div(BigInt.fromI32(10).pow(_decimal));
+}
+
+export function addDecimals(_inputInt: BigInt, _decimal: u8): BigInt {
+  return _inputInt.times(BigInt.fromI32(10).pow(_decimal));
 }
 
 export function fetchVectorPoolsTVL(_lpAddress: Address, _price: BigInt, _decimal: u8): BigInt {
@@ -86,4 +96,58 @@ export function fetchVtxAPR(
       .div(_tvl), // tvl
     10
   );
+}
+
+export function fetchPTPBonusApr(_symbol: string, _rewardTokenPrice: BigInt, _poolTokenPrice: BigInt): BigInt {
+  let _x = BigInt.fromI32(1),
+    _rewarder = Address.zero(),
+    _tvl = BigInt.zero();
+
+  if (_symbol === "UST" || _symbol === "USDC") {
+    if (_symbol === "UST") {
+      _rewarder = ALL_ADDRESSES.REWARDER_UST_UST;
+      _tvl = ustToken
+        .bind(ALL_ADDRESSES.UST_TOKEN)
+        .balanceOf(ALL_ADDRESSES.LP_PTP_UST_UST)
+        .times(_poolTokenPrice);
+    } else {
+      _rewarder = ALL_ADDRESSES.REWARDER_USDC_UST;
+      _tvl = usdcToken
+        .bind(ALL_ADDRESSES.USDC_TOKEN)
+        .balanceOf(ALL_ADDRESSES.LP_PTP_USDC_UST)
+        .times(_poolTokenPrice);
+    }
+    return addDecimals(
+      ptpBonusRewarder
+        .bind(_rewarder)
+        .tokenPerSec()
+        .times(BigInt.fromI32(31536000))
+        .times(_rewardTokenPrice),
+      8
+    ).div(_tvl);
+  } else if (_symbol === "AVAX" || _symbol === "sAVAX") {
+    if (_symbol === "AVAX") {
+      _rewarder = ALL_ADDRESSES.REWARDER_AVAX_QI;
+      _tvl = wavaxToken
+        .bind(ALL_ADDRESSES.WAVAX_TOKEN)
+        .balanceOf(ALL_ADDRESSES.LP_PTP_AVAX_AVAX)
+        .times(_poolTokenPrice);
+    } else {
+      _rewarder = ALL_ADDRESSES.REWARDER_SAVAX_QI;
+      _tvl = savaxToken
+        .bind(ALL_ADDRESSES.SAVAX_TOKEN)
+        .balanceOf(ALL_ADDRESSES.LP_PTP_SAVAX_AVAX)
+        .times(_poolTokenPrice);
+    }
+    return addDecimals(
+      ptpBonusRewarder
+        .bind(_rewarder)
+        .tokenPerSec()
+        .times(BigInt.fromI32(31536000))
+        .times(_rewardTokenPrice),
+      8
+    ).div(_tvl);
+  } else {
+    return BigInt.zero();
+  }
 }

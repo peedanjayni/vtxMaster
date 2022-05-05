@@ -8,7 +8,7 @@ dataSources:
     source:
       address: "0x423D0FE33031aA4456a17b150804aA57fc157d97"
       abi: masterChefVTX
-      startBlock: 14290562
+      startBlock: 14292100
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -20,12 +20,24 @@ dataSources:
       abis:
         - name: masterChefVTX
           file: vtxMaster/abis/masterChefVTX.json
+        - name: masterChefPTP
+          file: vtxMaster/abis/masterChefPTP.json
         - name: masterChefJOE
           file: vtxMaster/abis/masterChefJOE.json
         - name: oracleFactory
           file: vtxMaster/abis/oracleFactory.json
         - name: traderjoeLP
           file: vtxMaster/abis/traderjoeLP.json
+        - name: ptpBonusRewarder
+          file: vtxMaster/abis/ptpBonusRewarder.json
+        - name: ustToken
+          file: vtxMaster/abis/ustToken.json
+        - name: savaxToken
+          file: vtxMaster/abis/savaxToken.json
+        - name: wavaxToken
+          file: vtxMaster/abis/wavaxToken.json
+        - name: usdcToken
+          file: vtxMaster/abis/usdcToken.json
       blockHandlers:
         - handler: handleBlock
       file: vtxMaster/vtxMaster.wasm

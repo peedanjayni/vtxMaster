@@ -15,6 +15,7 @@ type AllPrice @entity {
   priceDAI: BigInt!
   priceMIM: BigInt!
   priceFRAX: BigInt!
+  priceQI: BigInt!
 }
 # Arrange entities by Pool
 type PoolStakedVTX @entity {

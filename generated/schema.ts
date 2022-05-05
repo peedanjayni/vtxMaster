@@ -30,6 +30,7 @@ export class AllPrice extends Entity {
     this.set("priceDAI", Value.fromBigInt(BigInt.zero()));
     this.set("priceMIM", Value.fromBigInt(BigInt.zero()));
     this.set("priceFRAX", Value.fromBigInt(BigInt.zero()));
+    this.set("priceQI", Value.fromBigInt(BigInt.zero()));
   }
 
   save(): void {
@@ -181,6 +182,15 @@ export class AllPrice extends Entity {
 
   set priceFRAX(value: BigInt) {
     this.set("priceFRAX", Value.fromBigInt(value));
+  }
+
+  get priceQI(): BigInt {
+    let value = this.get("priceQI");
+    return value!.toBigInt();
+  }
+
+  set priceQI(value: BigInt) {
+    this.set("priceQI", Value.fromBigInt(value));
   }
 }
 

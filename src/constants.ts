@@ -12,19 +12,24 @@ class schema {
   ORACLE_DAI: Address;
   ORACLE_MIM: Address;
   ORACLE_FRAX: Address;
+  ORACLE_QI: Address;
   TJ_LP_PTP: Address;
   TJ_LP_xPTP: Address;
   TJ_LP_VTX: Address;
   //
   MASTER_CHEF_VTX: Address;
+  MASTER_CHEF_PTP: Address;
   MASTER_CHEF_JOE: Address;
   MAIN_STAKING_JOE: Address;
+  MAIN_STAKING_PTP: Address;
+  // Vector LPs
   LP_STAKED_VTX: Address;
   LP_LOCKED_VTX: Address;
   LP_STAKED_PTP: Address;
   LP_STAKED_JOE: Address;
   LP_VTX_AVAX: Address;
   LP_Pool2_xPTP: Address;
+  LP_Pool2_zJOE: Address;
   LP_Main_DAIe: Address;
   LP_Main_USDC: Address;
   LP_Main_USDCe: Address;
@@ -51,7 +56,7 @@ class schema {
   LP_TJ_LINKe_AVAX: Address;
   LP_TJ_BNB_AVAX: Address;
   LP_TJ_USDT_AVAX: Address;
-  //
+  // Vector reciepts
   VLP_TJ_USDC_AVAX: Address;
   VLP_TJ_WETHe_AVAX: Address;
   VLP_TJ_USDTe_AVAX: Address;
@@ -65,6 +70,27 @@ class schema {
   VLP_TJ_LINKe_AVAX: Address;
   VLP_TJ_BNB_AVAX: Address;
   VLP_TJ_USDT_AVAX: Address;
+  // Platypus LPs
+  LP_PTP_UST_UST: Address;
+  LP_PTP_USDC_UST: Address;
+  LP_PTP_MIM_MIM: Address;
+  LP_PTP_USDC_MIM: Address;
+  LP_PTP_FRAX_FRAX: Address;
+  LP_PTP_USDC_FRAX: Address;
+  LP_PTP_AVAX_AVAX: Address;
+  LP_PTP_SAVAX_AVAX: Address;
+  // rewarder
+  REWARDER_UST_UST: Address;
+  REWARDER_USDC_UST: Address;
+  REWARDER_AVAX_QI: Address;
+  REWARDER_SAVAX_QI: Address;
+  // token
+  USDC_TOKEN: Address;
+  UST_TOKEN: Address;
+  WAVAX_TOKEN: Address;
+  SAVAX_TOKEN: Address;
+
+  // others
 }
 
 export const ALL_ADDRESSES: schema = {
@@ -77,19 +103,25 @@ export const ALL_ADDRESSES: schema = {
   ORACLE_DAI: Address.fromString("0x51D7180edA2260cc4F6e4EebB82FEF5c3c2B8300"),
   ORACLE_MIM: Address.fromString("0x54EdAB30a7134A16a54218AE64C73e1DAf48a8Fb"),
   ORACLE_FRAX: Address.fromString("0xbBa56eF1565354217a3353a466edB82E8F25b08e"),
+  ORACLE_QI: Address.fromString("0x36E039e6391A5E7A7267650979fdf613f659be5D"),
   TJ_LP_PTP: Address.fromString("0xcdfd91eea657cc2701117fe9711c9a4f61feed23"),
   TJ_LP_xPTP: Address.fromString("0xC4B7121b4FC065dECd26C33FB32e42C543E8850d"),
   TJ_LP_VTX: Address.fromString("0x9EF0C12b787F90F59cBBE0b611B82D30CAB92929"),
-
+  // masterChef
   MASTER_CHEF_VTX: Address.fromString("0x423d0fe33031aa4456a17b150804aa57fc157d97"),
+  MASTER_CHEF_PTP: Address.fromString("0x68c5f4374228BEEdFa078e77b5ed93C28a2f713E"),
   MASTER_CHEF_JOE: Address.fromString("0x4483f0b6e2f5486d06958c20f8c39a7abe87bf8f"),
+  // main staking
   MAIN_STAKING_JOE: Address.fromString("0x0e25c07748f727d6cccd7d2711fd7bd13d13422d"),
+  MAIN_STAKING_PTP: Address.fromString("0x8B3d9F0017FA369cD8C164D0Cc078bf4cA588aE5"),
+  // Vector LPs
   LP_STAKED_VTX: Address.fromString("0x5817d4f0b62a59b17f75207da1848c2ce75e7af4"),
   LP_LOCKED_VTX: Address.fromString("0x574679Ec54972cf6d705E0a71467Bb5BB362919D"),
   LP_STAKED_PTP: Address.fromString("0x060556209E507d30f2167a101bFC6D256Ed2f3e1"),
   LP_STAKED_JOE: Address.fromString("0x769bfeb9fAacD6Eb2746979a8dD0b7e9920aC2A4"),
   LP_VTX_AVAX: Address.fromString("0x9EF0C12b787F90F59cBBE0b611B82D30CAB92929"),
   LP_Pool2_xPTP: Address.fromString("0xC4B7121b4FC065dECd26C33FB32e42C543E8850d"),
+  LP_Pool2_zJOE: Address.fromString("0xcF80e302282c1E449Fd745fad1e43FAFfe480536"),
   LP_Main_DAIe: Address.fromString("0x2FdC25cEc50Dab4E1ECCFa1Be40509ae049cEaE0"),
   LP_Main_USDC: Address.fromString("0x0ADab2F0455987098059Cfc10875C010800c659F"),
   LP_Main_USDCe: Address.fromString("0xc641350D40256120BED47cF0AD24B5ce01D04af3"),
@@ -116,7 +148,7 @@ export const ALL_ADDRESSES: schema = {
   LP_TJ_LINKe_AVAX: Address.fromString("0x6F3a0C89f611Ef5dC9d96650324ac633D02265D3"),
   LP_TJ_BNB_AVAX: Address.fromString("0xeb8eB6300c53C3AddBb7382Ff6c6FbC4165B0742"),
   LP_TJ_USDT_AVAX: Address.fromString("0xbb4646a764358ee93c2a9c4a147d5aDEd527ab73"),
-  // Vector reciepts LP
+  // Vector reciepts
   VLP_TJ_USDC_AVAX: Address.fromString("0x08a7f16ad042365965D61F2518eAd2dEe281a1F6"),
   VLP_TJ_WETHe_AVAX: Address.fromString("0x9e54E1eCbCd85b5E6145414E1b88086cFC66006B"),
   VLP_TJ_USDTe_AVAX: Address.fromString("0xac3046c161fc65F453123C55543DA8d6B18e687C"),
@@ -130,4 +162,24 @@ export const ALL_ADDRESSES: schema = {
   VLP_TJ_LINKe_AVAX: Address.fromString("0x155C615007E5e39BFb51105E8dbe0d86eD2ECb7D"),
   VLP_TJ_BNB_AVAX: Address.fromString("0xAC55A9Ad2256482771D545805732C818Dc38808c"),
   VLP_TJ_USDT_AVAX: Address.fromString("0x490cFC0F6849de81eB3Adb62332C682bF7A4e118"),
+  // Platypus LPs
+  LP_PTP_UST_UST: Address.fromString("0xc7388D98Fa86B6639d71A0A6d410D5cDfc63A1d0"),
+  LP_PTP_USDC_UST: Address.fromString("0xFC95481F79eC965A535Ed8cef4630e1dd308d319"),
+  LP_PTP_MIM_MIM: Address.fromString("0xF01cEA00598d87Cb9792a01B040d04b0bd8Ca781"),
+  LP_PTP_USDC_MIM: Address.fromString("0x4E5704991b43C1D33b9Ccd1BC33B211bf068385A"),
+  LP_PTP_FRAX_FRAX: Address.fromString("0x6FD4b4c38ED80727EcD0d58505565F9e422c965f"),
+  LP_PTP_USDC_FRAX: Address.fromString("0x035D7D7F209B5d18e2AB5C2072E85B32e1D43760"),
+  LP_PTP_AVAX_AVAX: Address.fromString("0xC73eeD4494382093C6a7C284426A9a00f6C79939"),
+  LP_PTP_SAVAX_AVAX: Address.fromString("0xA2A7EE49750Ff12bb60b407da2531dB3c50A1789"),
+  // Platypus bonus reward rewarder
+  REWARDER_UST_UST: Address.fromString("0xF5990D0fF59A7F56300F3d1AE7F220854f2abc51"),
+  REWARDER_USDC_UST: Address.fromString("0xc4Be2E0da31156745a7139c63fbCb0f8340ca692"),
+  REWARDER_AVAX_QI: Address.fromString("0xe9377B47A073c4662dc6863A7299caD926447AB2"),
+  REWARDER_SAVAX_QI: Address.fromString("0x8fFd0BFC77A29Ecd08888921f5197B188A18191D"),
+  // token
+  UST_TOKEN: Address.fromString("0xb599c3590F42f8F995ECfa0f85D2980B76862fc1"),
+  USDC_TOKEN: Address.fromString("0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E"),
+  WAVAX_TOKEN: Address.fromString("0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7"),
+  SAVAX_TOKEN: Address.fromString("0x2b2C81e08f1Af8835a78Bb2A90AE924ACE0eA4bE"),
+  // others
 };

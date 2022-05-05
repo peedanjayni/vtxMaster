@@ -25,6 +25,7 @@ export function feedPrice(block: ethereum.Block): void {
   let priceDAI = oracleFactory.bind(ALL_ADDRESSES.ORACLE_DAI).latestAnswer(); // DAI 8
   let priceMIM = oracleFactory.bind(ALL_ADDRESSES.ORACLE_MIM).latestAnswer(); // MIM 8
   let priceFRAX = oracleFactory.bind(ALL_ADDRESSES.ORACLE_FRAX).latestAnswer(); // FRAX 8
+  let priceQI = oracleFactory.bind(ALL_ADDRESSES.ORACLE_QI).latestAnswer(); // QI 8
 
   // pricePTP =  reverve1 / reserve0 * priceAVAX traderjoe pair price feed
   let r0 = traderjoeLP.bind(ALL_ADDRESSES.TJ_LP_PTP).getReserves().value0;
@@ -56,5 +57,6 @@ export function feedPrice(block: ethereum.Block): void {
   priceFeed.pricePTP = pricePTP;
   priceFeed.pricexPTP = pricexPTP;
   priceFeed.priceVTX = priceVTX;
+  priceFeed.priceQI = priceQI;
   priceFeed.save();
 }
