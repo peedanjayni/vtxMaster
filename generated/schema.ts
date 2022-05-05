@@ -11,7 +11,7 @@ import {
   BigDecimal
 } from "@graphprotocol/graph-ts";
 
-export class allPrice extends Entity {
+export class AllPrice extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
@@ -34,18 +34,18 @@ export class allPrice extends Entity {
 
   save(): void {
     let id = this.get("id");
-    assert(id != null, "Cannot save allPrice entity without an ID");
+    assert(id != null, "Cannot save AllPrice entity without an ID");
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        `Entities of type allPrice must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        `Entities of type AllPrice must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
       );
-      store.set("allPrice", id.toString(), this);
+      store.set("AllPrice", id.toString(), this);
     }
   }
 
-  static load(id: string): allPrice | null {
-    return changetype<allPrice | null>(store.get("allPrice", id));
+  static load(id: string): AllPrice | null {
+    return changetype<AllPrice | null>(store.get("AllPrice", id));
   }
 
   get id(): string {
@@ -184,61 +184,33 @@ export class allPrice extends Entity {
   }
 }
 
-export class allTvl extends Entity {
+export class PoolStakedVTX extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
 
     this.set("blockNumber", Value.fromBigInt(BigInt.zero()));
     this.set("blockTimestamp", Value.fromBigInt(BigInt.zero()));
-    this.set("tvlStakedVTX", Value.fromBigInt(BigInt.zero()));
-    this.set("tvlLockedVTX", Value.fromBigInt(BigInt.zero()));
-    this.set("tvlStakedPTP", Value.fromBigInt(BigInt.zero()));
-    this.set("tvlStakedJOE", Value.fromBigInt(BigInt.zero()));
-    this.set("tvlPool2VTXAVAX", Value.fromBigInt(BigInt.zero()));
-    this.set("tvlPool2xPTP", Value.fromBigInt(BigInt.zero()));
-    this.set("tvlMainPoolDAIe", Value.fromBigInt(BigInt.zero()));
-    this.set("tvlMainPoolUSDC", Value.fromBigInt(BigInt.zero()));
-    this.set("tvlMainPoolUSDCe", Value.fromBigInt(BigInt.zero()));
-    this.set("tvlMainPoolUSDT", Value.fromBigInt(BigInt.zero()));
-    this.set("tvlMainPoolUSDTe", Value.fromBigInt(BigInt.zero()));
-    this.set("tvlAltPoolUSDCinUSDCUST", Value.fromBigInt(BigInt.zero()));
-    this.set("tvlAltPoolUSTinUSDCUST", Value.fromBigInt(BigInt.zero()));
-    this.set("tvlAltPoolUSDCinUSDCMIM", Value.fromBigInt(BigInt.zero()));
-    this.set("tvlAltPoolMIMinUSDCMIM", Value.fromBigInt(BigInt.zero()));
-    this.set("tvlAltPoolUSDCinUSDCFRAX", Value.fromBigInt(BigInt.zero()));
-    this.set("tvlAltPoolFRAXinUSDCFRAX", Value.fromBigInt(BigInt.zero()));
-    this.set("tvlAltPoolAVAXin2AVAX", Value.fromBigInt(BigInt.zero()));
-    this.set("tvlAltPoolSAVAXin2AVAX", Value.fromBigInt(BigInt.zero()));
-    this.set("tvlTJUSDCAVAX", Value.fromBigInt(BigInt.zero()));
-    this.set("tvlTJWETHeAVAX", Value.fromBigInt(BigInt.zero()));
-    this.set("tvlTJUSDTeAVAX", Value.fromBigInt(BigInt.zero()));
-    this.set("tvlTJUSDCeAVAX", Value.fromBigInt(BigInt.zero()));
-    this.set("tvlTJMIMAVAX", Value.fromBigInt(BigInt.zero()));
-    this.set("tvlTJWBTCeAVAX", Value.fromBigInt(BigInt.zero()));
-    this.set("tvlTJJOEAVAX", Value.fromBigInt(BigInt.zero()));
-    this.set("tvlTJJOEUSDC", Value.fromBigInt(BigInt.zero()));
-    this.set("tvlTJ2USDC", Value.fromBigInt(BigInt.zero()));
-    this.set("tvlTJ2USDT", Value.fromBigInt(BigInt.zero()));
-    this.set("tvlTJLINKeAVAX", Value.fromBigInt(BigInt.zero()));
-    this.set("tvlTJBNBAVAX", Value.fromBigInt(BigInt.zero()));
-    this.set("tvlTJUSDtAVAX", Value.fromBigInt(BigInt.zero()));
+    this.set("tvl", Value.fromBigInt(BigInt.zero()));
+    this.set("vtxApr", Value.fromBigInt(BigInt.zero()));
+    this.set("xptpApr", Value.fromBigInt(BigInt.zero()));
+    this.set("zjoeApr", Value.fromBigInt(BigInt.zero()));
   }
 
   save(): void {
     let id = this.get("id");
-    assert(id != null, "Cannot save allTvl entity without an ID");
+    assert(id != null, "Cannot save PoolStakedVTX entity without an ID");
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        `Entities of type allTvl must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        `Entities of type PoolStakedVTX must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
       );
-      store.set("allTvl", id.toString(), this);
+      store.set("PoolStakedVTX", id.toString(), this);
     }
   }
 
-  static load(id: string): allTvl | null {
-    return changetype<allTvl | null>(store.get("allTvl", id));
+  static load(id: string): PoolStakedVTX | null {
+    return changetype<PoolStakedVTX | null>(store.get("PoolStakedVTX", id));
   }
 
   get id(): string {
@@ -268,350 +240,70 @@ export class allTvl extends Entity {
     this.set("blockTimestamp", Value.fromBigInt(value));
   }
 
-  get tvlStakedVTX(): BigInt {
-    let value = this.get("tvlStakedVTX");
+  get tvl(): BigInt {
+    let value = this.get("tvl");
     return value!.toBigInt();
   }
 
-  set tvlStakedVTX(value: BigInt) {
-    this.set("tvlStakedVTX", Value.fromBigInt(value));
+  set tvl(value: BigInt) {
+    this.set("tvl", Value.fromBigInt(value));
   }
 
-  get tvlLockedVTX(): BigInt {
-    let value = this.get("tvlLockedVTX");
+  get vtxApr(): BigInt {
+    let value = this.get("vtxApr");
     return value!.toBigInt();
   }
 
-  set tvlLockedVTX(value: BigInt) {
-    this.set("tvlLockedVTX", Value.fromBigInt(value));
+  set vtxApr(value: BigInt) {
+    this.set("vtxApr", Value.fromBigInt(value));
   }
 
-  get tvlStakedPTP(): BigInt {
-    let value = this.get("tvlStakedPTP");
+  get xptpApr(): BigInt {
+    let value = this.get("xptpApr");
     return value!.toBigInt();
   }
 
-  set tvlStakedPTP(value: BigInt) {
-    this.set("tvlStakedPTP", Value.fromBigInt(value));
+  set xptpApr(value: BigInt) {
+    this.set("xptpApr", Value.fromBigInt(value));
   }
 
-  get tvlStakedJOE(): BigInt {
-    let value = this.get("tvlStakedJOE");
+  get zjoeApr(): BigInt {
+    let value = this.get("zjoeApr");
     return value!.toBigInt();
   }
 
-  set tvlStakedJOE(value: BigInt) {
-    this.set("tvlStakedJOE", Value.fromBigInt(value));
-  }
-
-  get tvlPool2VTXAVAX(): BigInt {
-    let value = this.get("tvlPool2VTXAVAX");
-    return value!.toBigInt();
-  }
-
-  set tvlPool2VTXAVAX(value: BigInt) {
-    this.set("tvlPool2VTXAVAX", Value.fromBigInt(value));
-  }
-
-  get tvlPool2xPTP(): BigInt {
-    let value = this.get("tvlPool2xPTP");
-    return value!.toBigInt();
-  }
-
-  set tvlPool2xPTP(value: BigInt) {
-    this.set("tvlPool2xPTP", Value.fromBigInt(value));
-  }
-
-  get tvlMainPoolDAIe(): BigInt {
-    let value = this.get("tvlMainPoolDAIe");
-    return value!.toBigInt();
-  }
-
-  set tvlMainPoolDAIe(value: BigInt) {
-    this.set("tvlMainPoolDAIe", Value.fromBigInt(value));
-  }
-
-  get tvlMainPoolUSDC(): BigInt {
-    let value = this.get("tvlMainPoolUSDC");
-    return value!.toBigInt();
-  }
-
-  set tvlMainPoolUSDC(value: BigInt) {
-    this.set("tvlMainPoolUSDC", Value.fromBigInt(value));
-  }
-
-  get tvlMainPoolUSDCe(): BigInt {
-    let value = this.get("tvlMainPoolUSDCe");
-    return value!.toBigInt();
-  }
-
-  set tvlMainPoolUSDCe(value: BigInt) {
-    this.set("tvlMainPoolUSDCe", Value.fromBigInt(value));
-  }
-
-  get tvlMainPoolUSDT(): BigInt {
-    let value = this.get("tvlMainPoolUSDT");
-    return value!.toBigInt();
-  }
-
-  set tvlMainPoolUSDT(value: BigInt) {
-    this.set("tvlMainPoolUSDT", Value.fromBigInt(value));
-  }
-
-  get tvlMainPoolUSDTe(): BigInt {
-    let value = this.get("tvlMainPoolUSDTe");
-    return value!.toBigInt();
-  }
-
-  set tvlMainPoolUSDTe(value: BigInt) {
-    this.set("tvlMainPoolUSDTe", Value.fromBigInt(value));
-  }
-
-  get tvlAltPoolUSDCinUSDCUST(): BigInt {
-    let value = this.get("tvlAltPoolUSDCinUSDCUST");
-    return value!.toBigInt();
-  }
-
-  set tvlAltPoolUSDCinUSDCUST(value: BigInt) {
-    this.set("tvlAltPoolUSDCinUSDCUST", Value.fromBigInt(value));
-  }
-
-  get tvlAltPoolUSTinUSDCUST(): BigInt {
-    let value = this.get("tvlAltPoolUSTinUSDCUST");
-    return value!.toBigInt();
-  }
-
-  set tvlAltPoolUSTinUSDCUST(value: BigInt) {
-    this.set("tvlAltPoolUSTinUSDCUST", Value.fromBigInt(value));
-  }
-
-  get tvlAltPoolUSDCinUSDCMIM(): BigInt {
-    let value = this.get("tvlAltPoolUSDCinUSDCMIM");
-    return value!.toBigInt();
-  }
-
-  set tvlAltPoolUSDCinUSDCMIM(value: BigInt) {
-    this.set("tvlAltPoolUSDCinUSDCMIM", Value.fromBigInt(value));
-  }
-
-  get tvlAltPoolMIMinUSDCMIM(): BigInt {
-    let value = this.get("tvlAltPoolMIMinUSDCMIM");
-    return value!.toBigInt();
-  }
-
-  set tvlAltPoolMIMinUSDCMIM(value: BigInt) {
-    this.set("tvlAltPoolMIMinUSDCMIM", Value.fromBigInt(value));
-  }
-
-  get tvlAltPoolUSDCinUSDCFRAX(): BigInt {
-    let value = this.get("tvlAltPoolUSDCinUSDCFRAX");
-    return value!.toBigInt();
-  }
-
-  set tvlAltPoolUSDCinUSDCFRAX(value: BigInt) {
-    this.set("tvlAltPoolUSDCinUSDCFRAX", Value.fromBigInt(value));
-  }
-
-  get tvlAltPoolFRAXinUSDCFRAX(): BigInt {
-    let value = this.get("tvlAltPoolFRAXinUSDCFRAX");
-    return value!.toBigInt();
-  }
-
-  set tvlAltPoolFRAXinUSDCFRAX(value: BigInt) {
-    this.set("tvlAltPoolFRAXinUSDCFRAX", Value.fromBigInt(value));
-  }
-
-  get tvlAltPoolAVAXin2AVAX(): BigInt {
-    let value = this.get("tvlAltPoolAVAXin2AVAX");
-    return value!.toBigInt();
-  }
-
-  set tvlAltPoolAVAXin2AVAX(value: BigInt) {
-    this.set("tvlAltPoolAVAXin2AVAX", Value.fromBigInt(value));
-  }
-
-  get tvlAltPoolSAVAXin2AVAX(): BigInt {
-    let value = this.get("tvlAltPoolSAVAXin2AVAX");
-    return value!.toBigInt();
-  }
-
-  set tvlAltPoolSAVAXin2AVAX(value: BigInt) {
-    this.set("tvlAltPoolSAVAXin2AVAX", Value.fromBigInt(value));
-  }
-
-  get tvlTJUSDCAVAX(): BigInt {
-    let value = this.get("tvlTJUSDCAVAX");
-    return value!.toBigInt();
-  }
-
-  set tvlTJUSDCAVAX(value: BigInt) {
-    this.set("tvlTJUSDCAVAX", Value.fromBigInt(value));
-  }
-
-  get tvlTJWETHeAVAX(): BigInt {
-    let value = this.get("tvlTJWETHeAVAX");
-    return value!.toBigInt();
-  }
-
-  set tvlTJWETHeAVAX(value: BigInt) {
-    this.set("tvlTJWETHeAVAX", Value.fromBigInt(value));
-  }
-
-  get tvlTJUSDTeAVAX(): BigInt {
-    let value = this.get("tvlTJUSDTeAVAX");
-    return value!.toBigInt();
-  }
-
-  set tvlTJUSDTeAVAX(value: BigInt) {
-    this.set("tvlTJUSDTeAVAX", Value.fromBigInt(value));
-  }
-
-  get tvlTJUSDCeAVAX(): BigInt {
-    let value = this.get("tvlTJUSDCeAVAX");
-    return value!.toBigInt();
-  }
-
-  set tvlTJUSDCeAVAX(value: BigInt) {
-    this.set("tvlTJUSDCeAVAX", Value.fromBigInt(value));
-  }
-
-  get tvlTJMIMAVAX(): BigInt {
-    let value = this.get("tvlTJMIMAVAX");
-    return value!.toBigInt();
-  }
-
-  set tvlTJMIMAVAX(value: BigInt) {
-    this.set("tvlTJMIMAVAX", Value.fromBigInt(value));
-  }
-
-  get tvlTJWBTCeAVAX(): BigInt {
-    let value = this.get("tvlTJWBTCeAVAX");
-    return value!.toBigInt();
-  }
-
-  set tvlTJWBTCeAVAX(value: BigInt) {
-    this.set("tvlTJWBTCeAVAX", Value.fromBigInt(value));
-  }
-
-  get tvlTJJOEAVAX(): BigInt {
-    let value = this.get("tvlTJJOEAVAX");
-    return value!.toBigInt();
-  }
-
-  set tvlTJJOEAVAX(value: BigInt) {
-    this.set("tvlTJJOEAVAX", Value.fromBigInt(value));
-  }
-
-  get tvlTJJOEUSDC(): BigInt {
-    let value = this.get("tvlTJJOEUSDC");
-    return value!.toBigInt();
-  }
-
-  set tvlTJJOEUSDC(value: BigInt) {
-    this.set("tvlTJJOEUSDC", Value.fromBigInt(value));
-  }
-
-  get tvlTJ2USDC(): BigInt {
-    let value = this.get("tvlTJ2USDC");
-    return value!.toBigInt();
-  }
-
-  set tvlTJ2USDC(value: BigInt) {
-    this.set("tvlTJ2USDC", Value.fromBigInt(value));
-  }
-
-  get tvlTJ2USDT(): BigInt {
-    let value = this.get("tvlTJ2USDT");
-    return value!.toBigInt();
-  }
-
-  set tvlTJ2USDT(value: BigInt) {
-    this.set("tvlTJ2USDT", Value.fromBigInt(value));
-  }
-
-  get tvlTJLINKeAVAX(): BigInt {
-    let value = this.get("tvlTJLINKeAVAX");
-    return value!.toBigInt();
-  }
-
-  set tvlTJLINKeAVAX(value: BigInt) {
-    this.set("tvlTJLINKeAVAX", Value.fromBigInt(value));
-  }
-
-  get tvlTJBNBAVAX(): BigInt {
-    let value = this.get("tvlTJBNBAVAX");
-    return value!.toBigInt();
-  }
-
-  set tvlTJBNBAVAX(value: BigInt) {
-    this.set("tvlTJBNBAVAX", Value.fromBigInt(value));
-  }
-
-  get tvlTJUSDtAVAX(): BigInt {
-    let value = this.get("tvlTJUSDtAVAX");
-    return value!.toBigInt();
-  }
-
-  set tvlTJUSDtAVAX(value: BigInt) {
-    this.set("tvlTJUSDtAVAX", Value.fromBigInt(value));
+  set zjoeApr(value: BigInt) {
+    this.set("zjoeApr", Value.fromBigInt(value));
   }
 }
 
-export class vtxAprEachPool extends Entity {
+export class PoolLockedVTX extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
 
     this.set("blockNumber", Value.fromBigInt(BigInt.zero()));
     this.set("blockTimestamp", Value.fromBigInt(BigInt.zero()));
-    this.set("vtxAprStakedVTX", Value.fromBigInt(BigInt.zero()));
-    this.set("vtxAprLockedVTX", Value.fromBigInt(BigInt.zero()));
-    this.set("vtxAprStakedPTP", Value.fromBigInt(BigInt.zero()));
-    this.set("vtxAprStakedJOE", Value.fromBigInt(BigInt.zero()));
-    this.set("vtxAprPool2VTXAVAX", Value.fromBigInt(BigInt.zero()));
-    this.set("vtxAprPool2xPTP", Value.fromBigInt(BigInt.zero()));
-    this.set("vtxAprMainPoolDAIe", Value.fromBigInt(BigInt.zero()));
-    this.set("vtxAprMainPoolUSDC", Value.fromBigInt(BigInt.zero()));
-    this.set("vtxAprMainPoolUSDCe", Value.fromBigInt(BigInt.zero()));
-    this.set("vtxAprMainPoolUSDT", Value.fromBigInt(BigInt.zero()));
-    this.set("vtxAprMainPoolUSDTe", Value.fromBigInt(BigInt.zero()));
-    this.set("vtxAprAltPoolUSDCinUSDCUST", Value.fromBigInt(BigInt.zero()));
-    this.set("vtxAprAltPoolUSTinUSDCUST", Value.fromBigInt(BigInt.zero()));
-    this.set("vtxAprAltPoolUSDCinUSDCMIM", Value.fromBigInt(BigInt.zero()));
-    this.set("vtxAprAltPoolMIMinUSDCMIM", Value.fromBigInt(BigInt.zero()));
-    this.set("vtxAprAltPoolUSDCinUSDCFRAX", Value.fromBigInt(BigInt.zero()));
-    this.set("vtxAprAltPoolFRAXinUSDCFRAX", Value.fromBigInt(BigInt.zero()));
-    this.set("vtxAprAltPoolAVAXin2AVAX", Value.fromBigInt(BigInt.zero()));
-    this.set("vtxAprAltPoolSAVAXin2AVAX", Value.fromBigInt(BigInt.zero()));
-    this.set("vtxAprTJUSDCAVAX", Value.fromBigInt(BigInt.zero()));
-    this.set("vtxAprTJWETHeAVAX", Value.fromBigInt(BigInt.zero()));
-    this.set("vtxAprTJUSDTeAVAX", Value.fromBigInt(BigInt.zero()));
-    this.set("vtxAprTJUSDCeAVAX", Value.fromBigInt(BigInt.zero()));
-    this.set("vtxAprTJMIMAVAX", Value.fromBigInt(BigInt.zero()));
-    this.set("vtxAprTJWBTCeAVAX", Value.fromBigInt(BigInt.zero()));
-    this.set("vtxAprTJJOEAVAX", Value.fromBigInt(BigInt.zero()));
-    this.set("vtxAprTJJOEUSDC", Value.fromBigInt(BigInt.zero()));
-    this.set("vtxAprTJ2USDC", Value.fromBigInt(BigInt.zero()));
-    this.set("vtxAprTJ2USDT", Value.fromBigInt(BigInt.zero()));
-    this.set("vtxAprTJLINKeAVAX", Value.fromBigInt(BigInt.zero()));
-    this.set("vtxAprTJBNBAVAX", Value.fromBigInt(BigInt.zero()));
-    this.set("vtxAprTJUSDtAVAX", Value.fromBigInt(BigInt.zero()));
+    this.set("tvl", Value.fromBigInt(BigInt.zero()));
+    this.set("vtxApr", Value.fromBigInt(BigInt.zero()));
+    this.set("xptpApr", Value.fromBigInt(BigInt.zero()));
+    this.set("zjoeApr", Value.fromBigInt(BigInt.zero()));
   }
 
   save(): void {
     let id = this.get("id");
-    assert(id != null, "Cannot save vtxAprEachPool entity without an ID");
+    assert(id != null, "Cannot save PoolLockedVTX entity without an ID");
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        `Entities of type vtxAprEachPool must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        `Entities of type PoolLockedVTX must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
       );
-      store.set("vtxAprEachPool", id.toString(), this);
+      store.set("PoolLockedVTX", id.toString(), this);
     }
   }
 
-  static load(id: string): vtxAprEachPool | null {
-    return changetype<vtxAprEachPool | null>(store.get("vtxAprEachPool", id));
+  static load(id: string): PoolLockedVTX | null {
+    return changetype<PoolLockedVTX | null>(store.get("PoolLockedVTX", id));
   }
 
   get id(): string {
@@ -641,350 +333,69 @@ export class vtxAprEachPool extends Entity {
     this.set("blockTimestamp", Value.fromBigInt(value));
   }
 
-  get vtxAprStakedVTX(): BigInt {
-    let value = this.get("vtxAprStakedVTX");
+  get tvl(): BigInt {
+    let value = this.get("tvl");
     return value!.toBigInt();
   }
 
-  set vtxAprStakedVTX(value: BigInt) {
-    this.set("vtxAprStakedVTX", Value.fromBigInt(value));
+  set tvl(value: BigInt) {
+    this.set("tvl", Value.fromBigInt(value));
   }
 
-  get vtxAprLockedVTX(): BigInt {
-    let value = this.get("vtxAprLockedVTX");
+  get vtxApr(): BigInt {
+    let value = this.get("vtxApr");
     return value!.toBigInt();
   }
 
-  set vtxAprLockedVTX(value: BigInt) {
-    this.set("vtxAprLockedVTX", Value.fromBigInt(value));
+  set vtxApr(value: BigInt) {
+    this.set("vtxApr", Value.fromBigInt(value));
   }
 
-  get vtxAprStakedPTP(): BigInt {
-    let value = this.get("vtxAprStakedPTP");
+  get xptpApr(): BigInt {
+    let value = this.get("xptpApr");
     return value!.toBigInt();
   }
 
-  set vtxAprStakedPTP(value: BigInt) {
-    this.set("vtxAprStakedPTP", Value.fromBigInt(value));
+  set xptpApr(value: BigInt) {
+    this.set("xptpApr", Value.fromBigInt(value));
   }
 
-  get vtxAprStakedJOE(): BigInt {
-    let value = this.get("vtxAprStakedJOE");
+  get zjoeApr(): BigInt {
+    let value = this.get("zjoeApr");
     return value!.toBigInt();
   }
 
-  set vtxAprStakedJOE(value: BigInt) {
-    this.set("vtxAprStakedJOE", Value.fromBigInt(value));
-  }
-
-  get vtxAprPool2VTXAVAX(): BigInt {
-    let value = this.get("vtxAprPool2VTXAVAX");
-    return value!.toBigInt();
-  }
-
-  set vtxAprPool2VTXAVAX(value: BigInt) {
-    this.set("vtxAprPool2VTXAVAX", Value.fromBigInt(value));
-  }
-
-  get vtxAprPool2xPTP(): BigInt {
-    let value = this.get("vtxAprPool2xPTP");
-    return value!.toBigInt();
-  }
-
-  set vtxAprPool2xPTP(value: BigInt) {
-    this.set("vtxAprPool2xPTP", Value.fromBigInt(value));
-  }
-
-  get vtxAprMainPoolDAIe(): BigInt {
-    let value = this.get("vtxAprMainPoolDAIe");
-    return value!.toBigInt();
-  }
-
-  set vtxAprMainPoolDAIe(value: BigInt) {
-    this.set("vtxAprMainPoolDAIe", Value.fromBigInt(value));
-  }
-
-  get vtxAprMainPoolUSDC(): BigInt {
-    let value = this.get("vtxAprMainPoolUSDC");
-    return value!.toBigInt();
-  }
-
-  set vtxAprMainPoolUSDC(value: BigInt) {
-    this.set("vtxAprMainPoolUSDC", Value.fromBigInt(value));
-  }
-
-  get vtxAprMainPoolUSDCe(): BigInt {
-    let value = this.get("vtxAprMainPoolUSDCe");
-    return value!.toBigInt();
-  }
-
-  set vtxAprMainPoolUSDCe(value: BigInt) {
-    this.set("vtxAprMainPoolUSDCe", Value.fromBigInt(value));
-  }
-
-  get vtxAprMainPoolUSDT(): BigInt {
-    let value = this.get("vtxAprMainPoolUSDT");
-    return value!.toBigInt();
-  }
-
-  set vtxAprMainPoolUSDT(value: BigInt) {
-    this.set("vtxAprMainPoolUSDT", Value.fromBigInt(value));
-  }
-
-  get vtxAprMainPoolUSDTe(): BigInt {
-    let value = this.get("vtxAprMainPoolUSDTe");
-    return value!.toBigInt();
-  }
-
-  set vtxAprMainPoolUSDTe(value: BigInt) {
-    this.set("vtxAprMainPoolUSDTe", Value.fromBigInt(value));
-  }
-
-  get vtxAprAltPoolUSDCinUSDCUST(): BigInt {
-    let value = this.get("vtxAprAltPoolUSDCinUSDCUST");
-    return value!.toBigInt();
-  }
-
-  set vtxAprAltPoolUSDCinUSDCUST(value: BigInt) {
-    this.set("vtxAprAltPoolUSDCinUSDCUST", Value.fromBigInt(value));
-  }
-
-  get vtxAprAltPoolUSTinUSDCUST(): BigInt {
-    let value = this.get("vtxAprAltPoolUSTinUSDCUST");
-    return value!.toBigInt();
-  }
-
-  set vtxAprAltPoolUSTinUSDCUST(value: BigInt) {
-    this.set("vtxAprAltPoolUSTinUSDCUST", Value.fromBigInt(value));
-  }
-
-  get vtxAprAltPoolUSDCinUSDCMIM(): BigInt {
-    let value = this.get("vtxAprAltPoolUSDCinUSDCMIM");
-    return value!.toBigInt();
-  }
-
-  set vtxAprAltPoolUSDCinUSDCMIM(value: BigInt) {
-    this.set("vtxAprAltPoolUSDCinUSDCMIM", Value.fromBigInt(value));
-  }
-
-  get vtxAprAltPoolMIMinUSDCMIM(): BigInt {
-    let value = this.get("vtxAprAltPoolMIMinUSDCMIM");
-    return value!.toBigInt();
-  }
-
-  set vtxAprAltPoolMIMinUSDCMIM(value: BigInt) {
-    this.set("vtxAprAltPoolMIMinUSDCMIM", Value.fromBigInt(value));
-  }
-
-  get vtxAprAltPoolUSDCinUSDCFRAX(): BigInt {
-    let value = this.get("vtxAprAltPoolUSDCinUSDCFRAX");
-    return value!.toBigInt();
-  }
-
-  set vtxAprAltPoolUSDCinUSDCFRAX(value: BigInt) {
-    this.set("vtxAprAltPoolUSDCinUSDCFRAX", Value.fromBigInt(value));
-  }
-
-  get vtxAprAltPoolFRAXinUSDCFRAX(): BigInt {
-    let value = this.get("vtxAprAltPoolFRAXinUSDCFRAX");
-    return value!.toBigInt();
-  }
-
-  set vtxAprAltPoolFRAXinUSDCFRAX(value: BigInt) {
-    this.set("vtxAprAltPoolFRAXinUSDCFRAX", Value.fromBigInt(value));
-  }
-
-  get vtxAprAltPoolAVAXin2AVAX(): BigInt {
-    let value = this.get("vtxAprAltPoolAVAXin2AVAX");
-    return value!.toBigInt();
-  }
-
-  set vtxAprAltPoolAVAXin2AVAX(value: BigInt) {
-    this.set("vtxAprAltPoolAVAXin2AVAX", Value.fromBigInt(value));
-  }
-
-  get vtxAprAltPoolSAVAXin2AVAX(): BigInt {
-    let value = this.get("vtxAprAltPoolSAVAXin2AVAX");
-    return value!.toBigInt();
-  }
-
-  set vtxAprAltPoolSAVAXin2AVAX(value: BigInt) {
-    this.set("vtxAprAltPoolSAVAXin2AVAX", Value.fromBigInt(value));
-  }
-
-  get vtxAprTJUSDCAVAX(): BigInt {
-    let value = this.get("vtxAprTJUSDCAVAX");
-    return value!.toBigInt();
-  }
-
-  set vtxAprTJUSDCAVAX(value: BigInt) {
-    this.set("vtxAprTJUSDCAVAX", Value.fromBigInt(value));
-  }
-
-  get vtxAprTJWETHeAVAX(): BigInt {
-    let value = this.get("vtxAprTJWETHeAVAX");
-    return value!.toBigInt();
-  }
-
-  set vtxAprTJWETHeAVAX(value: BigInt) {
-    this.set("vtxAprTJWETHeAVAX", Value.fromBigInt(value));
-  }
-
-  get vtxAprTJUSDTeAVAX(): BigInt {
-    let value = this.get("vtxAprTJUSDTeAVAX");
-    return value!.toBigInt();
-  }
-
-  set vtxAprTJUSDTeAVAX(value: BigInt) {
-    this.set("vtxAprTJUSDTeAVAX", Value.fromBigInt(value));
-  }
-
-  get vtxAprTJUSDCeAVAX(): BigInt {
-    let value = this.get("vtxAprTJUSDCeAVAX");
-    return value!.toBigInt();
-  }
-
-  set vtxAprTJUSDCeAVAX(value: BigInt) {
-    this.set("vtxAprTJUSDCeAVAX", Value.fromBigInt(value));
-  }
-
-  get vtxAprTJMIMAVAX(): BigInt {
-    let value = this.get("vtxAprTJMIMAVAX");
-    return value!.toBigInt();
-  }
-
-  set vtxAprTJMIMAVAX(value: BigInt) {
-    this.set("vtxAprTJMIMAVAX", Value.fromBigInt(value));
-  }
-
-  get vtxAprTJWBTCeAVAX(): BigInt {
-    let value = this.get("vtxAprTJWBTCeAVAX");
-    return value!.toBigInt();
-  }
-
-  set vtxAprTJWBTCeAVAX(value: BigInt) {
-    this.set("vtxAprTJWBTCeAVAX", Value.fromBigInt(value));
-  }
-
-  get vtxAprTJJOEAVAX(): BigInt {
-    let value = this.get("vtxAprTJJOEAVAX");
-    return value!.toBigInt();
-  }
-
-  set vtxAprTJJOEAVAX(value: BigInt) {
-    this.set("vtxAprTJJOEAVAX", Value.fromBigInt(value));
-  }
-
-  get vtxAprTJJOEUSDC(): BigInt {
-    let value = this.get("vtxAprTJJOEUSDC");
-    return value!.toBigInt();
-  }
-
-  set vtxAprTJJOEUSDC(value: BigInt) {
-    this.set("vtxAprTJJOEUSDC", Value.fromBigInt(value));
-  }
-
-  get vtxAprTJ2USDC(): BigInt {
-    let value = this.get("vtxAprTJ2USDC");
-    return value!.toBigInt();
-  }
-
-  set vtxAprTJ2USDC(value: BigInt) {
-    this.set("vtxAprTJ2USDC", Value.fromBigInt(value));
-  }
-
-  get vtxAprTJ2USDT(): BigInt {
-    let value = this.get("vtxAprTJ2USDT");
-    return value!.toBigInt();
-  }
-
-  set vtxAprTJ2USDT(value: BigInt) {
-    this.set("vtxAprTJ2USDT", Value.fromBigInt(value));
-  }
-
-  get vtxAprTJLINKeAVAX(): BigInt {
-    let value = this.get("vtxAprTJLINKeAVAX");
-    return value!.toBigInt();
-  }
-
-  set vtxAprTJLINKeAVAX(value: BigInt) {
-    this.set("vtxAprTJLINKeAVAX", Value.fromBigInt(value));
-  }
-
-  get vtxAprTJBNBAVAX(): BigInt {
-    let value = this.get("vtxAprTJBNBAVAX");
-    return value!.toBigInt();
-  }
-
-  set vtxAprTJBNBAVAX(value: BigInt) {
-    this.set("vtxAprTJBNBAVAX", Value.fromBigInt(value));
-  }
-
-  get vtxAprTJUSDtAVAX(): BigInt {
-    let value = this.get("vtxAprTJUSDtAVAX");
-    return value!.toBigInt();
-  }
-
-  set vtxAprTJUSDtAVAX(value: BigInt) {
-    this.set("vtxAprTJUSDtAVAX", Value.fromBigInt(value));
+  set zjoeApr(value: BigInt) {
+    this.set("zjoeApr", Value.fromBigInt(value));
   }
 }
 
-export class ptpAprEachPool extends Entity {
+export class PoolStakedPTP extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
 
     this.set("blockNumber", Value.fromBigInt(BigInt.zero()));
     this.set("blockTimestamp", Value.fromBigInt(BigInt.zero()));
-    this.set("ptpAprStakedVTX", Value.fromBigInt(BigInt.zero()));
-    this.set("ptpAprLockedVTX", Value.fromBigInt(BigInt.zero()));
-    this.set("ptpAprStakedPTP", Value.fromBigInt(BigInt.zero()));
-    this.set("ptpAprStakedJOE", Value.fromBigInt(BigInt.zero()));
-    this.set("ptpAprPool2VTXAVAX", Value.fromBigInt(BigInt.zero()));
-    this.set("ptpAprPool2xPTP", Value.fromBigInt(BigInt.zero()));
-    this.set("ptpAprMainPoolDAIe", Value.fromBigInt(BigInt.zero()));
-    this.set("ptpAprMainPoolUSDC", Value.fromBigInt(BigInt.zero()));
-    this.set("ptpAprMainPoolUSDCe", Value.fromBigInt(BigInt.zero()));
-    this.set("ptpAprMainPoolUSDT", Value.fromBigInt(BigInt.zero()));
-    this.set("ptpAprMainPoolUSDTe", Value.fromBigInt(BigInt.zero()));
-    this.set("ptpAprAltPoolUSDCinUSDCUST", Value.fromBigInt(BigInt.zero()));
-    this.set("ptpAprAltPoolUSTinUSDCUST", Value.fromBigInt(BigInt.zero()));
-    this.set("ptpAprAltPoolUSDCinUSDCMIM", Value.fromBigInt(BigInt.zero()));
-    this.set("ptpAprAltPoolMIMinUSDCMIM", Value.fromBigInt(BigInt.zero()));
-    this.set("ptpAprAltPoolUSDCinUSDCFRAX", Value.fromBigInt(BigInt.zero()));
-    this.set("ptpAprAltPoolFRAXinUSDCFRAX", Value.fromBigInt(BigInt.zero()));
-    this.set("ptpAprAltPoolAVAXin2AVAX", Value.fromBigInt(BigInt.zero()));
-    this.set("ptpAprAltPoolSAVAXin2AVAX", Value.fromBigInt(BigInt.zero()));
-    this.set("ptpAprTJUSDCAVAX", Value.fromBigInt(BigInt.zero()));
-    this.set("ptpAprTJWETHeAVAX", Value.fromBigInt(BigInt.zero()));
-    this.set("ptpAprTJUSDTeAVAX", Value.fromBigInt(BigInt.zero()));
-    this.set("ptpAprTJUSDCeAVAX", Value.fromBigInt(BigInt.zero()));
-    this.set("ptpAprTJMIMAVAX", Value.fromBigInt(BigInt.zero()));
-    this.set("ptpAprTJWBTCeAVAX", Value.fromBigInt(BigInt.zero()));
-    this.set("ptpAprTJJOEAVAX", Value.fromBigInt(BigInt.zero()));
-    this.set("ptpAprTJJOEUSDC", Value.fromBigInt(BigInt.zero()));
-    this.set("ptpAprTJ2USDC", Value.fromBigInt(BigInt.zero()));
-    this.set("ptpAprTJ2USDT", Value.fromBigInt(BigInt.zero()));
-    this.set("ptpAprTJLINKeAVAX", Value.fromBigInt(BigInt.zero()));
-    this.set("ptpAprTJBNBAVAX", Value.fromBigInt(BigInt.zero()));
-    this.set("ptpAprTJUSDtAVAX", Value.fromBigInt(BigInt.zero()));
+    this.set("tvl", Value.fromBigInt(BigInt.zero()));
+    this.set("vtxApr", Value.fromBigInt(BigInt.zero()));
+    this.set("ptpApr", Value.fromBigInt(BigInt.zero()));
   }
 
   save(): void {
     let id = this.get("id");
-    assert(id != null, "Cannot save ptpAprEachPool entity without an ID");
+    assert(id != null, "Cannot save PoolStakedPTP entity without an ID");
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        `Entities of type ptpAprEachPool must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        `Entities of type PoolStakedPTP must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
       );
-      store.set("ptpAprEachPool", id.toString(), this);
+      store.set("PoolStakedPTP", id.toString(), this);
     }
   }
 
-  static load(id: string): ptpAprEachPool | null {
-    return changetype<ptpAprEachPool | null>(store.get("ptpAprEachPool", id));
+  static load(id: string): PoolStakedPTP | null {
+    return changetype<PoolStakedPTP | null>(store.get("PoolStakedPTP", id));
   }
 
   get id(): string {
@@ -1014,319 +425,60 @@ export class ptpAprEachPool extends Entity {
     this.set("blockTimestamp", Value.fromBigInt(value));
   }
 
-  get ptpAprStakedVTX(): BigInt {
-    let value = this.get("ptpAprStakedVTX");
+  get tvl(): BigInt {
+    let value = this.get("tvl");
     return value!.toBigInt();
   }
 
-  set ptpAprStakedVTX(value: BigInt) {
-    this.set("ptpAprStakedVTX", Value.fromBigInt(value));
+  set tvl(value: BigInt) {
+    this.set("tvl", Value.fromBigInt(value));
   }
 
-  get ptpAprLockedVTX(): BigInt {
-    let value = this.get("ptpAprLockedVTX");
+  get vtxApr(): BigInt {
+    let value = this.get("vtxApr");
     return value!.toBigInt();
   }
 
-  set ptpAprLockedVTX(value: BigInt) {
-    this.set("ptpAprLockedVTX", Value.fromBigInt(value));
+  set vtxApr(value: BigInt) {
+    this.set("vtxApr", Value.fromBigInt(value));
   }
 
-  get ptpAprStakedPTP(): BigInt {
-    let value = this.get("ptpAprStakedPTP");
+  get ptpApr(): BigInt {
+    let value = this.get("ptpApr");
     return value!.toBigInt();
   }
 
-  set ptpAprStakedPTP(value: BigInt) {
-    this.set("ptpAprStakedPTP", Value.fromBigInt(value));
-  }
-
-  get ptpAprStakedJOE(): BigInt {
-    let value = this.get("ptpAprStakedJOE");
-    return value!.toBigInt();
-  }
-
-  set ptpAprStakedJOE(value: BigInt) {
-    this.set("ptpAprStakedJOE", Value.fromBigInt(value));
-  }
-
-  get ptpAprPool2VTXAVAX(): BigInt {
-    let value = this.get("ptpAprPool2VTXAVAX");
-    return value!.toBigInt();
-  }
-
-  set ptpAprPool2VTXAVAX(value: BigInt) {
-    this.set("ptpAprPool2VTXAVAX", Value.fromBigInt(value));
-  }
-
-  get ptpAprPool2xPTP(): BigInt {
-    let value = this.get("ptpAprPool2xPTP");
-    return value!.toBigInt();
-  }
-
-  set ptpAprPool2xPTP(value: BigInt) {
-    this.set("ptpAprPool2xPTP", Value.fromBigInt(value));
-  }
-
-  get ptpAprMainPoolDAIe(): BigInt {
-    let value = this.get("ptpAprMainPoolDAIe");
-    return value!.toBigInt();
-  }
-
-  set ptpAprMainPoolDAIe(value: BigInt) {
-    this.set("ptpAprMainPoolDAIe", Value.fromBigInt(value));
-  }
-
-  get ptpAprMainPoolUSDC(): BigInt {
-    let value = this.get("ptpAprMainPoolUSDC");
-    return value!.toBigInt();
-  }
-
-  set ptpAprMainPoolUSDC(value: BigInt) {
-    this.set("ptpAprMainPoolUSDC", Value.fromBigInt(value));
-  }
-
-  get ptpAprMainPoolUSDCe(): BigInt {
-    let value = this.get("ptpAprMainPoolUSDCe");
-    return value!.toBigInt();
-  }
-
-  set ptpAprMainPoolUSDCe(value: BigInt) {
-    this.set("ptpAprMainPoolUSDCe", Value.fromBigInt(value));
-  }
-
-  get ptpAprMainPoolUSDT(): BigInt {
-    let value = this.get("ptpAprMainPoolUSDT");
-    return value!.toBigInt();
-  }
-
-  set ptpAprMainPoolUSDT(value: BigInt) {
-    this.set("ptpAprMainPoolUSDT", Value.fromBigInt(value));
-  }
-
-  get ptpAprMainPoolUSDTe(): BigInt {
-    let value = this.get("ptpAprMainPoolUSDTe");
-    return value!.toBigInt();
-  }
-
-  set ptpAprMainPoolUSDTe(value: BigInt) {
-    this.set("ptpAprMainPoolUSDTe", Value.fromBigInt(value));
-  }
-
-  get ptpAprAltPoolUSDCinUSDCUST(): BigInt {
-    let value = this.get("ptpAprAltPoolUSDCinUSDCUST");
-    return value!.toBigInt();
-  }
-
-  set ptpAprAltPoolUSDCinUSDCUST(value: BigInt) {
-    this.set("ptpAprAltPoolUSDCinUSDCUST", Value.fromBigInt(value));
-  }
-
-  get ptpAprAltPoolUSTinUSDCUST(): BigInt {
-    let value = this.get("ptpAprAltPoolUSTinUSDCUST");
-    return value!.toBigInt();
-  }
-
-  set ptpAprAltPoolUSTinUSDCUST(value: BigInt) {
-    this.set("ptpAprAltPoolUSTinUSDCUST", Value.fromBigInt(value));
-  }
-
-  get ptpAprAltPoolUSDCinUSDCMIM(): BigInt {
-    let value = this.get("ptpAprAltPoolUSDCinUSDCMIM");
-    return value!.toBigInt();
-  }
-
-  set ptpAprAltPoolUSDCinUSDCMIM(value: BigInt) {
-    this.set("ptpAprAltPoolUSDCinUSDCMIM", Value.fromBigInt(value));
-  }
-
-  get ptpAprAltPoolMIMinUSDCMIM(): BigInt {
-    let value = this.get("ptpAprAltPoolMIMinUSDCMIM");
-    return value!.toBigInt();
-  }
-
-  set ptpAprAltPoolMIMinUSDCMIM(value: BigInt) {
-    this.set("ptpAprAltPoolMIMinUSDCMIM", Value.fromBigInt(value));
-  }
-
-  get ptpAprAltPoolUSDCinUSDCFRAX(): BigInt {
-    let value = this.get("ptpAprAltPoolUSDCinUSDCFRAX");
-    return value!.toBigInt();
-  }
-
-  set ptpAprAltPoolUSDCinUSDCFRAX(value: BigInt) {
-    this.set("ptpAprAltPoolUSDCinUSDCFRAX", Value.fromBigInt(value));
-  }
-
-  get ptpAprAltPoolFRAXinUSDCFRAX(): BigInt {
-    let value = this.get("ptpAprAltPoolFRAXinUSDCFRAX");
-    return value!.toBigInt();
-  }
-
-  set ptpAprAltPoolFRAXinUSDCFRAX(value: BigInt) {
-    this.set("ptpAprAltPoolFRAXinUSDCFRAX", Value.fromBigInt(value));
-  }
-
-  get ptpAprAltPoolAVAXin2AVAX(): BigInt {
-    let value = this.get("ptpAprAltPoolAVAXin2AVAX");
-    return value!.toBigInt();
-  }
-
-  set ptpAprAltPoolAVAXin2AVAX(value: BigInt) {
-    this.set("ptpAprAltPoolAVAXin2AVAX", Value.fromBigInt(value));
-  }
-
-  get ptpAprAltPoolSAVAXin2AVAX(): BigInt {
-    let value = this.get("ptpAprAltPoolSAVAXin2AVAX");
-    return value!.toBigInt();
-  }
-
-  set ptpAprAltPoolSAVAXin2AVAX(value: BigInt) {
-    this.set("ptpAprAltPoolSAVAXin2AVAX", Value.fromBigInt(value));
-  }
-
-  get ptpAprTJUSDCAVAX(): BigInt {
-    let value = this.get("ptpAprTJUSDCAVAX");
-    return value!.toBigInt();
-  }
-
-  set ptpAprTJUSDCAVAX(value: BigInt) {
-    this.set("ptpAprTJUSDCAVAX", Value.fromBigInt(value));
-  }
-
-  get ptpAprTJWETHeAVAX(): BigInt {
-    let value = this.get("ptpAprTJWETHeAVAX");
-    return value!.toBigInt();
-  }
-
-  set ptpAprTJWETHeAVAX(value: BigInt) {
-    this.set("ptpAprTJWETHeAVAX", Value.fromBigInt(value));
-  }
-
-  get ptpAprTJUSDTeAVAX(): BigInt {
-    let value = this.get("ptpAprTJUSDTeAVAX");
-    return value!.toBigInt();
-  }
-
-  set ptpAprTJUSDTeAVAX(value: BigInt) {
-    this.set("ptpAprTJUSDTeAVAX", Value.fromBigInt(value));
-  }
-
-  get ptpAprTJUSDCeAVAX(): BigInt {
-    let value = this.get("ptpAprTJUSDCeAVAX");
-    return value!.toBigInt();
-  }
-
-  set ptpAprTJUSDCeAVAX(value: BigInt) {
-    this.set("ptpAprTJUSDCeAVAX", Value.fromBigInt(value));
-  }
-
-  get ptpAprTJMIMAVAX(): BigInt {
-    let value = this.get("ptpAprTJMIMAVAX");
-    return value!.toBigInt();
-  }
-
-  set ptpAprTJMIMAVAX(value: BigInt) {
-    this.set("ptpAprTJMIMAVAX", Value.fromBigInt(value));
-  }
-
-  get ptpAprTJWBTCeAVAX(): BigInt {
-    let value = this.get("ptpAprTJWBTCeAVAX");
-    return value!.toBigInt();
-  }
-
-  set ptpAprTJWBTCeAVAX(value: BigInt) {
-    this.set("ptpAprTJWBTCeAVAX", Value.fromBigInt(value));
-  }
-
-  get ptpAprTJJOEAVAX(): BigInt {
-    let value = this.get("ptpAprTJJOEAVAX");
-    return value!.toBigInt();
-  }
-
-  set ptpAprTJJOEAVAX(value: BigInt) {
-    this.set("ptpAprTJJOEAVAX", Value.fromBigInt(value));
-  }
-
-  get ptpAprTJJOEUSDC(): BigInt {
-    let value = this.get("ptpAprTJJOEUSDC");
-    return value!.toBigInt();
-  }
-
-  set ptpAprTJJOEUSDC(value: BigInt) {
-    this.set("ptpAprTJJOEUSDC", Value.fromBigInt(value));
-  }
-
-  get ptpAprTJ2USDC(): BigInt {
-    let value = this.get("ptpAprTJ2USDC");
-    return value!.toBigInt();
-  }
-
-  set ptpAprTJ2USDC(value: BigInt) {
-    this.set("ptpAprTJ2USDC", Value.fromBigInt(value));
-  }
-
-  get ptpAprTJ2USDT(): BigInt {
-    let value = this.get("ptpAprTJ2USDT");
-    return value!.toBigInt();
-  }
-
-  set ptpAprTJ2USDT(value: BigInt) {
-    this.set("ptpAprTJ2USDT", Value.fromBigInt(value));
-  }
-
-  get ptpAprTJLINKeAVAX(): BigInt {
-    let value = this.get("ptpAprTJLINKeAVAX");
-    return value!.toBigInt();
-  }
-
-  set ptpAprTJLINKeAVAX(value: BigInt) {
-    this.set("ptpAprTJLINKeAVAX", Value.fromBigInt(value));
-  }
-
-  get ptpAprTJBNBAVAX(): BigInt {
-    let value = this.get("ptpAprTJBNBAVAX");
-    return value!.toBigInt();
-  }
-
-  set ptpAprTJBNBAVAX(value: BigInt) {
-    this.set("ptpAprTJBNBAVAX", Value.fromBigInt(value));
-  }
-
-  get ptpAprTJUSDtAVAX(): BigInt {
-    let value = this.get("ptpAprTJUSDtAVAX");
-    return value!.toBigInt();
-  }
-
-  set ptpAprTJUSDtAVAX(value: BigInt) {
-    this.set("ptpAprTJUSDtAVAX", Value.fromBigInt(value));
+  set ptpApr(value: BigInt) {
+    this.set("ptpApr", Value.fromBigInt(value));
   }
 }
 
-export class joeAprEachPool extends Entity {
+export class PoolStakedJOE extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
 
     this.set("blockNumber", Value.fromBigInt(BigInt.zero()));
     this.set("blockTimestamp", Value.fromBigInt(BigInt.zero()));
-    this.set("joeAprStakedJOE", Value.fromBigInt(BigInt.zero()));
+    this.set("tvl", Value.fromBigInt(BigInt.zero()));
+    this.set("vtxApr", Value.fromBigInt(BigInt.zero()));
+    this.set("joeApr", Value.fromBigInt(BigInt.zero()));
   }
 
   save(): void {
     let id = this.get("id");
-    assert(id != null, "Cannot save joeAprEachPool entity without an ID");
+    assert(id != null, "Cannot save PoolStakedJOE entity without an ID");
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        `Entities of type joeAprEachPool must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        `Entities of type PoolStakedJOE must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
       );
-      store.set("joeAprEachPool", id.toString(), this);
+      store.set("PoolStakedJOE", id.toString(), this);
     }
   }
 
-  static load(id: string): joeAprEachPool | null {
-    return changetype<joeAprEachPool | null>(store.get("joeAprEachPool", id));
+  static load(id: string): PoolStakedJOE | null {
+    return changetype<PoolStakedJOE | null>(store.get("PoolStakedJOE", id));
   }
 
   get id(): string {
@@ -1356,41 +508,60 @@ export class joeAprEachPool extends Entity {
     this.set("blockTimestamp", Value.fromBigInt(value));
   }
 
-  get joeAprStakedJOE(): BigInt {
-    let value = this.get("joeAprStakedJOE");
+  get tvl(): BigInt {
+    let value = this.get("tvl");
     return value!.toBigInt();
   }
 
-  set joeAprStakedJOE(value: BigInt) {
-    this.set("joeAprStakedJOE", Value.fromBigInt(value));
+  set tvl(value: BigInt) {
+    this.set("tvl", Value.fromBigInt(value));
+  }
+
+  get vtxApr(): BigInt {
+    let value = this.get("vtxApr");
+    return value!.toBigInt();
+  }
+
+  set vtxApr(value: BigInt) {
+    this.set("vtxApr", Value.fromBigInt(value));
+  }
+
+  get joeApr(): BigInt {
+    let value = this.get("joeApr");
+    return value!.toBigInt();
+  }
+
+  set joeApr(value: BigInt) {
+    this.set("joeApr", Value.fromBigInt(value));
   }
 }
 
-export class xptpAprEachPool extends Entity {
+export class Pool2VTXAVAX extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
 
     this.set("blockNumber", Value.fromBigInt(BigInt.zero()));
     this.set("blockTimestamp", Value.fromBigInt(BigInt.zero()));
-    this.set("xptpAprStakedVTX", Value.fromBigInt(BigInt.zero()));
-    this.set("xptpAprLockedVTX", Value.fromBigInt(BigInt.zero()));
+    this.set("tvl", Value.fromBigInt(BigInt.zero()));
+    this.set("vtxApr", Value.fromBigInt(BigInt.zero()));
+    this.set("lpApr", Value.fromBigInt(BigInt.zero()));
   }
 
   save(): void {
     let id = this.get("id");
-    assert(id != null, "Cannot save xptpAprEachPool entity without an ID");
+    assert(id != null, "Cannot save Pool2VTXAVAX entity without an ID");
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        `Entities of type xptpAprEachPool must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        `Entities of type Pool2VTXAVAX must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
       );
-      store.set("xptpAprEachPool", id.toString(), this);
+      store.set("Pool2VTXAVAX", id.toString(), this);
     }
   }
 
-  static load(id: string): xptpAprEachPool | null {
-    return changetype<xptpAprEachPool | null>(store.get("xptpAprEachPool", id));
+  static load(id: string): Pool2VTXAVAX | null {
+    return changetype<Pool2VTXAVAX | null>(store.get("Pool2VTXAVAX", id));
   }
 
   get id(): string {
@@ -1420,50 +591,60 @@ export class xptpAprEachPool extends Entity {
     this.set("blockTimestamp", Value.fromBigInt(value));
   }
 
-  get xptpAprStakedVTX(): BigInt {
-    let value = this.get("xptpAprStakedVTX");
+  get tvl(): BigInt {
+    let value = this.get("tvl");
     return value!.toBigInt();
   }
 
-  set xptpAprStakedVTX(value: BigInt) {
-    this.set("xptpAprStakedVTX", Value.fromBigInt(value));
+  set tvl(value: BigInt) {
+    this.set("tvl", Value.fromBigInt(value));
   }
 
-  get xptpAprLockedVTX(): BigInt {
-    let value = this.get("xptpAprLockedVTX");
+  get vtxApr(): BigInt {
+    let value = this.get("vtxApr");
     return value!.toBigInt();
   }
 
-  set xptpAprLockedVTX(value: BigInt) {
-    this.set("xptpAprLockedVTX", Value.fromBigInt(value));
+  set vtxApr(value: BigInt) {
+    this.set("vtxApr", Value.fromBigInt(value));
+  }
+
+  get lpApr(): BigInt {
+    let value = this.get("lpApr");
+    return value!.toBigInt();
+  }
+
+  set lpApr(value: BigInt) {
+    this.set("lpApr", Value.fromBigInt(value));
   }
 }
 
-export class zjoeAprEachPool extends Entity {
+export class Pool2PTP extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
 
     this.set("blockNumber", Value.fromBigInt(BigInt.zero()));
     this.set("blockTimestamp", Value.fromBigInt(BigInt.zero()));
-    this.set("zjoeAprStakedVTX", Value.fromBigInt(BigInt.zero()));
-    this.set("zjoeAprLockedVTX", Value.fromBigInt(BigInt.zero()));
+    this.set("tvl", Value.fromBigInt(BigInt.zero()));
+    this.set("vtxApr", Value.fromBigInt(BigInt.zero()));
+    this.set("lpApr", Value.fromBigInt(BigInt.zero()));
   }
 
   save(): void {
     let id = this.get("id");
-    assert(id != null, "Cannot save zjoeAprEachPool entity without an ID");
+    assert(id != null, "Cannot save Pool2PTP entity without an ID");
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        `Entities of type zjoeAprEachPool must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        `Entities of type Pool2PTP must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
       );
-      store.set("zjoeAprEachPool", id.toString(), this);
+      store.set("Pool2PTP", id.toString(), this);
     }
   }
 
-  static load(id: string): zjoeAprEachPool | null {
-    return changetype<zjoeAprEachPool | null>(store.get("zjoeAprEachPool", id));
+  static load(id: string): Pool2PTP | null {
+    return changetype<Pool2PTP | null>(store.get("Pool2PTP", id));
   }
 
   get id(): string {
@@ -1493,61 +674,60 @@ export class zjoeAprEachPool extends Entity {
     this.set("blockTimestamp", Value.fromBigInt(value));
   }
 
-  get zjoeAprStakedVTX(): BigInt {
-    let value = this.get("zjoeAprStakedVTX");
+  get tvl(): BigInt {
+    let value = this.get("tvl");
     return value!.toBigInt();
   }
 
-  set zjoeAprStakedVTX(value: BigInt) {
-    this.set("zjoeAprStakedVTX", Value.fromBigInt(value));
+  set tvl(value: BigInt) {
+    this.set("tvl", Value.fromBigInt(value));
   }
 
-  get zjoeAprLockedVTX(): BigInt {
-    let value = this.get("zjoeAprLockedVTX");
+  get vtxApr(): BigInt {
+    let value = this.get("vtxApr");
     return value!.toBigInt();
   }
 
-  set zjoeAprLockedVTX(value: BigInt) {
-    this.set("zjoeAprLockedVTX", Value.fromBigInt(value));
+  set vtxApr(value: BigInt) {
+    this.set("vtxApr", Value.fromBigInt(value));
+  }
+
+  get lpApr(): BigInt {
+    let value = this.get("lpApr");
+    return value!.toBigInt();
+  }
+
+  set lpApr(value: BigInt) {
+    this.set("lpApr", Value.fromBigInt(value));
   }
 }
 
-export class lpAprEachTjPool extends Entity {
+export class Pool2JOE extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
 
     this.set("blockNumber", Value.fromBigInt(BigInt.zero()));
     this.set("blockTimestamp", Value.fromBigInt(BigInt.zero()));
-    this.set("lpAprTJUSDCAVAX", Value.fromBigInt(BigInt.zero()));
-    this.set("lpAprTJWETHeAVAX", Value.fromBigInt(BigInt.zero()));
-    this.set("lpAprTJUSDTeAVAX", Value.fromBigInt(BigInt.zero()));
-    this.set("lpAprTJUSDCeAVAX", Value.fromBigInt(BigInt.zero()));
-    this.set("lpAprTJMIMAVAX", Value.fromBigInt(BigInt.zero()));
-    this.set("lpAprTJWBTCeAVAX", Value.fromBigInt(BigInt.zero()));
-    this.set("lpAprTJJOEAVAX", Value.fromBigInt(BigInt.zero()));
-    this.set("lpAprTJJOEUSDC", Value.fromBigInt(BigInt.zero()));
-    this.set("lpAprTJ2USDC", Value.fromBigInt(BigInt.zero()));
-    this.set("lpAprTJ2USDT", Value.fromBigInt(BigInt.zero()));
-    this.set("lpAprTJLINKeAVAX", Value.fromBigInt(BigInt.zero()));
-    this.set("lpAprTJBNBAVAX", Value.fromBigInt(BigInt.zero()));
-    this.set("lpAprTJUSDtAVAX", Value.fromBigInt(BigInt.zero()));
+    this.set("tvl", Value.fromBigInt(BigInt.zero()));
+    this.set("vtxApr", Value.fromBigInt(BigInt.zero()));
+    this.set("lpApr", Value.fromBigInt(BigInt.zero()));
   }
 
   save(): void {
     let id = this.get("id");
-    assert(id != null, "Cannot save lpAprEachTjPool entity without an ID");
+    assert(id != null, "Cannot save Pool2JOE entity without an ID");
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        `Entities of type lpAprEachTjPool must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        `Entities of type Pool2JOE must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
       );
-      store.set("lpAprEachTjPool", id.toString(), this);
+      store.set("Pool2JOE", id.toString(), this);
     }
   }
 
-  static load(id: string): lpAprEachTjPool | null {
-    return changetype<lpAprEachTjPool | null>(store.get("lpAprEachTjPool", id));
+  static load(id: string): Pool2JOE | null {
+    return changetype<Pool2JOE | null>(store.get("Pool2JOE", id));
   }
 
   get id(): string {
@@ -1577,162 +757,60 @@ export class lpAprEachTjPool extends Entity {
     this.set("blockTimestamp", Value.fromBigInt(value));
   }
 
-  get lpAprTJUSDCAVAX(): BigInt {
-    let value = this.get("lpAprTJUSDCAVAX");
+  get tvl(): BigInt {
+    let value = this.get("tvl");
     return value!.toBigInt();
   }
 
-  set lpAprTJUSDCAVAX(value: BigInt) {
-    this.set("lpAprTJUSDCAVAX", Value.fromBigInt(value));
+  set tvl(value: BigInt) {
+    this.set("tvl", Value.fromBigInt(value));
   }
 
-  get lpAprTJWETHeAVAX(): BigInt {
-    let value = this.get("lpAprTJWETHeAVAX");
+  get vtxApr(): BigInt {
+    let value = this.get("vtxApr");
     return value!.toBigInt();
   }
 
-  set lpAprTJWETHeAVAX(value: BigInt) {
-    this.set("lpAprTJWETHeAVAX", Value.fromBigInt(value));
+  set vtxApr(value: BigInt) {
+    this.set("vtxApr", Value.fromBigInt(value));
   }
 
-  get lpAprTJUSDTeAVAX(): BigInt {
-    let value = this.get("lpAprTJUSDTeAVAX");
+  get lpApr(): BigInt {
+    let value = this.get("lpApr");
     return value!.toBigInt();
   }
 
-  set lpAprTJUSDTeAVAX(value: BigInt) {
-    this.set("lpAprTJUSDTeAVAX", Value.fromBigInt(value));
-  }
-
-  get lpAprTJUSDCeAVAX(): BigInt {
-    let value = this.get("lpAprTJUSDCeAVAX");
-    return value!.toBigInt();
-  }
-
-  set lpAprTJUSDCeAVAX(value: BigInt) {
-    this.set("lpAprTJUSDCeAVAX", Value.fromBigInt(value));
-  }
-
-  get lpAprTJMIMAVAX(): BigInt {
-    let value = this.get("lpAprTJMIMAVAX");
-    return value!.toBigInt();
-  }
-
-  set lpAprTJMIMAVAX(value: BigInt) {
-    this.set("lpAprTJMIMAVAX", Value.fromBigInt(value));
-  }
-
-  get lpAprTJWBTCeAVAX(): BigInt {
-    let value = this.get("lpAprTJWBTCeAVAX");
-    return value!.toBigInt();
-  }
-
-  set lpAprTJWBTCeAVAX(value: BigInt) {
-    this.set("lpAprTJWBTCeAVAX", Value.fromBigInt(value));
-  }
-
-  get lpAprTJJOEAVAX(): BigInt {
-    let value = this.get("lpAprTJJOEAVAX");
-    return value!.toBigInt();
-  }
-
-  set lpAprTJJOEAVAX(value: BigInt) {
-    this.set("lpAprTJJOEAVAX", Value.fromBigInt(value));
-  }
-
-  get lpAprTJJOEUSDC(): BigInt {
-    let value = this.get("lpAprTJJOEUSDC");
-    return value!.toBigInt();
-  }
-
-  set lpAprTJJOEUSDC(value: BigInt) {
-    this.set("lpAprTJJOEUSDC", Value.fromBigInt(value));
-  }
-
-  get lpAprTJ2USDC(): BigInt {
-    let value = this.get("lpAprTJ2USDC");
-    return value!.toBigInt();
-  }
-
-  set lpAprTJ2USDC(value: BigInt) {
-    this.set("lpAprTJ2USDC", Value.fromBigInt(value));
-  }
-
-  get lpAprTJ2USDT(): BigInt {
-    let value = this.get("lpAprTJ2USDT");
-    return value!.toBigInt();
-  }
-
-  set lpAprTJ2USDT(value: BigInt) {
-    this.set("lpAprTJ2USDT", Value.fromBigInt(value));
-  }
-
-  get lpAprTJLINKeAVAX(): BigInt {
-    let value = this.get("lpAprTJLINKeAVAX");
-    return value!.toBigInt();
-  }
-
-  set lpAprTJLINKeAVAX(value: BigInt) {
-    this.set("lpAprTJLINKeAVAX", Value.fromBigInt(value));
-  }
-
-  get lpAprTJBNBAVAX(): BigInt {
-    let value = this.get("lpAprTJBNBAVAX");
-    return value!.toBigInt();
-  }
-
-  set lpAprTJBNBAVAX(value: BigInt) {
-    this.set("lpAprTJBNBAVAX", Value.fromBigInt(value));
-  }
-
-  get lpAprTJUSDtAVAX(): BigInt {
-    let value = this.get("lpAprTJUSDtAVAX");
-    return value!.toBigInt();
-  }
-
-  set lpAprTJUSDtAVAX(value: BigInt) {
-    this.set("lpAprTJUSDtAVAX", Value.fromBigInt(value));
+  set lpApr(value: BigInt) {
+    this.set("lpApr", Value.fromBigInt(value));
   }
 }
 
-export class baseAprEachTjPool extends Entity {
+export class PoolMainDAIe extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
 
     this.set("blockNumber", Value.fromBigInt(BigInt.zero()));
     this.set("blockTimestamp", Value.fromBigInt(BigInt.zero()));
-    this.set("baseAprTJUSDCAVAX", Value.fromBigInt(BigInt.zero()));
-    this.set("baseAprTJWETHeAVAX", Value.fromBigInt(BigInt.zero()));
-    this.set("baseAprTJUSDTeAVAX", Value.fromBigInt(BigInt.zero()));
-    this.set("baseAprTJUSDCeAVAX", Value.fromBigInt(BigInt.zero()));
-    this.set("baseAprTJMIMAVAX", Value.fromBigInt(BigInt.zero()));
-    this.set("baseAprTJWBTCeAVAX", Value.fromBigInt(BigInt.zero()));
-    this.set("baseAprTJJOEAVAX", Value.fromBigInt(BigInt.zero()));
-    this.set("baseAprTJJOEUSDC", Value.fromBigInt(BigInt.zero()));
-    this.set("baseAprTJ2USDC", Value.fromBigInt(BigInt.zero()));
-    this.set("baseAprTJ2USDT", Value.fromBigInt(BigInt.zero()));
-    this.set("baseAprTJLINKeAVAX", Value.fromBigInt(BigInt.zero()));
-    this.set("baseAprTJBNBAVAX", Value.fromBigInt(BigInt.zero()));
-    this.set("baseAprTJUSDtAVAX", Value.fromBigInt(BigInt.zero()));
+    this.set("tvl", Value.fromBigInt(BigInt.zero()));
+    this.set("vtxApr", Value.fromBigInt(BigInt.zero()));
+    this.set("ptpApr", Value.fromBigInt(BigInt.zero()));
   }
 
   save(): void {
     let id = this.get("id");
-    assert(id != null, "Cannot save baseAprEachTjPool entity without an ID");
+    assert(id != null, "Cannot save PoolMainDAIe entity without an ID");
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        `Entities of type baseAprEachTjPool must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        `Entities of type PoolMainDAIe must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
       );
-      store.set("baseAprEachTjPool", id.toString(), this);
+      store.set("PoolMainDAIe", id.toString(), this);
     }
   }
 
-  static load(id: string): baseAprEachTjPool | null {
-    return changetype<baseAprEachTjPool | null>(
-      store.get("baseAprEachTjPool", id)
-    );
+  static load(id: string): PoolMainDAIe | null {
+    return changetype<PoolMainDAIe | null>(store.get("PoolMainDAIe", id));
   }
 
   get id(): string {
@@ -1762,162 +840,60 @@ export class baseAprEachTjPool extends Entity {
     this.set("blockTimestamp", Value.fromBigInt(value));
   }
 
-  get baseAprTJUSDCAVAX(): BigInt {
-    let value = this.get("baseAprTJUSDCAVAX");
+  get tvl(): BigInt {
+    let value = this.get("tvl");
     return value!.toBigInt();
   }
 
-  set baseAprTJUSDCAVAX(value: BigInt) {
-    this.set("baseAprTJUSDCAVAX", Value.fromBigInt(value));
+  set tvl(value: BigInt) {
+    this.set("tvl", Value.fromBigInt(value));
   }
 
-  get baseAprTJWETHeAVAX(): BigInt {
-    let value = this.get("baseAprTJWETHeAVAX");
+  get vtxApr(): BigInt {
+    let value = this.get("vtxApr");
     return value!.toBigInt();
   }
 
-  set baseAprTJWETHeAVAX(value: BigInt) {
-    this.set("baseAprTJWETHeAVAX", Value.fromBigInt(value));
+  set vtxApr(value: BigInt) {
+    this.set("vtxApr", Value.fromBigInt(value));
   }
 
-  get baseAprTJUSDTeAVAX(): BigInt {
-    let value = this.get("baseAprTJUSDTeAVAX");
+  get ptpApr(): BigInt {
+    let value = this.get("ptpApr");
     return value!.toBigInt();
   }
 
-  set baseAprTJUSDTeAVAX(value: BigInt) {
-    this.set("baseAprTJUSDTeAVAX", Value.fromBigInt(value));
-  }
-
-  get baseAprTJUSDCeAVAX(): BigInt {
-    let value = this.get("baseAprTJUSDCeAVAX");
-    return value!.toBigInt();
-  }
-
-  set baseAprTJUSDCeAVAX(value: BigInt) {
-    this.set("baseAprTJUSDCeAVAX", Value.fromBigInt(value));
-  }
-
-  get baseAprTJMIMAVAX(): BigInt {
-    let value = this.get("baseAprTJMIMAVAX");
-    return value!.toBigInt();
-  }
-
-  set baseAprTJMIMAVAX(value: BigInt) {
-    this.set("baseAprTJMIMAVAX", Value.fromBigInt(value));
-  }
-
-  get baseAprTJWBTCeAVAX(): BigInt {
-    let value = this.get("baseAprTJWBTCeAVAX");
-    return value!.toBigInt();
-  }
-
-  set baseAprTJWBTCeAVAX(value: BigInt) {
-    this.set("baseAprTJWBTCeAVAX", Value.fromBigInt(value));
-  }
-
-  get baseAprTJJOEAVAX(): BigInt {
-    let value = this.get("baseAprTJJOEAVAX");
-    return value!.toBigInt();
-  }
-
-  set baseAprTJJOEAVAX(value: BigInt) {
-    this.set("baseAprTJJOEAVAX", Value.fromBigInt(value));
-  }
-
-  get baseAprTJJOEUSDC(): BigInt {
-    let value = this.get("baseAprTJJOEUSDC");
-    return value!.toBigInt();
-  }
-
-  set baseAprTJJOEUSDC(value: BigInt) {
-    this.set("baseAprTJJOEUSDC", Value.fromBigInt(value));
-  }
-
-  get baseAprTJ2USDC(): BigInt {
-    let value = this.get("baseAprTJ2USDC");
-    return value!.toBigInt();
-  }
-
-  set baseAprTJ2USDC(value: BigInt) {
-    this.set("baseAprTJ2USDC", Value.fromBigInt(value));
-  }
-
-  get baseAprTJ2USDT(): BigInt {
-    let value = this.get("baseAprTJ2USDT");
-    return value!.toBigInt();
-  }
-
-  set baseAprTJ2USDT(value: BigInt) {
-    this.set("baseAprTJ2USDT", Value.fromBigInt(value));
-  }
-
-  get baseAprTJLINKeAVAX(): BigInt {
-    let value = this.get("baseAprTJLINKeAVAX");
-    return value!.toBigInt();
-  }
-
-  set baseAprTJLINKeAVAX(value: BigInt) {
-    this.set("baseAprTJLINKeAVAX", Value.fromBigInt(value));
-  }
-
-  get baseAprTJBNBAVAX(): BigInt {
-    let value = this.get("baseAprTJBNBAVAX");
-    return value!.toBigInt();
-  }
-
-  set baseAprTJBNBAVAX(value: BigInt) {
-    this.set("baseAprTJBNBAVAX", Value.fromBigInt(value));
-  }
-
-  get baseAprTJUSDtAVAX(): BigInt {
-    let value = this.get("baseAprTJUSDtAVAX");
-    return value!.toBigInt();
-  }
-
-  set baseAprTJUSDtAVAX(value: BigInt) {
-    this.set("baseAprTJUSDtAVAX", Value.fromBigInt(value));
+  set ptpApr(value: BigInt) {
+    this.set("ptpApr", Value.fromBigInt(value));
   }
 }
 
-export class boostAprEachTjPool extends Entity {
+export class PoolMainUSDC extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
 
     this.set("blockNumber", Value.fromBigInt(BigInt.zero()));
     this.set("blockTimestamp", Value.fromBigInt(BigInt.zero()));
-    this.set("boostAprTJUSDCAVAX", Value.fromBigInt(BigInt.zero()));
-    this.set("boostAprTJWETHeAVAX", Value.fromBigInt(BigInt.zero()));
-    this.set("boostAprTJUSDTeAVAX", Value.fromBigInt(BigInt.zero()));
-    this.set("boostAprTJUSDCeAVAX", Value.fromBigInt(BigInt.zero()));
-    this.set("boostAprTJMIMAVAX", Value.fromBigInt(BigInt.zero()));
-    this.set("boostAprTJWBTCeAVAX", Value.fromBigInt(BigInt.zero()));
-    this.set("boostAprTJJOEAVAX", Value.fromBigInt(BigInt.zero()));
-    this.set("boostAprTJJOEUSDC", Value.fromBigInt(BigInt.zero()));
-    this.set("boostAprTJ2USDC", Value.fromBigInt(BigInt.zero()));
-    this.set("boostAprTJ2USDT", Value.fromBigInt(BigInt.zero()));
-    this.set("boostAprTJLINKeAVAX", Value.fromBigInt(BigInt.zero()));
-    this.set("boostAprTJBNBAVAX", Value.fromBigInt(BigInt.zero()));
-    this.set("boostAprTJUSDtAVAX", Value.fromBigInt(BigInt.zero()));
+    this.set("tvl", Value.fromBigInt(BigInt.zero()));
+    this.set("vtxApr", Value.fromBigInt(BigInt.zero()));
+    this.set("ptpApr", Value.fromBigInt(BigInt.zero()));
   }
 
   save(): void {
     let id = this.get("id");
-    assert(id != null, "Cannot save boostAprEachTjPool entity without an ID");
+    assert(id != null, "Cannot save PoolMainUSDC entity without an ID");
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        `Entities of type boostAprEachTjPool must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        `Entities of type PoolMainUSDC must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
       );
-      store.set("boostAprEachTjPool", id.toString(), this);
+      store.set("PoolMainUSDC", id.toString(), this);
     }
   }
 
-  static load(id: string): boostAprEachTjPool | null {
-    return changetype<boostAprEachTjPool | null>(
-      store.get("boostAprEachTjPool", id)
-    );
+  static load(id: string): PoolMainUSDC | null {
+    return changetype<PoolMainUSDC | null>(store.get("PoolMainUSDC", id));
   }
 
   get id(): string {
@@ -1947,149 +923,60 @@ export class boostAprEachTjPool extends Entity {
     this.set("blockTimestamp", Value.fromBigInt(value));
   }
 
-  get boostAprTJUSDCAVAX(): BigInt {
-    let value = this.get("boostAprTJUSDCAVAX");
+  get tvl(): BigInt {
+    let value = this.get("tvl");
     return value!.toBigInt();
   }
 
-  set boostAprTJUSDCAVAX(value: BigInt) {
-    this.set("boostAprTJUSDCAVAX", Value.fromBigInt(value));
+  set tvl(value: BigInt) {
+    this.set("tvl", Value.fromBigInt(value));
   }
 
-  get boostAprTJWETHeAVAX(): BigInt {
-    let value = this.get("boostAprTJWETHeAVAX");
+  get vtxApr(): BigInt {
+    let value = this.get("vtxApr");
     return value!.toBigInt();
   }
 
-  set boostAprTJWETHeAVAX(value: BigInt) {
-    this.set("boostAprTJWETHeAVAX", Value.fromBigInt(value));
+  set vtxApr(value: BigInt) {
+    this.set("vtxApr", Value.fromBigInt(value));
   }
 
-  get boostAprTJUSDTeAVAX(): BigInt {
-    let value = this.get("boostAprTJUSDTeAVAX");
+  get ptpApr(): BigInt {
+    let value = this.get("ptpApr");
     return value!.toBigInt();
   }
 
-  set boostAprTJUSDTeAVAX(value: BigInt) {
-    this.set("boostAprTJUSDTeAVAX", Value.fromBigInt(value));
-  }
-
-  get boostAprTJUSDCeAVAX(): BigInt {
-    let value = this.get("boostAprTJUSDCeAVAX");
-    return value!.toBigInt();
-  }
-
-  set boostAprTJUSDCeAVAX(value: BigInt) {
-    this.set("boostAprTJUSDCeAVAX", Value.fromBigInt(value));
-  }
-
-  get boostAprTJMIMAVAX(): BigInt {
-    let value = this.get("boostAprTJMIMAVAX");
-    return value!.toBigInt();
-  }
-
-  set boostAprTJMIMAVAX(value: BigInt) {
-    this.set("boostAprTJMIMAVAX", Value.fromBigInt(value));
-  }
-
-  get boostAprTJWBTCeAVAX(): BigInt {
-    let value = this.get("boostAprTJWBTCeAVAX");
-    return value!.toBigInt();
-  }
-
-  set boostAprTJWBTCeAVAX(value: BigInt) {
-    this.set("boostAprTJWBTCeAVAX", Value.fromBigInt(value));
-  }
-
-  get boostAprTJJOEAVAX(): BigInt {
-    let value = this.get("boostAprTJJOEAVAX");
-    return value!.toBigInt();
-  }
-
-  set boostAprTJJOEAVAX(value: BigInt) {
-    this.set("boostAprTJJOEAVAX", Value.fromBigInt(value));
-  }
-
-  get boostAprTJJOEUSDC(): BigInt {
-    let value = this.get("boostAprTJJOEUSDC");
-    return value!.toBigInt();
-  }
-
-  set boostAprTJJOEUSDC(value: BigInt) {
-    this.set("boostAprTJJOEUSDC", Value.fromBigInt(value));
-  }
-
-  get boostAprTJ2USDC(): BigInt {
-    let value = this.get("boostAprTJ2USDC");
-    return value!.toBigInt();
-  }
-
-  set boostAprTJ2USDC(value: BigInt) {
-    this.set("boostAprTJ2USDC", Value.fromBigInt(value));
-  }
-
-  get boostAprTJ2USDT(): BigInt {
-    let value = this.get("boostAprTJ2USDT");
-    return value!.toBigInt();
-  }
-
-  set boostAprTJ2USDT(value: BigInt) {
-    this.set("boostAprTJ2USDT", Value.fromBigInt(value));
-  }
-
-  get boostAprTJLINKeAVAX(): BigInt {
-    let value = this.get("boostAprTJLINKeAVAX");
-    return value!.toBigInt();
-  }
-
-  set boostAprTJLINKeAVAX(value: BigInt) {
-    this.set("boostAprTJLINKeAVAX", Value.fromBigInt(value));
-  }
-
-  get boostAprTJBNBAVAX(): BigInt {
-    let value = this.get("boostAprTJBNBAVAX");
-    return value!.toBigInt();
-  }
-
-  set boostAprTJBNBAVAX(value: BigInt) {
-    this.set("boostAprTJBNBAVAX", Value.fromBigInt(value));
-  }
-
-  get boostAprTJUSDtAVAX(): BigInt {
-    let value = this.get("boostAprTJUSDtAVAX");
-    return value!.toBigInt();
-  }
-
-  set boostAprTJUSDtAVAX(value: BigInt) {
-    this.set("boostAprTJUSDtAVAX", Value.fromBigInt(value));
+  set ptpApr(value: BigInt) {
+    this.set("ptpApr", Value.fromBigInt(value));
   }
 }
 
-export class ustAprEachPool extends Entity {
+export class PoolMainUSDCe extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
 
     this.set("blockNumber", Value.fromBigInt(BigInt.zero()));
     this.set("blockTimestamp", Value.fromBigInt(BigInt.zero()));
-    this.set("ustAprAltPoolUSDCinUSDCMIM", Value.fromBigInt(BigInt.zero()));
-    this.set("ustAprAltPoolMIMinUSDCMIM", Value.fromBigInt(BigInt.zero()));
+    this.set("tvl", Value.fromBigInt(BigInt.zero()));
+    this.set("vtxApr", Value.fromBigInt(BigInt.zero()));
+    this.set("ptpApr", Value.fromBigInt(BigInt.zero()));
   }
 
   save(): void {
     let id = this.get("id");
-    assert(id != null, "Cannot save ustAprEachPool entity without an ID");
+    assert(id != null, "Cannot save PoolMainUSDCe entity without an ID");
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        `Entities of type ustAprEachPool must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        `Entities of type PoolMainUSDCe must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
       );
-      store.set("ustAprEachPool", id.toString(), this);
+      store.set("PoolMainUSDCe", id.toString(), this);
     }
   }
 
-  static load(id: string): ustAprEachPool | null {
-    return changetype<ustAprEachPool | null>(store.get("ustAprEachPool", id));
+  static load(id: string): PoolMainUSDCe | null {
+    return changetype<PoolMainUSDCe | null>(store.get("PoolMainUSDCe", id));
   }
 
   get id(): string {
@@ -2119,50 +1006,60 @@ export class ustAprEachPool extends Entity {
     this.set("blockTimestamp", Value.fromBigInt(value));
   }
 
-  get ustAprAltPoolUSDCinUSDCMIM(): BigInt {
-    let value = this.get("ustAprAltPoolUSDCinUSDCMIM");
+  get tvl(): BigInt {
+    let value = this.get("tvl");
     return value!.toBigInt();
   }
 
-  set ustAprAltPoolUSDCinUSDCMIM(value: BigInt) {
-    this.set("ustAprAltPoolUSDCinUSDCMIM", Value.fromBigInt(value));
+  set tvl(value: BigInt) {
+    this.set("tvl", Value.fromBigInt(value));
   }
 
-  get ustAprAltPoolMIMinUSDCMIM(): BigInt {
-    let value = this.get("ustAprAltPoolMIMinUSDCMIM");
+  get vtxApr(): BigInt {
+    let value = this.get("vtxApr");
     return value!.toBigInt();
   }
 
-  set ustAprAltPoolMIMinUSDCMIM(value: BigInt) {
-    this.set("ustAprAltPoolMIMinUSDCMIM", Value.fromBigInt(value));
+  set vtxApr(value: BigInt) {
+    this.set("vtxApr", Value.fromBigInt(value));
+  }
+
+  get ptpApr(): BigInt {
+    let value = this.get("ptpApr");
+    return value!.toBigInt();
+  }
+
+  set ptpApr(value: BigInt) {
+    this.set("ptpApr", Value.fromBigInt(value));
   }
 }
 
-export class qiAprEachPool extends Entity {
+export class PoolMainUSDT extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
 
     this.set("blockNumber", Value.fromBigInt(BigInt.zero()));
     this.set("blockTimestamp", Value.fromBigInt(BigInt.zero()));
-    this.set("qiAprAltPoolAVAXin2AVAX", Value.fromBigInt(BigInt.zero()));
-    this.set("qiAprAltPoolSAVAXin2AVAX", Value.fromBigInt(BigInt.zero()));
+    this.set("tvl", Value.fromBigInt(BigInt.zero()));
+    this.set("vtxApr", Value.fromBigInt(BigInt.zero()));
+    this.set("ptpApr", Value.fromBigInt(BigInt.zero()));
   }
 
   save(): void {
     let id = this.get("id");
-    assert(id != null, "Cannot save qiAprEachPool entity without an ID");
+    assert(id != null, "Cannot save PoolMainUSDT entity without an ID");
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        `Entities of type qiAprEachPool must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        `Entities of type PoolMainUSDT must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
       );
-      store.set("qiAprEachPool", id.toString(), this);
+      store.set("PoolMainUSDT", id.toString(), this);
     }
   }
 
-  static load(id: string): qiAprEachPool | null {
-    return changetype<qiAprEachPool | null>(store.get("qiAprEachPool", id));
+  static load(id: string): PoolMainUSDT | null {
+    return changetype<PoolMainUSDT | null>(store.get("PoolMainUSDT", id));
   }
 
   get id(): string {
@@ -2192,21 +1089,1944 @@ export class qiAprEachPool extends Entity {
     this.set("blockTimestamp", Value.fromBigInt(value));
   }
 
-  get qiAprAltPoolAVAXin2AVAX(): BigInt {
-    let value = this.get("qiAprAltPoolAVAXin2AVAX");
+  get tvl(): BigInt {
+    let value = this.get("tvl");
     return value!.toBigInt();
   }
 
-  set qiAprAltPoolAVAXin2AVAX(value: BigInt) {
-    this.set("qiAprAltPoolAVAXin2AVAX", Value.fromBigInt(value));
+  set tvl(value: BigInt) {
+    this.set("tvl", Value.fromBigInt(value));
   }
 
-  get qiAprAltPoolSAVAXin2AVAX(): BigInt {
-    let value = this.get("qiAprAltPoolSAVAXin2AVAX");
+  get vtxApr(): BigInt {
+    let value = this.get("vtxApr");
     return value!.toBigInt();
   }
 
-  set qiAprAltPoolSAVAXin2AVAX(value: BigInt) {
-    this.set("qiAprAltPoolSAVAXin2AVAX", Value.fromBigInt(value));
+  set vtxApr(value: BigInt) {
+    this.set("vtxApr", Value.fromBigInt(value));
+  }
+
+  get ptpApr(): BigInt {
+    let value = this.get("ptpApr");
+    return value!.toBigInt();
+  }
+
+  set ptpApr(value: BigInt) {
+    this.set("ptpApr", Value.fromBigInt(value));
+  }
+}
+
+export class PoolMainUSDTe extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("blockNumber", Value.fromBigInt(BigInt.zero()));
+    this.set("blockTimestamp", Value.fromBigInt(BigInt.zero()));
+    this.set("tvl", Value.fromBigInt(BigInt.zero()));
+    this.set("vtxApr", Value.fromBigInt(BigInt.zero()));
+    this.set("ptpApr", Value.fromBigInt(BigInt.zero()));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save PoolMainUSDTe entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type PoolMainUSDTe must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("PoolMainUSDTe", id.toString(), this);
+    }
+  }
+
+  static load(id: string): PoolMainUSDTe | null {
+    return changetype<PoolMainUSDTe | null>(store.get("PoolMainUSDTe", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get blockNumber(): BigInt {
+    let value = this.get("blockNumber");
+    return value!.toBigInt();
+  }
+
+  set blockNumber(value: BigInt) {
+    this.set("blockNumber", Value.fromBigInt(value));
+  }
+
+  get blockTimestamp(): BigInt {
+    let value = this.get("blockTimestamp");
+    return value!.toBigInt();
+  }
+
+  set blockTimestamp(value: BigInt) {
+    this.set("blockTimestamp", Value.fromBigInt(value));
+  }
+
+  get tvl(): BigInt {
+    let value = this.get("tvl");
+    return value!.toBigInt();
+  }
+
+  set tvl(value: BigInt) {
+    this.set("tvl", Value.fromBigInt(value));
+  }
+
+  get vtxApr(): BigInt {
+    let value = this.get("vtxApr");
+    return value!.toBigInt();
+  }
+
+  set vtxApr(value: BigInt) {
+    this.set("vtxApr", Value.fromBigInt(value));
+  }
+
+  get ptpApr(): BigInt {
+    let value = this.get("ptpApr");
+    return value!.toBigInt();
+  }
+
+  set ptpApr(value: BigInt) {
+    this.set("ptpApr", Value.fromBigInt(value));
+  }
+}
+
+export class PoolAltUSDCUST extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("blockNumber", Value.fromBigInt(BigInt.zero()));
+    this.set("blockTimestamp", Value.fromBigInt(BigInt.zero()));
+    this.set("tvl1", Value.fromBigInt(BigInt.zero()));
+    this.set("tvl2", Value.fromBigInt(BigInt.zero()));
+    this.set("vtxApr1", Value.fromBigInt(BigInt.zero()));
+    this.set("ptpApr1", Value.fromBigInt(BigInt.zero()));
+    this.set("ustApr1", Value.fromBigInt(BigInt.zero()));
+    this.set("vtxApr2", Value.fromBigInt(BigInt.zero()));
+    this.set("ptpApr2", Value.fromBigInt(BigInt.zero()));
+    this.set("ustApr2", Value.fromBigInt(BigInt.zero()));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save PoolAltUSDCUST entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type PoolAltUSDCUST must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("PoolAltUSDCUST", id.toString(), this);
+    }
+  }
+
+  static load(id: string): PoolAltUSDCUST | null {
+    return changetype<PoolAltUSDCUST | null>(store.get("PoolAltUSDCUST", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get blockNumber(): BigInt {
+    let value = this.get("blockNumber");
+    return value!.toBigInt();
+  }
+
+  set blockNumber(value: BigInt) {
+    this.set("blockNumber", Value.fromBigInt(value));
+  }
+
+  get blockTimestamp(): BigInt {
+    let value = this.get("blockTimestamp");
+    return value!.toBigInt();
+  }
+
+  set blockTimestamp(value: BigInt) {
+    this.set("blockTimestamp", Value.fromBigInt(value));
+  }
+
+  get tvl1(): BigInt {
+    let value = this.get("tvl1");
+    return value!.toBigInt();
+  }
+
+  set tvl1(value: BigInt) {
+    this.set("tvl1", Value.fromBigInt(value));
+  }
+
+  get tvl2(): BigInt {
+    let value = this.get("tvl2");
+    return value!.toBigInt();
+  }
+
+  set tvl2(value: BigInt) {
+    this.set("tvl2", Value.fromBigInt(value));
+  }
+
+  get vtxApr1(): BigInt {
+    let value = this.get("vtxApr1");
+    return value!.toBigInt();
+  }
+
+  set vtxApr1(value: BigInt) {
+    this.set("vtxApr1", Value.fromBigInt(value));
+  }
+
+  get ptpApr1(): BigInt {
+    let value = this.get("ptpApr1");
+    return value!.toBigInt();
+  }
+
+  set ptpApr1(value: BigInt) {
+    this.set("ptpApr1", Value.fromBigInt(value));
+  }
+
+  get ustApr1(): BigInt {
+    let value = this.get("ustApr1");
+    return value!.toBigInt();
+  }
+
+  set ustApr1(value: BigInt) {
+    this.set("ustApr1", Value.fromBigInt(value));
+  }
+
+  get vtxApr2(): BigInt {
+    let value = this.get("vtxApr2");
+    return value!.toBigInt();
+  }
+
+  set vtxApr2(value: BigInt) {
+    this.set("vtxApr2", Value.fromBigInt(value));
+  }
+
+  get ptpApr2(): BigInt {
+    let value = this.get("ptpApr2");
+    return value!.toBigInt();
+  }
+
+  set ptpApr2(value: BigInt) {
+    this.set("ptpApr2", Value.fromBigInt(value));
+  }
+
+  get ustApr2(): BigInt {
+    let value = this.get("ustApr2");
+    return value!.toBigInt();
+  }
+
+  set ustApr2(value: BigInt) {
+    this.set("ustApr2", Value.fromBigInt(value));
+  }
+}
+
+export class PoolAltUSDCMIM extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("blockNumber", Value.fromBigInt(BigInt.zero()));
+    this.set("blockTimestamp", Value.fromBigInt(BigInt.zero()));
+    this.set("tvl1", Value.fromBigInt(BigInt.zero()));
+    this.set("tvl2", Value.fromBigInt(BigInt.zero()));
+    this.set("vtxApr1", Value.fromBigInt(BigInt.zero()));
+    this.set("ptpApr1", Value.fromBigInt(BigInt.zero()));
+    this.set("vtxApr2", Value.fromBigInt(BigInt.zero()));
+    this.set("ptpApr2", Value.fromBigInt(BigInt.zero()));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save PoolAltUSDCMIM entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type PoolAltUSDCMIM must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("PoolAltUSDCMIM", id.toString(), this);
+    }
+  }
+
+  static load(id: string): PoolAltUSDCMIM | null {
+    return changetype<PoolAltUSDCMIM | null>(store.get("PoolAltUSDCMIM", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get blockNumber(): BigInt {
+    let value = this.get("blockNumber");
+    return value!.toBigInt();
+  }
+
+  set blockNumber(value: BigInt) {
+    this.set("blockNumber", Value.fromBigInt(value));
+  }
+
+  get blockTimestamp(): BigInt {
+    let value = this.get("blockTimestamp");
+    return value!.toBigInt();
+  }
+
+  set blockTimestamp(value: BigInt) {
+    this.set("blockTimestamp", Value.fromBigInt(value));
+  }
+
+  get tvl1(): BigInt {
+    let value = this.get("tvl1");
+    return value!.toBigInt();
+  }
+
+  set tvl1(value: BigInt) {
+    this.set("tvl1", Value.fromBigInt(value));
+  }
+
+  get tvl2(): BigInt {
+    let value = this.get("tvl2");
+    return value!.toBigInt();
+  }
+
+  set tvl2(value: BigInt) {
+    this.set("tvl2", Value.fromBigInt(value));
+  }
+
+  get vtxApr1(): BigInt {
+    let value = this.get("vtxApr1");
+    return value!.toBigInt();
+  }
+
+  set vtxApr1(value: BigInt) {
+    this.set("vtxApr1", Value.fromBigInt(value));
+  }
+
+  get ptpApr1(): BigInt {
+    let value = this.get("ptpApr1");
+    return value!.toBigInt();
+  }
+
+  set ptpApr1(value: BigInt) {
+    this.set("ptpApr1", Value.fromBigInt(value));
+  }
+
+  get vtxApr2(): BigInt {
+    let value = this.get("vtxApr2");
+    return value!.toBigInt();
+  }
+
+  set vtxApr2(value: BigInt) {
+    this.set("vtxApr2", Value.fromBigInt(value));
+  }
+
+  get ptpApr2(): BigInt {
+    let value = this.get("ptpApr2");
+    return value!.toBigInt();
+  }
+
+  set ptpApr2(value: BigInt) {
+    this.set("ptpApr2", Value.fromBigInt(value));
+  }
+}
+
+export class PoolAltUSDCFRAX extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("blockNumber", Value.fromBigInt(BigInt.zero()));
+    this.set("blockTimestamp", Value.fromBigInt(BigInt.zero()));
+    this.set("tvl1", Value.fromBigInt(BigInt.zero()));
+    this.set("tvl2", Value.fromBigInt(BigInt.zero()));
+    this.set("vtxApr1", Value.fromBigInt(BigInt.zero()));
+    this.set("ptpApr1", Value.fromBigInt(BigInt.zero()));
+    this.set("vtxApr2", Value.fromBigInt(BigInt.zero()));
+    this.set("ptpApr2", Value.fromBigInt(BigInt.zero()));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save PoolAltUSDCFRAX entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type PoolAltUSDCFRAX must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("PoolAltUSDCFRAX", id.toString(), this);
+    }
+  }
+
+  static load(id: string): PoolAltUSDCFRAX | null {
+    return changetype<PoolAltUSDCFRAX | null>(store.get("PoolAltUSDCFRAX", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get blockNumber(): BigInt {
+    let value = this.get("blockNumber");
+    return value!.toBigInt();
+  }
+
+  set blockNumber(value: BigInt) {
+    this.set("blockNumber", Value.fromBigInt(value));
+  }
+
+  get blockTimestamp(): BigInt {
+    let value = this.get("blockTimestamp");
+    return value!.toBigInt();
+  }
+
+  set blockTimestamp(value: BigInt) {
+    this.set("blockTimestamp", Value.fromBigInt(value));
+  }
+
+  get tvl1(): BigInt {
+    let value = this.get("tvl1");
+    return value!.toBigInt();
+  }
+
+  set tvl1(value: BigInt) {
+    this.set("tvl1", Value.fromBigInt(value));
+  }
+
+  get tvl2(): BigInt {
+    let value = this.get("tvl2");
+    return value!.toBigInt();
+  }
+
+  set tvl2(value: BigInt) {
+    this.set("tvl2", Value.fromBigInt(value));
+  }
+
+  get vtxApr1(): BigInt {
+    let value = this.get("vtxApr1");
+    return value!.toBigInt();
+  }
+
+  set vtxApr1(value: BigInt) {
+    this.set("vtxApr1", Value.fromBigInt(value));
+  }
+
+  get ptpApr1(): BigInt {
+    let value = this.get("ptpApr1");
+    return value!.toBigInt();
+  }
+
+  set ptpApr1(value: BigInt) {
+    this.set("ptpApr1", Value.fromBigInt(value));
+  }
+
+  get vtxApr2(): BigInt {
+    let value = this.get("vtxApr2");
+    return value!.toBigInt();
+  }
+
+  set vtxApr2(value: BigInt) {
+    this.set("vtxApr2", Value.fromBigInt(value));
+  }
+
+  get ptpApr2(): BigInt {
+    let value = this.get("ptpApr2");
+    return value!.toBigInt();
+  }
+
+  set ptpApr2(value: BigInt) {
+    this.set("ptpApr2", Value.fromBigInt(value));
+  }
+}
+
+export class PoolAlt2AVAX extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("blockNumber", Value.fromBigInt(BigInt.zero()));
+    this.set("blockTimestamp", Value.fromBigInt(BigInt.zero()));
+    this.set("tvl1", Value.fromBigInt(BigInt.zero()));
+    this.set("tvl2", Value.fromBigInt(BigInt.zero()));
+    this.set("vtxApr1", Value.fromBigInt(BigInt.zero()));
+    this.set("ptpApr1", Value.fromBigInt(BigInt.zero()));
+    this.set("qiApr1", Value.fromBigInt(BigInt.zero()));
+    this.set("vtxApr2", Value.fromBigInt(BigInt.zero()));
+    this.set("ptpApr2", Value.fromBigInt(BigInt.zero()));
+    this.set("qiApr2", Value.fromBigInt(BigInt.zero()));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save PoolAlt2AVAX entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type PoolAlt2AVAX must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("PoolAlt2AVAX", id.toString(), this);
+    }
+  }
+
+  static load(id: string): PoolAlt2AVAX | null {
+    return changetype<PoolAlt2AVAX | null>(store.get("PoolAlt2AVAX", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get blockNumber(): BigInt {
+    let value = this.get("blockNumber");
+    return value!.toBigInt();
+  }
+
+  set blockNumber(value: BigInt) {
+    this.set("blockNumber", Value.fromBigInt(value));
+  }
+
+  get blockTimestamp(): BigInt {
+    let value = this.get("blockTimestamp");
+    return value!.toBigInt();
+  }
+
+  set blockTimestamp(value: BigInt) {
+    this.set("blockTimestamp", Value.fromBigInt(value));
+  }
+
+  get tvl1(): BigInt {
+    let value = this.get("tvl1");
+    return value!.toBigInt();
+  }
+
+  set tvl1(value: BigInt) {
+    this.set("tvl1", Value.fromBigInt(value));
+  }
+
+  get tvl2(): BigInt {
+    let value = this.get("tvl2");
+    return value!.toBigInt();
+  }
+
+  set tvl2(value: BigInt) {
+    this.set("tvl2", Value.fromBigInt(value));
+  }
+
+  get vtxApr1(): BigInt {
+    let value = this.get("vtxApr1");
+    return value!.toBigInt();
+  }
+
+  set vtxApr1(value: BigInt) {
+    this.set("vtxApr1", Value.fromBigInt(value));
+  }
+
+  get ptpApr1(): BigInt {
+    let value = this.get("ptpApr1");
+    return value!.toBigInt();
+  }
+
+  set ptpApr1(value: BigInt) {
+    this.set("ptpApr1", Value.fromBigInt(value));
+  }
+
+  get qiApr1(): BigInt {
+    let value = this.get("qiApr1");
+    return value!.toBigInt();
+  }
+
+  set qiApr1(value: BigInt) {
+    this.set("qiApr1", Value.fromBigInt(value));
+  }
+
+  get vtxApr2(): BigInt {
+    let value = this.get("vtxApr2");
+    return value!.toBigInt();
+  }
+
+  set vtxApr2(value: BigInt) {
+    this.set("vtxApr2", Value.fromBigInt(value));
+  }
+
+  get ptpApr2(): BigInt {
+    let value = this.get("ptpApr2");
+    return value!.toBigInt();
+  }
+
+  set ptpApr2(value: BigInt) {
+    this.set("ptpApr2", Value.fromBigInt(value));
+  }
+
+  get qiApr2(): BigInt {
+    let value = this.get("qiApr2");
+    return value!.toBigInt();
+  }
+
+  set qiApr2(value: BigInt) {
+    this.set("qiApr2", Value.fromBigInt(value));
+  }
+}
+
+export class PoolBnbAVAX extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("blockNumber", Value.fromBigInt(BigInt.zero()));
+    this.set("blockTimestamp", Value.fromBigInt(BigInt.zero()));
+    this.set("tvl", Value.fromBigInt(BigInt.zero()));
+    this.set("vtxApr", Value.fromBigInt(BigInt.zero()));
+    this.set("lpApr", Value.fromBigInt(BigInt.zero()));
+    this.set("baseApr", Value.fromBigInt(BigInt.zero()));
+    this.set("boostApr", Value.fromBigInt(BigInt.zero()));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save PoolBnbAVAX entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type PoolBnbAVAX must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("PoolBnbAVAX", id.toString(), this);
+    }
+  }
+
+  static load(id: string): PoolBnbAVAX | null {
+    return changetype<PoolBnbAVAX | null>(store.get("PoolBnbAVAX", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get blockNumber(): BigInt {
+    let value = this.get("blockNumber");
+    return value!.toBigInt();
+  }
+
+  set blockNumber(value: BigInt) {
+    this.set("blockNumber", Value.fromBigInt(value));
+  }
+
+  get blockTimestamp(): BigInt {
+    let value = this.get("blockTimestamp");
+    return value!.toBigInt();
+  }
+
+  set blockTimestamp(value: BigInt) {
+    this.set("blockTimestamp", Value.fromBigInt(value));
+  }
+
+  get tvl(): BigInt {
+    let value = this.get("tvl");
+    return value!.toBigInt();
+  }
+
+  set tvl(value: BigInt) {
+    this.set("tvl", Value.fromBigInt(value));
+  }
+
+  get vtxApr(): BigInt {
+    let value = this.get("vtxApr");
+    return value!.toBigInt();
+  }
+
+  set vtxApr(value: BigInt) {
+    this.set("vtxApr", Value.fromBigInt(value));
+  }
+
+  get lpApr(): BigInt {
+    let value = this.get("lpApr");
+    return value!.toBigInt();
+  }
+
+  set lpApr(value: BigInt) {
+    this.set("lpApr", Value.fromBigInt(value));
+  }
+
+  get baseApr(): BigInt {
+    let value = this.get("baseApr");
+    return value!.toBigInt();
+  }
+
+  set baseApr(value: BigInt) {
+    this.set("baseApr", Value.fromBigInt(value));
+  }
+
+  get boostApr(): BigInt {
+    let value = this.get("boostApr");
+    return value!.toBigInt();
+  }
+
+  set boostApr(value: BigInt) {
+    this.set("boostApr", Value.fromBigInt(value));
+  }
+}
+
+export class PoolJoeAVAX extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("blockNumber", Value.fromBigInt(BigInt.zero()));
+    this.set("blockTimestamp", Value.fromBigInt(BigInt.zero()));
+    this.set("tvl", Value.fromBigInt(BigInt.zero()));
+    this.set("vtxApr", Value.fromBigInt(BigInt.zero()));
+    this.set("lpApr", Value.fromBigInt(BigInt.zero()));
+    this.set("baseApr", Value.fromBigInt(BigInt.zero()));
+    this.set("boostApr", Value.fromBigInt(BigInt.zero()));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save PoolJoeAVAX entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type PoolJoeAVAX must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("PoolJoeAVAX", id.toString(), this);
+    }
+  }
+
+  static load(id: string): PoolJoeAVAX | null {
+    return changetype<PoolJoeAVAX | null>(store.get("PoolJoeAVAX", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get blockNumber(): BigInt {
+    let value = this.get("blockNumber");
+    return value!.toBigInt();
+  }
+
+  set blockNumber(value: BigInt) {
+    this.set("blockNumber", Value.fromBigInt(value));
+  }
+
+  get blockTimestamp(): BigInt {
+    let value = this.get("blockTimestamp");
+    return value!.toBigInt();
+  }
+
+  set blockTimestamp(value: BigInt) {
+    this.set("blockTimestamp", Value.fromBigInt(value));
+  }
+
+  get tvl(): BigInt {
+    let value = this.get("tvl");
+    return value!.toBigInt();
+  }
+
+  set tvl(value: BigInt) {
+    this.set("tvl", Value.fromBigInt(value));
+  }
+
+  get vtxApr(): BigInt {
+    let value = this.get("vtxApr");
+    return value!.toBigInt();
+  }
+
+  set vtxApr(value: BigInt) {
+    this.set("vtxApr", Value.fromBigInt(value));
+  }
+
+  get lpApr(): BigInt {
+    let value = this.get("lpApr");
+    return value!.toBigInt();
+  }
+
+  set lpApr(value: BigInt) {
+    this.set("lpApr", Value.fromBigInt(value));
+  }
+
+  get baseApr(): BigInt {
+    let value = this.get("baseApr");
+    return value!.toBigInt();
+  }
+
+  set baseApr(value: BigInt) {
+    this.set("baseApr", Value.fromBigInt(value));
+  }
+
+  get boostApr(): BigInt {
+    let value = this.get("boostApr");
+    return value!.toBigInt();
+  }
+
+  set boostApr(value: BigInt) {
+    this.set("boostApr", Value.fromBigInt(value));
+  }
+}
+
+export class PoolJoeUSDC extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("blockNumber", Value.fromBigInt(BigInt.zero()));
+    this.set("blockTimestamp", Value.fromBigInt(BigInt.zero()));
+    this.set("tvl", Value.fromBigInt(BigInt.zero()));
+    this.set("vtxApr", Value.fromBigInt(BigInt.zero()));
+    this.set("lpApr", Value.fromBigInt(BigInt.zero()));
+    this.set("baseApr", Value.fromBigInt(BigInt.zero()));
+    this.set("boostApr", Value.fromBigInt(BigInt.zero()));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save PoolJoeUSDC entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type PoolJoeUSDC must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("PoolJoeUSDC", id.toString(), this);
+    }
+  }
+
+  static load(id: string): PoolJoeUSDC | null {
+    return changetype<PoolJoeUSDC | null>(store.get("PoolJoeUSDC", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get blockNumber(): BigInt {
+    let value = this.get("blockNumber");
+    return value!.toBigInt();
+  }
+
+  set blockNumber(value: BigInt) {
+    this.set("blockNumber", Value.fromBigInt(value));
+  }
+
+  get blockTimestamp(): BigInt {
+    let value = this.get("blockTimestamp");
+    return value!.toBigInt();
+  }
+
+  set blockTimestamp(value: BigInt) {
+    this.set("blockTimestamp", Value.fromBigInt(value));
+  }
+
+  get tvl(): BigInt {
+    let value = this.get("tvl");
+    return value!.toBigInt();
+  }
+
+  set tvl(value: BigInt) {
+    this.set("tvl", Value.fromBigInt(value));
+  }
+
+  get vtxApr(): BigInt {
+    let value = this.get("vtxApr");
+    return value!.toBigInt();
+  }
+
+  set vtxApr(value: BigInt) {
+    this.set("vtxApr", Value.fromBigInt(value));
+  }
+
+  get lpApr(): BigInt {
+    let value = this.get("lpApr");
+    return value!.toBigInt();
+  }
+
+  set lpApr(value: BigInt) {
+    this.set("lpApr", Value.fromBigInt(value));
+  }
+
+  get baseApr(): BigInt {
+    let value = this.get("baseApr");
+    return value!.toBigInt();
+  }
+
+  set baseApr(value: BigInt) {
+    this.set("baseApr", Value.fromBigInt(value));
+  }
+
+  get boostApr(): BigInt {
+    let value = this.get("boostApr");
+    return value!.toBigInt();
+  }
+
+  set boostApr(value: BigInt) {
+    this.set("boostApr", Value.fromBigInt(value));
+  }
+}
+
+export class PoolLinkeAVAX extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("blockNumber", Value.fromBigInt(BigInt.zero()));
+    this.set("blockTimestamp", Value.fromBigInt(BigInt.zero()));
+    this.set("tvl", Value.fromBigInt(BigInt.zero()));
+    this.set("vtxApr", Value.fromBigInt(BigInt.zero()));
+    this.set("lpApr", Value.fromBigInt(BigInt.zero()));
+    this.set("baseApr", Value.fromBigInt(BigInt.zero()));
+    this.set("boostApr", Value.fromBigInt(BigInt.zero()));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save PoolLinkeAVAX entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type PoolLinkeAVAX must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("PoolLinkeAVAX", id.toString(), this);
+    }
+  }
+
+  static load(id: string): PoolLinkeAVAX | null {
+    return changetype<PoolLinkeAVAX | null>(store.get("PoolLinkeAVAX", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get blockNumber(): BigInt {
+    let value = this.get("blockNumber");
+    return value!.toBigInt();
+  }
+
+  set blockNumber(value: BigInt) {
+    this.set("blockNumber", Value.fromBigInt(value));
+  }
+
+  get blockTimestamp(): BigInt {
+    let value = this.get("blockTimestamp");
+    return value!.toBigInt();
+  }
+
+  set blockTimestamp(value: BigInt) {
+    this.set("blockTimestamp", Value.fromBigInt(value));
+  }
+
+  get tvl(): BigInt {
+    let value = this.get("tvl");
+    return value!.toBigInt();
+  }
+
+  set tvl(value: BigInt) {
+    this.set("tvl", Value.fromBigInt(value));
+  }
+
+  get vtxApr(): BigInt {
+    let value = this.get("vtxApr");
+    return value!.toBigInt();
+  }
+
+  set vtxApr(value: BigInt) {
+    this.set("vtxApr", Value.fromBigInt(value));
+  }
+
+  get lpApr(): BigInt {
+    let value = this.get("lpApr");
+    return value!.toBigInt();
+  }
+
+  set lpApr(value: BigInt) {
+    this.set("lpApr", Value.fromBigInt(value));
+  }
+
+  get baseApr(): BigInt {
+    let value = this.get("baseApr");
+    return value!.toBigInt();
+  }
+
+  set baseApr(value: BigInt) {
+    this.set("baseApr", Value.fromBigInt(value));
+  }
+
+  get boostApr(): BigInt {
+    let value = this.get("boostApr");
+    return value!.toBigInt();
+  }
+
+  set boostApr(value: BigInt) {
+    this.set("boostApr", Value.fromBigInt(value));
+  }
+}
+
+export class PoolMimAVAX extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("blockNumber", Value.fromBigInt(BigInt.zero()));
+    this.set("blockTimestamp", Value.fromBigInt(BigInt.zero()));
+    this.set("tvl", Value.fromBigInt(BigInt.zero()));
+    this.set("vtxApr", Value.fromBigInt(BigInt.zero()));
+    this.set("lpApr", Value.fromBigInt(BigInt.zero()));
+    this.set("baseApr", Value.fromBigInt(BigInt.zero()));
+    this.set("boostApr", Value.fromBigInt(BigInt.zero()));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save PoolMimAVAX entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type PoolMimAVAX must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("PoolMimAVAX", id.toString(), this);
+    }
+  }
+
+  static load(id: string): PoolMimAVAX | null {
+    return changetype<PoolMimAVAX | null>(store.get("PoolMimAVAX", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get blockNumber(): BigInt {
+    let value = this.get("blockNumber");
+    return value!.toBigInt();
+  }
+
+  set blockNumber(value: BigInt) {
+    this.set("blockNumber", Value.fromBigInt(value));
+  }
+
+  get blockTimestamp(): BigInt {
+    let value = this.get("blockTimestamp");
+    return value!.toBigInt();
+  }
+
+  set blockTimestamp(value: BigInt) {
+    this.set("blockTimestamp", Value.fromBigInt(value));
+  }
+
+  get tvl(): BigInt {
+    let value = this.get("tvl");
+    return value!.toBigInt();
+  }
+
+  set tvl(value: BigInt) {
+    this.set("tvl", Value.fromBigInt(value));
+  }
+
+  get vtxApr(): BigInt {
+    let value = this.get("vtxApr");
+    return value!.toBigInt();
+  }
+
+  set vtxApr(value: BigInt) {
+    this.set("vtxApr", Value.fromBigInt(value));
+  }
+
+  get lpApr(): BigInt {
+    let value = this.get("lpApr");
+    return value!.toBigInt();
+  }
+
+  set lpApr(value: BigInt) {
+    this.set("lpApr", Value.fromBigInt(value));
+  }
+
+  get baseApr(): BigInt {
+    let value = this.get("baseApr");
+    return value!.toBigInt();
+  }
+
+  set baseApr(value: BigInt) {
+    this.set("baseApr", Value.fromBigInt(value));
+  }
+
+  get boostApr(): BigInt {
+    let value = this.get("boostApr");
+    return value!.toBigInt();
+  }
+
+  set boostApr(value: BigInt) {
+    this.set("boostApr", Value.fromBigInt(value));
+  }
+}
+
+export class PoolUsdcAVAX extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("blockNumber", Value.fromBigInt(BigInt.zero()));
+    this.set("blockTimestamp", Value.fromBigInt(BigInt.zero()));
+    this.set("tvl", Value.fromBigInt(BigInt.zero()));
+    this.set("vtxApr", Value.fromBigInt(BigInt.zero()));
+    this.set("lpApr", Value.fromBigInt(BigInt.zero()));
+    this.set("baseApr", Value.fromBigInt(BigInt.zero()));
+    this.set("boostApr", Value.fromBigInt(BigInt.zero()));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save PoolUsdcAVAX entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type PoolUsdcAVAX must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("PoolUsdcAVAX", id.toString(), this);
+    }
+  }
+
+  static load(id: string): PoolUsdcAVAX | null {
+    return changetype<PoolUsdcAVAX | null>(store.get("PoolUsdcAVAX", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get blockNumber(): BigInt {
+    let value = this.get("blockNumber");
+    return value!.toBigInt();
+  }
+
+  set blockNumber(value: BigInt) {
+    this.set("blockNumber", Value.fromBigInt(value));
+  }
+
+  get blockTimestamp(): BigInt {
+    let value = this.get("blockTimestamp");
+    return value!.toBigInt();
+  }
+
+  set blockTimestamp(value: BigInt) {
+    this.set("blockTimestamp", Value.fromBigInt(value));
+  }
+
+  get tvl(): BigInt {
+    let value = this.get("tvl");
+    return value!.toBigInt();
+  }
+
+  set tvl(value: BigInt) {
+    this.set("tvl", Value.fromBigInt(value));
+  }
+
+  get vtxApr(): BigInt {
+    let value = this.get("vtxApr");
+    return value!.toBigInt();
+  }
+
+  set vtxApr(value: BigInt) {
+    this.set("vtxApr", Value.fromBigInt(value));
+  }
+
+  get lpApr(): BigInt {
+    let value = this.get("lpApr");
+    return value!.toBigInt();
+  }
+
+  set lpApr(value: BigInt) {
+    this.set("lpApr", Value.fromBigInt(value));
+  }
+
+  get baseApr(): BigInt {
+    let value = this.get("baseApr");
+    return value!.toBigInt();
+  }
+
+  set baseApr(value: BigInt) {
+    this.set("baseApr", Value.fromBigInt(value));
+  }
+
+  get boostApr(): BigInt {
+    let value = this.get("boostApr");
+    return value!.toBigInt();
+  }
+
+  set boostApr(value: BigInt) {
+    this.set("boostApr", Value.fromBigInt(value));
+  }
+}
+
+export class PoolUsdceAVAX extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("blockNumber", Value.fromBigInt(BigInt.zero()));
+    this.set("blockTimestamp", Value.fromBigInt(BigInt.zero()));
+    this.set("tvl", Value.fromBigInt(BigInt.zero()));
+    this.set("vtxApr", Value.fromBigInt(BigInt.zero()));
+    this.set("lpApr", Value.fromBigInt(BigInt.zero()));
+    this.set("baseApr", Value.fromBigInt(BigInt.zero()));
+    this.set("boostApr", Value.fromBigInt(BigInt.zero()));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save PoolUsdceAVAX entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type PoolUsdceAVAX must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("PoolUsdceAVAX", id.toString(), this);
+    }
+  }
+
+  static load(id: string): PoolUsdceAVAX | null {
+    return changetype<PoolUsdceAVAX | null>(store.get("PoolUsdceAVAX", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get blockNumber(): BigInt {
+    let value = this.get("blockNumber");
+    return value!.toBigInt();
+  }
+
+  set blockNumber(value: BigInt) {
+    this.set("blockNumber", Value.fromBigInt(value));
+  }
+
+  get blockTimestamp(): BigInt {
+    let value = this.get("blockTimestamp");
+    return value!.toBigInt();
+  }
+
+  set blockTimestamp(value: BigInt) {
+    this.set("blockTimestamp", Value.fromBigInt(value));
+  }
+
+  get tvl(): BigInt {
+    let value = this.get("tvl");
+    return value!.toBigInt();
+  }
+
+  set tvl(value: BigInt) {
+    this.set("tvl", Value.fromBigInt(value));
+  }
+
+  get vtxApr(): BigInt {
+    let value = this.get("vtxApr");
+    return value!.toBigInt();
+  }
+
+  set vtxApr(value: BigInt) {
+    this.set("vtxApr", Value.fromBigInt(value));
+  }
+
+  get lpApr(): BigInt {
+    let value = this.get("lpApr");
+    return value!.toBigInt();
+  }
+
+  set lpApr(value: BigInt) {
+    this.set("lpApr", Value.fromBigInt(value));
+  }
+
+  get baseApr(): BigInt {
+    let value = this.get("baseApr");
+    return value!.toBigInt();
+  }
+
+  set baseApr(value: BigInt) {
+    this.set("baseApr", Value.fromBigInt(value));
+  }
+
+  get boostApr(): BigInt {
+    let value = this.get("boostApr");
+    return value!.toBigInt();
+  }
+
+  set boostApr(value: BigInt) {
+    this.set("boostApr", Value.fromBigInt(value));
+  }
+}
+
+export class Pool2USDC extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("blockNumber", Value.fromBigInt(BigInt.zero()));
+    this.set("blockTimestamp", Value.fromBigInt(BigInt.zero()));
+    this.set("tvl", Value.fromBigInt(BigInt.zero()));
+    this.set("vtxApr", Value.fromBigInt(BigInt.zero()));
+    this.set("lpApr", Value.fromBigInt(BigInt.zero()));
+    this.set("baseApr", Value.fromBigInt(BigInt.zero()));
+    this.set("boostApr", Value.fromBigInt(BigInt.zero()));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save Pool2USDC entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type Pool2USDC must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("Pool2USDC", id.toString(), this);
+    }
+  }
+
+  static load(id: string): Pool2USDC | null {
+    return changetype<Pool2USDC | null>(store.get("Pool2USDC", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get blockNumber(): BigInt {
+    let value = this.get("blockNumber");
+    return value!.toBigInt();
+  }
+
+  set blockNumber(value: BigInt) {
+    this.set("blockNumber", Value.fromBigInt(value));
+  }
+
+  get blockTimestamp(): BigInt {
+    let value = this.get("blockTimestamp");
+    return value!.toBigInt();
+  }
+
+  set blockTimestamp(value: BigInt) {
+    this.set("blockTimestamp", Value.fromBigInt(value));
+  }
+
+  get tvl(): BigInt {
+    let value = this.get("tvl");
+    return value!.toBigInt();
+  }
+
+  set tvl(value: BigInt) {
+    this.set("tvl", Value.fromBigInt(value));
+  }
+
+  get vtxApr(): BigInt {
+    let value = this.get("vtxApr");
+    return value!.toBigInt();
+  }
+
+  set vtxApr(value: BigInt) {
+    this.set("vtxApr", Value.fromBigInt(value));
+  }
+
+  get lpApr(): BigInt {
+    let value = this.get("lpApr");
+    return value!.toBigInt();
+  }
+
+  set lpApr(value: BigInt) {
+    this.set("lpApr", Value.fromBigInt(value));
+  }
+
+  get baseApr(): BigInt {
+    let value = this.get("baseApr");
+    return value!.toBigInt();
+  }
+
+  set baseApr(value: BigInt) {
+    this.set("baseApr", Value.fromBigInt(value));
+  }
+
+  get boostApr(): BigInt {
+    let value = this.get("boostApr");
+    return value!.toBigInt();
+  }
+
+  set boostApr(value: BigInt) {
+    this.set("boostApr", Value.fromBigInt(value));
+  }
+}
+
+export class PoolUsdteAVAX extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("blockNumber", Value.fromBigInt(BigInt.zero()));
+    this.set("blockTimestamp", Value.fromBigInt(BigInt.zero()));
+    this.set("tvl", Value.fromBigInt(BigInt.zero()));
+    this.set("vtxApr", Value.fromBigInt(BigInt.zero()));
+    this.set("lpApr", Value.fromBigInt(BigInt.zero()));
+    this.set("baseApr", Value.fromBigInt(BigInt.zero()));
+    this.set("boostApr", Value.fromBigInt(BigInt.zero()));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save PoolUsdteAVAX entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type PoolUsdteAVAX must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("PoolUsdteAVAX", id.toString(), this);
+    }
+  }
+
+  static load(id: string): PoolUsdteAVAX | null {
+    return changetype<PoolUsdteAVAX | null>(store.get("PoolUsdteAVAX", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get blockNumber(): BigInt {
+    let value = this.get("blockNumber");
+    return value!.toBigInt();
+  }
+
+  set blockNumber(value: BigInt) {
+    this.set("blockNumber", Value.fromBigInt(value));
+  }
+
+  get blockTimestamp(): BigInt {
+    let value = this.get("blockTimestamp");
+    return value!.toBigInt();
+  }
+
+  set blockTimestamp(value: BigInt) {
+    this.set("blockTimestamp", Value.fromBigInt(value));
+  }
+
+  get tvl(): BigInt {
+    let value = this.get("tvl");
+    return value!.toBigInt();
+  }
+
+  set tvl(value: BigInt) {
+    this.set("tvl", Value.fromBigInt(value));
+  }
+
+  get vtxApr(): BigInt {
+    let value = this.get("vtxApr");
+    return value!.toBigInt();
+  }
+
+  set vtxApr(value: BigInt) {
+    this.set("vtxApr", Value.fromBigInt(value));
+  }
+
+  get lpApr(): BigInt {
+    let value = this.get("lpApr");
+    return value!.toBigInt();
+  }
+
+  set lpApr(value: BigInt) {
+    this.set("lpApr", Value.fromBigInt(value));
+  }
+
+  get baseApr(): BigInt {
+    let value = this.get("baseApr");
+    return value!.toBigInt();
+  }
+
+  set baseApr(value: BigInt) {
+    this.set("baseApr", Value.fromBigInt(value));
+  }
+
+  get boostApr(): BigInt {
+    let value = this.get("boostApr");
+    return value!.toBigInt();
+  }
+
+  set boostApr(value: BigInt) {
+    this.set("boostApr", Value.fromBigInt(value));
+  }
+}
+
+export class PoolUsdtAVAX extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("blockNumber", Value.fromBigInt(BigInt.zero()));
+    this.set("blockTimestamp", Value.fromBigInt(BigInt.zero()));
+    this.set("tvl", Value.fromBigInt(BigInt.zero()));
+    this.set("vtxApr", Value.fromBigInt(BigInt.zero()));
+    this.set("lpApr", Value.fromBigInt(BigInt.zero()));
+    this.set("baseApr", Value.fromBigInt(BigInt.zero()));
+    this.set("boostApr", Value.fromBigInt(BigInt.zero()));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save PoolUsdtAVAX entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type PoolUsdtAVAX must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("PoolUsdtAVAX", id.toString(), this);
+    }
+  }
+
+  static load(id: string): PoolUsdtAVAX | null {
+    return changetype<PoolUsdtAVAX | null>(store.get("PoolUsdtAVAX", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get blockNumber(): BigInt {
+    let value = this.get("blockNumber");
+    return value!.toBigInt();
+  }
+
+  set blockNumber(value: BigInt) {
+    this.set("blockNumber", Value.fromBigInt(value));
+  }
+
+  get blockTimestamp(): BigInt {
+    let value = this.get("blockTimestamp");
+    return value!.toBigInt();
+  }
+
+  set blockTimestamp(value: BigInt) {
+    this.set("blockTimestamp", Value.fromBigInt(value));
+  }
+
+  get tvl(): BigInt {
+    let value = this.get("tvl");
+    return value!.toBigInt();
+  }
+
+  set tvl(value: BigInt) {
+    this.set("tvl", Value.fromBigInt(value));
+  }
+
+  get vtxApr(): BigInt {
+    let value = this.get("vtxApr");
+    return value!.toBigInt();
+  }
+
+  set vtxApr(value: BigInt) {
+    this.set("vtxApr", Value.fromBigInt(value));
+  }
+
+  get lpApr(): BigInt {
+    let value = this.get("lpApr");
+    return value!.toBigInt();
+  }
+
+  set lpApr(value: BigInt) {
+    this.set("lpApr", Value.fromBigInt(value));
+  }
+
+  get baseApr(): BigInt {
+    let value = this.get("baseApr");
+    return value!.toBigInt();
+  }
+
+  set baseApr(value: BigInt) {
+    this.set("baseApr", Value.fromBigInt(value));
+  }
+
+  get boostApr(): BigInt {
+    let value = this.get("boostApr");
+    return value!.toBigInt();
+  }
+
+  set boostApr(value: BigInt) {
+    this.set("boostApr", Value.fromBigInt(value));
+  }
+}
+
+export class Pool2USDT extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("blockNumber", Value.fromBigInt(BigInt.zero()));
+    this.set("blockTimestamp", Value.fromBigInt(BigInt.zero()));
+    this.set("tvl", Value.fromBigInt(BigInt.zero()));
+    this.set("vtxApr", Value.fromBigInt(BigInt.zero()));
+    this.set("lpApr", Value.fromBigInt(BigInt.zero()));
+    this.set("baseApr", Value.fromBigInt(BigInt.zero()));
+    this.set("boostApr", Value.fromBigInt(BigInt.zero()));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save Pool2USDT entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type Pool2USDT must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("Pool2USDT", id.toString(), this);
+    }
+  }
+
+  static load(id: string): Pool2USDT | null {
+    return changetype<Pool2USDT | null>(store.get("Pool2USDT", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get blockNumber(): BigInt {
+    let value = this.get("blockNumber");
+    return value!.toBigInt();
+  }
+
+  set blockNumber(value: BigInt) {
+    this.set("blockNumber", Value.fromBigInt(value));
+  }
+
+  get blockTimestamp(): BigInt {
+    let value = this.get("blockTimestamp");
+    return value!.toBigInt();
+  }
+
+  set blockTimestamp(value: BigInt) {
+    this.set("blockTimestamp", Value.fromBigInt(value));
+  }
+
+  get tvl(): BigInt {
+    let value = this.get("tvl");
+    return value!.toBigInt();
+  }
+
+  set tvl(value: BigInt) {
+    this.set("tvl", Value.fromBigInt(value));
+  }
+
+  get vtxApr(): BigInt {
+    let value = this.get("vtxApr");
+    return value!.toBigInt();
+  }
+
+  set vtxApr(value: BigInt) {
+    this.set("vtxApr", Value.fromBigInt(value));
+  }
+
+  get lpApr(): BigInt {
+    let value = this.get("lpApr");
+    return value!.toBigInt();
+  }
+
+  set lpApr(value: BigInt) {
+    this.set("lpApr", Value.fromBigInt(value));
+  }
+
+  get baseApr(): BigInt {
+    let value = this.get("baseApr");
+    return value!.toBigInt();
+  }
+
+  set baseApr(value: BigInt) {
+    this.set("baseApr", Value.fromBigInt(value));
+  }
+
+  get boostApr(): BigInt {
+    let value = this.get("boostApr");
+    return value!.toBigInt();
+  }
+
+  set boostApr(value: BigInt) {
+    this.set("boostApr", Value.fromBigInt(value));
+  }
+}
+
+export class PoolWbtceAVAX extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("blockNumber", Value.fromBigInt(BigInt.zero()));
+    this.set("blockTimestamp", Value.fromBigInt(BigInt.zero()));
+    this.set("tvl", Value.fromBigInt(BigInt.zero()));
+    this.set("vtxApr", Value.fromBigInt(BigInt.zero()));
+    this.set("lpApr", Value.fromBigInt(BigInt.zero()));
+    this.set("baseApr", Value.fromBigInt(BigInt.zero()));
+    this.set("boostApr", Value.fromBigInt(BigInt.zero()));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save PoolWbtceAVAX entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type PoolWbtceAVAX must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("PoolWbtceAVAX", id.toString(), this);
+    }
+  }
+
+  static load(id: string): PoolWbtceAVAX | null {
+    return changetype<PoolWbtceAVAX | null>(store.get("PoolWbtceAVAX", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get blockNumber(): BigInt {
+    let value = this.get("blockNumber");
+    return value!.toBigInt();
+  }
+
+  set blockNumber(value: BigInt) {
+    this.set("blockNumber", Value.fromBigInt(value));
+  }
+
+  get blockTimestamp(): BigInt {
+    let value = this.get("blockTimestamp");
+    return value!.toBigInt();
+  }
+
+  set blockTimestamp(value: BigInt) {
+    this.set("blockTimestamp", Value.fromBigInt(value));
+  }
+
+  get tvl(): BigInt {
+    let value = this.get("tvl");
+    return value!.toBigInt();
+  }
+
+  set tvl(value: BigInt) {
+    this.set("tvl", Value.fromBigInt(value));
+  }
+
+  get vtxApr(): BigInt {
+    let value = this.get("vtxApr");
+    return value!.toBigInt();
+  }
+
+  set vtxApr(value: BigInt) {
+    this.set("vtxApr", Value.fromBigInt(value));
+  }
+
+  get lpApr(): BigInt {
+    let value = this.get("lpApr");
+    return value!.toBigInt();
+  }
+
+  set lpApr(value: BigInt) {
+    this.set("lpApr", Value.fromBigInt(value));
+  }
+
+  get baseApr(): BigInt {
+    let value = this.get("baseApr");
+    return value!.toBigInt();
+  }
+
+  set baseApr(value: BigInt) {
+    this.set("baseApr", Value.fromBigInt(value));
+  }
+
+  get boostApr(): BigInt {
+    let value = this.get("boostApr");
+    return value!.toBigInt();
+  }
+
+  set boostApr(value: BigInt) {
+    this.set("boostApr", Value.fromBigInt(value));
+  }
+}
+
+export class PoolWetheAVAX extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("blockNumber", Value.fromBigInt(BigInt.zero()));
+    this.set("blockTimestamp", Value.fromBigInt(BigInt.zero()));
+    this.set("tvl", Value.fromBigInt(BigInt.zero()));
+    this.set("vtxApr", Value.fromBigInt(BigInt.zero()));
+    this.set("lpApr", Value.fromBigInt(BigInt.zero()));
+    this.set("baseApr", Value.fromBigInt(BigInt.zero()));
+    this.set("boostApr", Value.fromBigInt(BigInt.zero()));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save PoolWetheAVAX entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type PoolWetheAVAX must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("PoolWetheAVAX", id.toString(), this);
+    }
+  }
+
+  static load(id: string): PoolWetheAVAX | null {
+    return changetype<PoolWetheAVAX | null>(store.get("PoolWetheAVAX", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get blockNumber(): BigInt {
+    let value = this.get("blockNumber");
+    return value!.toBigInt();
+  }
+
+  set blockNumber(value: BigInt) {
+    this.set("blockNumber", Value.fromBigInt(value));
+  }
+
+  get blockTimestamp(): BigInt {
+    let value = this.get("blockTimestamp");
+    return value!.toBigInt();
+  }
+
+  set blockTimestamp(value: BigInt) {
+    this.set("blockTimestamp", Value.fromBigInt(value));
+  }
+
+  get tvl(): BigInt {
+    let value = this.get("tvl");
+    return value!.toBigInt();
+  }
+
+  set tvl(value: BigInt) {
+    this.set("tvl", Value.fromBigInt(value));
+  }
+
+  get vtxApr(): BigInt {
+    let value = this.get("vtxApr");
+    return value!.toBigInt();
+  }
+
+  set vtxApr(value: BigInt) {
+    this.set("vtxApr", Value.fromBigInt(value));
+  }
+
+  get lpApr(): BigInt {
+    let value = this.get("lpApr");
+    return value!.toBigInt();
+  }
+
+  set lpApr(value: BigInt) {
+    this.set("lpApr", Value.fromBigInt(value));
+  }
+
+  get baseApr(): BigInt {
+    let value = this.get("baseApr");
+    return value!.toBigInt();
+  }
+
+  set baseApr(value: BigInt) {
+    this.set("baseApr", Value.fromBigInt(value));
+  }
+
+  get boostApr(): BigInt {
+    let value = this.get("boostApr");
+    return value!.toBigInt();
+  }
+
+  set boostApr(value: BigInt) {
+    this.set("boostApr", Value.fromBigInt(value));
   }
 }

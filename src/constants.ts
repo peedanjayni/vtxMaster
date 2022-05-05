@@ -1,7 +1,8 @@
 import { Address } from "@graphprotocol/graph-ts";
+import { Add } from "../generated/vtxMaster/masterChefVTX";
 
 class schema {
-  // feed price
+  //
   ORACLE_AVAX: Address;
   ORACLE_sAVAX: Address;
   ORACLE_JOE: Address;
@@ -14,7 +15,7 @@ class schema {
   TJ_LP_PTP: Address;
   TJ_LP_xPTP: Address;
   TJ_LP_VTX: Address;
-  // feed tvl
+  //
   MASTER_CHEF_VTX: Address;
   MASTER_CHEF_JOE: Address;
   MAIN_STAKING_JOE: Address;
@@ -50,6 +51,20 @@ class schema {
   LP_TJ_LINKe_AVAX: Address;
   LP_TJ_BNB_AVAX: Address;
   LP_TJ_USDT_AVAX: Address;
+  //
+  VLP_TJ_USDC_AVAX: Address;
+  VLP_TJ_WETHe_AVAX: Address;
+  VLP_TJ_USDTe_AVAX: Address;
+  VLP_TJ_USDCe_AVAX: Address;
+  VLP_TJ_MIM_AVAX: Address;
+  VLP_TJ_WBTCe_AVAX: Address;
+  VLP_TJ_JOE_AVAX: Address;
+  VLP_TJ_JOE_USDC: Address;
+  VLP_TJ_2USDC: Address;
+  VLP_TJ_2USDT: Address;
+  VLP_TJ_LINKe_AVAX: Address;
+  VLP_TJ_BNB_AVAX: Address;
+  VLP_TJ_USDT_AVAX: Address;
 }
 
 export const ALL_ADDRESSES: schema = {
@@ -101,4 +116,18 @@ export const ALL_ADDRESSES: schema = {
   LP_TJ_LINKe_AVAX: Address.fromString("0x6F3a0C89f611Ef5dC9d96650324ac633D02265D3"),
   LP_TJ_BNB_AVAX: Address.fromString("0xeb8eB6300c53C3AddBb7382Ff6c6FbC4165B0742"),
   LP_TJ_USDT_AVAX: Address.fromString("0xbb4646a764358ee93c2a9c4a147d5aDEd527ab73"),
+  // Vector reciepts LP
+  VLP_TJ_USDC_AVAX: Address.fromString("0x08a7f16ad042365965D61F2518eAd2dEe281a1F6"),
+  VLP_TJ_WETHe_AVAX: Address.fromString("0x9e54E1eCbCd85b5E6145414E1b88086cFC66006B"),
+  VLP_TJ_USDTe_AVAX: Address.fromString("0xac3046c161fc65F453123C55543DA8d6B18e687C"),
+  VLP_TJ_USDCe_AVAX: Address.fromString("0x530Eb6170D2F96310414A96a647F970BcD2CD85C"),
+  VLP_TJ_MIM_AVAX: Address.fromString("0x12C6aE3b4675ADEe0971C194ED9844B141980653"),
+  VLP_TJ_WBTCe_AVAX: Address.fromString("0x47bb23D30081a2d55E49B20276897AC7A5F1064d"),
+  VLP_TJ_JOE_AVAX: Address.fromString("0x4e179E5B027e9FABaf5159f02d8e11063519f65e"),
+  VLP_TJ_JOE_USDC: Address.fromString("0xaac6b032048CC892e22bFCb85a60F431Eee83c03"),
+  VLP_TJ_2USDC: Address.fromString("0xd5978FCB43F87afE4281254CAA29bCD218cba1cF"),
+  VLP_TJ_2USDT: Address.fromString("0xFB6aE9fD38725E44bD8a76E617cBf801957d9006"),
+  VLP_TJ_LINKe_AVAX: Address.fromString("0x155C615007E5e39BFb51105E8dbe0d86eD2ECb7D"),
+  VLP_TJ_BNB_AVAX: Address.fromString("0xAC55A9Ad2256482771D545805732C818Dc38808c"),
+  VLP_TJ_USDT_AVAX: Address.fromString("0x490cFC0F6849de81eB3Adb62332C682bF7A4e118"),
 };

@@ -1,5 +1,5 @@
 # price from oracles and TJ LPs
-type allPrice @entity {
+type AllPrice @entity {
   id: ID!
   blockNumber: BigInt!
   blockTimestamp: BigInt!
@@ -16,216 +16,285 @@ type allPrice @entity {
   priceMIM: BigInt!
   priceFRAX: BigInt!
 }
-# all TVLs
-type allTvl @entity {
+# Arrange entities by Pool
+type PoolStakedVTX @entity {
   id: ID!
   blockNumber: BigInt!
   blockTimestamp: BigInt!
-  tvlStakedVTX: BigInt!
-  tvlLockedVTX: BigInt!
-  tvlStakedPTP: BigInt!
-  tvlStakedJOE: BigInt!
-  tvlPool2VTXAVAX: BigInt!
-  tvlPool2xPTP: BigInt!
-  tvlMainPoolDAIe: BigInt!
-  tvlMainPoolUSDC: BigInt!
-  tvlMainPoolUSDCe: BigInt!
-  tvlMainPoolUSDT: BigInt!
-  tvlMainPoolUSDTe: BigInt!
-  tvlAltPoolUSDCinUSDCUST: BigInt!
-  tvlAltPoolUSTinUSDCUST: BigInt!
-  tvlAltPoolUSDCinUSDCMIM: BigInt!
-  tvlAltPoolMIMinUSDCMIM: BigInt!
-  tvlAltPoolUSDCinUSDCFRAX: BigInt!
-  tvlAltPoolFRAXinUSDCFRAX: BigInt!
-  tvlAltPoolAVAXin2AVAX: BigInt!
-  tvlAltPoolSAVAXin2AVAX: BigInt!
-  tvlTJUSDCAVAX: BigInt!
-  tvlTJWETHeAVAX: BigInt!
-  tvlTJUSDTeAVAX: BigInt!
-  tvlTJUSDCeAVAX: BigInt!
-  tvlTJMIMAVAX: BigInt!
-  tvlTJWBTCeAVAX: BigInt!
-  tvlTJJOEAVAX: BigInt!
-  tvlTJJOEUSDC: BigInt!
-  tvlTJ2USDC: BigInt!
-  tvlTJ2USDT: BigInt!
-  tvlTJLINKeAVAX: BigInt!
-  tvlTJBNBAVAX: BigInt!
-  tvlTJUSDtAVAX: BigInt!
+  tvl: BigInt!
+  vtxApr: BigInt!
+  xptpApr: BigInt!
+  zjoeApr: BigInt!
 }
-# Staked/Locked VTX APR = VTX + zJOE + xPTP
-# Staked PTP/JOE APR = VTX + PTP/JOE
-# Platypus APR = PTP + VTX + bonus
-# Traderjoe APR = LP + base + boosted + VTX
-type vtxAprEachPool @entity {
+type PoolLockedVTX @entity {
   id: ID!
   blockNumber: BigInt!
   blockTimestamp: BigInt!
-  vtxAprStakedVTX: BigInt!
-  vtxAprLockedVTX: BigInt!
-  vtxAprStakedPTP: BigInt!
-  vtxAprStakedJOE: BigInt!
-  vtxAprPool2VTXAVAX: BigInt!
-  vtxAprPool2xPTP: BigInt!
-  vtxAprMainPoolDAIe: BigInt!
-  vtxAprMainPoolUSDC: BigInt!
-  vtxAprMainPoolUSDCe: BigInt!
-  vtxAprMainPoolUSDT: BigInt!
-  vtxAprMainPoolUSDTe: BigInt!
-  vtxAprAltPoolUSDCinUSDCUST: BigInt!
-  vtxAprAltPoolUSTinUSDCUST: BigInt!
-  vtxAprAltPoolUSDCinUSDCMIM: BigInt!
-  vtxAprAltPoolMIMinUSDCMIM: BigInt!
-  vtxAprAltPoolUSDCinUSDCFRAX: BigInt!
-  vtxAprAltPoolFRAXinUSDCFRAX: BigInt!
-  vtxAprAltPoolAVAXin2AVAX: BigInt!
-  vtxAprAltPoolSAVAXin2AVAX: BigInt!
-  vtxAprTJUSDCAVAX: BigInt!
-  vtxAprTJWETHeAVAX: BigInt!
-  vtxAprTJUSDTeAVAX: BigInt!
-  vtxAprTJUSDCeAVAX: BigInt!
-  vtxAprTJMIMAVAX: BigInt!
-  vtxAprTJWBTCeAVAX: BigInt!
-  vtxAprTJJOEAVAX: BigInt!
-  vtxAprTJJOEUSDC: BigInt!
-  vtxAprTJ2USDC: BigInt!
-  vtxAprTJ2USDT: BigInt!
-  vtxAprTJLINKeAVAX: BigInt!
-  vtxAprTJBNBAVAX: BigInt!
-  vtxAprTJUSDtAVAX: BigInt!
+  tvl: BigInt!
+  vtxApr: BigInt!
+  xptpApr: BigInt!
+  zjoeApr: BigInt!
 }
-
-type ptpAprEachPool @entity {
+type PoolStakedPTP @entity {
   id: ID!
   blockNumber: BigInt!
   blockTimestamp: BigInt!
-  ptpAprStakedVTX: BigInt!
-  ptpAprLockedVTX: BigInt!
-  ptpAprStakedPTP: BigInt!
-  ptpAprStakedJOE: BigInt!
-  ptpAprPool2VTXAVAX: BigInt!
-  ptpAprPool2xPTP: BigInt!
-  ptpAprMainPoolDAIe: BigInt!
-  ptpAprMainPoolUSDC: BigInt!
-  ptpAprMainPoolUSDCe: BigInt!
-  ptpAprMainPoolUSDT: BigInt!
-  ptpAprMainPoolUSDTe: BigInt!
-  ptpAprAltPoolUSDCinUSDCUST: BigInt!
-  ptpAprAltPoolUSTinUSDCUST: BigInt!
-  ptpAprAltPoolUSDCinUSDCMIM: BigInt!
-  ptpAprAltPoolMIMinUSDCMIM: BigInt!
-  ptpAprAltPoolUSDCinUSDCFRAX: BigInt!
-  ptpAprAltPoolFRAXinUSDCFRAX: BigInt!
-  ptpAprAltPoolAVAXin2AVAX: BigInt!
-  ptpAprAltPoolSAVAXin2AVAX: BigInt!
-  ptpAprTJUSDCAVAX: BigInt!
-  ptpAprTJWETHeAVAX: BigInt!
-  ptpAprTJUSDTeAVAX: BigInt!
-  ptpAprTJUSDCeAVAX: BigInt!
-  ptpAprTJMIMAVAX: BigInt!
-  ptpAprTJWBTCeAVAX: BigInt!
-  ptpAprTJJOEAVAX: BigInt!
-  ptpAprTJJOEUSDC: BigInt!
-  ptpAprTJ2USDC: BigInt!
-  ptpAprTJ2USDT: BigInt!
-  ptpAprTJLINKeAVAX: BigInt!
-  ptpAprTJBNBAVAX: BigInt!
-  ptpAprTJUSDtAVAX: BigInt!
+  tvl: BigInt!
+  vtxApr: BigInt!
+  ptpApr: BigInt!
 }
-# Staked JOE only
-type joeAprEachPool @entity {
+type PoolStakedJOE @entity {
   id: ID!
   blockNumber: BigInt!
   blockTimestamp: BigInt!
-  joeAprStakedJOE: BigInt!
+  tvl: BigInt!
+  vtxApr: BigInt!
+  joeApr: BigInt!
 }
-
-type xptpAprEachPool @entity {
+type Pool2VTXAVAX @entity {
   id: ID!
   blockNumber: BigInt!
   blockTimestamp: BigInt!
-  xptpAprStakedVTX: BigInt!
-  xptpAprLockedVTX: BigInt!
+  tvl: BigInt!
+  vtxApr: BigInt!
+  lpApr: BigInt!
 }
-
-type zjoeAprEachPool @entity {
+type Pool2PTP @entity {
   id: ID!
   blockNumber: BigInt!
   blockTimestamp: BigInt!
-  zjoeAprStakedVTX: BigInt!
-  zjoeAprLockedVTX: BigInt!
+  tvl: BigInt!
+  vtxApr: BigInt!
+  lpApr: BigInt!
 }
-
-type lpAprEachTjPool @entity {
+type Pool2JOE @entity {
   id: ID!
   blockNumber: BigInt!
   blockTimestamp: BigInt!
-  lpAprTJUSDCAVAX: BigInt!
-  lpAprTJWETHeAVAX: BigInt!
-  lpAprTJUSDTeAVAX: BigInt!
-  lpAprTJUSDCeAVAX: BigInt!
-  lpAprTJMIMAVAX: BigInt!
-  lpAprTJWBTCeAVAX: BigInt!
-  lpAprTJJOEAVAX: BigInt!
-  lpAprTJJOEUSDC: BigInt!
-  lpAprTJ2USDC: BigInt!
-  lpAprTJ2USDT: BigInt!
-  lpAprTJLINKeAVAX: BigInt!
-  lpAprTJBNBAVAX: BigInt!
-  lpAprTJUSDtAVAX: BigInt!
+  tvl: BigInt!
+  vtxApr: BigInt!
+  lpApr: BigInt!
+}
+# Platypus main Pools
+type PoolMainDAIe @entity {
+  id: ID!
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  tvl: BigInt!
+  vtxApr: BigInt!
+  ptpApr: BigInt!
+}
+type PoolMainUSDC @entity {
+  id: ID!
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  tvl: BigInt!
+  vtxApr: BigInt!
+  ptpApr: BigInt!
+}
+type PoolMainUSDCe @entity {
+  id: ID!
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  tvl: BigInt!
+  vtxApr: BigInt!
+  ptpApr: BigInt!
+}
+type PoolMainUSDT @entity {
+  id: ID!
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  tvl: BigInt!
+  vtxApr: BigInt!
+  ptpApr: BigInt!
+}
+type PoolMainUSDTe @entity {
+  id: ID!
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  tvl: BigInt!
+  vtxApr: BigInt!
+  ptpApr: BigInt!
+}
+# Platypus alt Pools
+# 1 for USDC 2 for alt pair
+type PoolAltUSDCUST @entity {
+  id: ID!
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  tvl1: BigInt!
+  tvl2: BigInt!
+  vtxApr1: BigInt!
+  ptpApr1: BigInt!
+  ustApr1: BigInt!
+  vtxApr2: BigInt!
+  ptpApr2: BigInt!
+  ustApr2: BigInt!
+}
+type PoolAltUSDCMIM @entity {
+  id: ID!
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  tvl1: BigInt!
+  tvl2: BigInt!
+  vtxApr1: BigInt!
+  ptpApr1: BigInt!
+  vtxApr2: BigInt!
+  ptpApr2: BigInt!
+}
+type PoolAltUSDCFRAX @entity {
+  id: ID!
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  tvl1: BigInt!
+  tvl2: BigInt!
+  vtxApr1: BigInt!
+  ptpApr1: BigInt!
+  vtxApr2: BigInt!
+  ptpApr2: BigInt!
+}
+type PoolAlt2AVAX @entity {
+  id: ID!
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  tvl1: BigInt!
+  tvl2: BigInt!
+  vtxApr1: BigInt!
+  ptpApr1: BigInt!
+  qiApr1: BigInt!
+  vtxApr2: BigInt!
+  ptpApr2: BigInt!
+  qiApr2: BigInt!
 }
 
-type baseAprEachTjPool @entity {
+# Traderjoe Pools
+type PoolBnbAVAX @entity {
   id: ID!
   blockNumber: BigInt!
   blockTimestamp: BigInt!
-  baseAprTJUSDCAVAX: BigInt!
-  baseAprTJWETHeAVAX: BigInt!
-  baseAprTJUSDTeAVAX: BigInt!
-  baseAprTJUSDCeAVAX: BigInt!
-  baseAprTJMIMAVAX: BigInt!
-  baseAprTJWBTCeAVAX: BigInt!
-  baseAprTJJOEAVAX: BigInt!
-  baseAprTJJOEUSDC: BigInt!
-  baseAprTJ2USDC: BigInt!
-  baseAprTJ2USDT: BigInt!
-  baseAprTJLINKeAVAX: BigInt!
-  baseAprTJBNBAVAX: BigInt!
-  baseAprTJUSDtAVAX: BigInt!
+  tvl: BigInt!
+  vtxApr: BigInt!
+  lpApr: BigInt!
+  baseApr: BigInt!
+  boostApr: BigInt!
 }
-
-type boostAprEachTjPool @entity {
+type PoolJoeAVAX @entity {
   id: ID!
   blockNumber: BigInt!
   blockTimestamp: BigInt!
-  boostAprTJUSDCAVAX: BigInt!
-  boostAprTJWETHeAVAX: BigInt!
-  boostAprTJUSDTeAVAX: BigInt!
-  boostAprTJUSDCeAVAX: BigInt!
-  boostAprTJMIMAVAX: BigInt!
-  boostAprTJWBTCeAVAX: BigInt!
-  boostAprTJJOEAVAX: BigInt!
-  boostAprTJJOEUSDC: BigInt!
-  boostAprTJ2USDC: BigInt!
-  boostAprTJ2USDT: BigInt!
-  boostAprTJLINKeAVAX: BigInt!
-  boostAprTJBNBAVAX: BigInt!
-  boostAprTJUSDtAVAX: BigInt!
+  tvl: BigInt!
+  vtxApr: BigInt!
+  lpApr: BigInt!
+  baseApr: BigInt!
+  boostApr: BigInt!
 }
-# bonus rewards
-type ustAprEachPool @entity {
+type PoolJoeUSDC @entity {
   id: ID!
   blockNumber: BigInt!
   blockTimestamp: BigInt!
-  ustAprAltPoolUSDCinUSDCMIM: BigInt!
-  ustAprAltPoolMIMinUSDCMIM: BigInt!
+  tvl: BigInt!
+  vtxApr: BigInt!
+  lpApr: BigInt!
+  baseApr: BigInt!
+  boostApr: BigInt!
 }
-
-type qiAprEachPool @entity {
+type PoolLinkeAVAX @entity {
   id: ID!
   blockNumber: BigInt!
   blockTimestamp: BigInt!
-  qiAprAltPoolAVAXin2AVAX: BigInt!
-  qiAprAltPoolSAVAXin2AVAX: BigInt!
+  tvl: BigInt!
+  vtxApr: BigInt!
+  lpApr: BigInt!
+  baseApr: BigInt!
+  boostApr: BigInt!
+}
+type PoolMimAVAX @entity {
+  id: ID!
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  tvl: BigInt!
+  vtxApr: BigInt!
+  lpApr: BigInt!
+  baseApr: BigInt!
+  boostApr: BigInt!
+}
+type PoolUsdcAVAX @entity {
+  id: ID!
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  tvl: BigInt!
+  vtxApr: BigInt!
+  lpApr: BigInt!
+  baseApr: BigInt!
+  boostApr: BigInt!
+}
+type PoolUsdceAVAX @entity {
+  id: ID!
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  tvl: BigInt!
+  vtxApr: BigInt!
+  lpApr: BigInt!
+  baseApr: BigInt!
+  boostApr: BigInt!
+}
+type Pool2USDC @entity {
+  id: ID!
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  tvl: BigInt!
+  vtxApr: BigInt!
+  lpApr: BigInt!
+  baseApr: BigInt!
+  boostApr: BigInt!
+}
+type PoolUsdteAVAX @entity {
+  id: ID!
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  tvl: BigInt!
+  vtxApr: BigInt!
+  lpApr: BigInt!
+  baseApr: BigInt!
+  boostApr: BigInt!
+}
+type PoolUsdtAVAX @entity {
+  id: ID!
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  tvl: BigInt!
+  vtxApr: BigInt!
+  lpApr: BigInt!
+  baseApr: BigInt!
+  boostApr: BigInt!
+}
+type Pool2USDT @entity {
+  id: ID!
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  tvl: BigInt!
+  vtxApr: BigInt!
+  lpApr: BigInt!
+  baseApr: BigInt!
+  boostApr: BigInt!
+}
+type PoolWbtceAVAX @entity {
+  id: ID!
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  tvl: BigInt!
+  vtxApr: BigInt!
+  lpApr: BigInt!
+  baseApr: BigInt!
+  boostApr: BigInt!
+}
+type PoolWetheAVAX @entity {
+  id: ID!
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  tvl: BigInt!
+  vtxApr: BigInt!
+  lpApr: BigInt!
+  baseApr: BigInt!
+  boostApr: BigInt!
 }

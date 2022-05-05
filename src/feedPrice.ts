@@ -1,6 +1,6 @@
 import { ethereum, Address } from "@graphprotocol/graph-ts";
 import { mvDecimals } from "./helpers";
-import { allPrice } from "../generated/schema";
+import { AllPrice } from "../generated/schema";
 import { traderjoeLP } from "../generated/vtxMaster/traderjoeLP";
 import { oracleFactory } from "../generated/vtxMaster/oracleFactory";
 import { ALL_ADDRESSES } from "./constants";
@@ -9,9 +9,9 @@ import { ALL_ADDRESSES } from "./constants";
 export function feedPrice(block: ethereum.Block): void {
   // load entity
   let id = block.number.toHex();
-  let priceFeed = allPrice.load(id);
+  let priceFeed = AllPrice.load(id);
   if (!priceFeed) {
-    priceFeed = new allPrice(id);
+    priceFeed = new AllPrice(id);
   }
   let blockNumber = block.number;
   let blockTimestamp = block.timestamp;
