@@ -1,5 +1,5 @@
 # price from oracles and TJ LPs
-type AllPrice @entity {
+type Stat @entity {
   id: ID!
   blockNumber: BigInt!
   blockTimestamp: BigInt!
@@ -16,6 +16,7 @@ type AllPrice @entity {
   priceMIM: BigInt!
   priceFRAX: BigInt!
   priceQI: BigInt!
+  totalVePTP: BigInt!
 }
 # Arrange entities by Pool
 type PoolStakedVTX @entity {

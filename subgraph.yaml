@@ -8,7 +8,7 @@ dataSources:
     source:
       address: "0x423D0FE33031aA4456a17b150804aA57fc157d97"
       abi: masterChefVTX
-      startBlock: 14292100
+      startBlock: 14351600
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -24,8 +24,12 @@ dataSources:
           file: ./abis/masterChefPTP.json
         - name: masterChefJOE
           file: ./abis/masterChefJOE.json
+        - name: vePTP
+          file: ./abis/vePTP.json
         - name: oracleFactory
           file: ./abis/oracleFactory.json
+        - name: platypusAsset
+          file: ./abis/platypusAsset.json
         - name: traderjoeLP
           file: ./abis/traderjoeLP.json
         - name: ptpBonusRewarder

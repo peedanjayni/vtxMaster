@@ -2,6 +2,7 @@ import { Address, BigInt } from "@graphprotocol/graph-ts";
 import { masterChefVTX } from "../generated/vtxMaster/masterChefVTX";
 import { masterChefJOE } from "../generated/vtxMaster/masterChefJOE";
 import { masterChefPTP } from "../generated/vtxMaster/masterChefPTP";
+import { platypusAsset } from "../generated/vtxMaster/platypusAsset";
 import { traderjoeLP } from "../generated/vtxMaster/traderjoeLP";
 import { ptpBonusRewarder } from "../generated/vtxMaster/ptpBonusRewarder";
 import { ustToken } from "../generated/vtxMaster/ustToken";
@@ -99,8 +100,7 @@ export function fetchVtxAPR(
 }
 
 export function fetchPTPBonusApr(_symbol: string, _rewardTokenPrice: BigInt, _poolTokenPrice: BigInt): BigInt {
-  let _x = BigInt.fromI32(1),
-    _rewarder = Address.zero(),
+  let _rewarder = Address.zero(),
     _tvl = BigInt.zero();
 
   if (_symbol === "UST" || _symbol === "USDC") {
@@ -150,4 +150,56 @@ export function fetchPTPBonusApr(_symbol: string, _rewardTokenPrice: BigInt, _po
   } else {
     return BigInt.zero();
   }
+}
+
+// sqrt(totalVePTP * totalTVL) = totalFactor
+// totalTVL = totalFactor^2 / totalVePTP
+
+export function fetchPTPAPR(_number: i32, _lp: Address, _ptpPrice: BigInt, _totalVePTP: BigInt, _tvl: BigInt): BigInt {
+  let _poolNumber = BigInt.fromI32(_number);
+  let baseShare = masterChefPTP.bind(ALL_ADDRESSES.MASTER_CHEF_PTP).dialutingRepartition(); // 375 means .375
+  let boostShare = masterChefPTP.bind(ALL_ADDRESSES.MASTER_CHEF_PTP).nonDialutingRepartition(); // 625 means .625
+  let ptpEmission = masterChefPTP
+    .bind(ALL_ADDRESSES.MASTER_CHEF_PTP)
+    .ptpPerSec()
+    .times(BigInt.fromI32(31536000)); // 18
+  let adjustedAllocPoint = masterChefPTP.bind(ALL_ADDRESSES.MASTER_CHEF_PTP).poolInfo(_poolNumber).value7; // 18
+  let totalAdjustedAllocPoint = masterChefPTP.bind(ALL_ADDRESSES.MASTER_CHEF_PTP).totalAdjustedAllocPoint(); // 18
+  let userFactor = masterChefPTP
+    .bind(ALL_ADDRESSES.MASTER_CHEF_PTP)
+    .userInfo(_poolNumber, ALL_ADDRESSES.MAIN_STAKING_PTP).value2; // 18
+  let totalFactor = masterChefPTP.bind(ALL_ADDRESSES.MASTER_CHEF_PTP).poolInfo(_poolNumber).value5; // 18
+  let userAmount = masterChefPTP
+    .bind(ALL_ADDRESSES.MASTER_CHEF_PTP)
+    .userInfo(_poolNumber, ALL_ADDRESSES.MAIN_STAKING_PTP).value0; // depends on coin
+  // let underlyingTokenDecimal = u8(platypusAsset.bind(_lp).decimals());
+  let poolAmount = platypusAsset.bind(_lp).underlyingTokenBalance(); // same as userAmount
+  // apr = (baseRewards + boostRewards) / _tvl
+  let baseRewards = mvDecimals(
+    ptpEmission
+      .times(adjustedAllocPoint)
+      .times(userAmount)
+      .times(baseShare)
+      .times(_ptpPrice)
+      .div(totalAdjustedAllocPoint)
+      .div(poolAmount)
+      .div(BigInt.fromI32(1000)), // 375 to .375
+    18
+  );
+  let boostRewards = mvDecimals(
+    ptpEmission
+      .times(adjustedAllocPoint)
+      .times(userFactor)
+      .times(boostShare)
+      .times(_ptpPrice)
+      .div(totalAdjustedAllocPoint)
+      .div(totalFactor)
+      .div(BigInt.fromI32(1000)),
+    18
+  );
+  let apr = addDecimals(baseRewards.plus(boostRewards), 8).div(_tvl);
+  // hair cut 18%
+  apr = apr.times(BigInt.fromI32(82)).div(BigInt.fromI32(100));
+
+  return apr;
 }

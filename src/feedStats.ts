@@ -1,17 +1,18 @@
-import { ethereum, Address } from "@graphprotocol/graph-ts";
+import { ethereum } from "@graphprotocol/graph-ts";
 import { mvDecimals } from "./helpers";
-import { AllPrice } from "../generated/schema";
+import { Stat } from "../generated/schema";
 import { traderjoeLP } from "../generated/vtxMaster/traderjoeLP";
 import { oracleFactory } from "../generated/vtxMaster/oracleFactory";
+import { vePTP } from "../generated/vtxMaster/vePTP";
 import { ALL_ADDRESSES } from "./constants";
 
 // feed price
 export function feedPrice(block: ethereum.Block): void {
   // load entity
   let id = block.number.toHex();
-  let priceFeed = AllPrice.load(id);
-  if (!priceFeed) {
-    priceFeed = new AllPrice(id);
+  let baseStats = Stat.load(id);
+  if (!baseStats) {
+    baseStats = new Stat(id);
   }
   let blockNumber = block.number;
   let blockTimestamp = block.timestamp;
@@ -42,21 +43,25 @@ export function feedPrice(block: ethereum.Block): void {
   r1 = traderjoeLP.bind(ALL_ADDRESSES.TJ_LP_VTX).getReserves().value1;
   let priceVTX = r1.times(priceAVAX).div(r0); // VTX 8
 
+  // vePTP
+  let totalVePTP = mvDecimals(vePTP.bind(ALL_ADDRESSES.PLATYPUSVENOM).totalSupply(), 10); // 18->8
+
   // save
-  priceFeed.blockNumber = blockNumber;
-  priceFeed.blockTimestamp = blockTimestamp;
-  priceFeed.priceAVAX = priceAVAX;
-  priceFeed.priceSAVAX = priceSAVAX;
-  priceFeed.priceJOE = priceJOE;
-  priceFeed.priceUSDC = priceUSDC;
-  priceFeed.priceUSDT = priceUSDT;
-  priceFeed.priceUST = priceUST;
-  priceFeed.priceDAI = priceDAI;
-  priceFeed.priceMIM = priceMIM;
-  priceFeed.priceFRAX = priceFRAX;
-  priceFeed.pricePTP = pricePTP;
-  priceFeed.pricexPTP = pricexPTP;
-  priceFeed.priceVTX = priceVTX;
-  priceFeed.priceQI = priceQI;
-  priceFeed.save();
+  baseStats.blockNumber = blockNumber;
+  baseStats.blockTimestamp = blockTimestamp;
+  baseStats.priceAVAX = priceAVAX;
+  baseStats.priceSAVAX = priceSAVAX;
+  baseStats.priceJOE = priceJOE;
+  baseStats.priceUSDC = priceUSDC;
+  baseStats.priceUSDT = priceUSDT;
+  baseStats.priceUST = priceUST;
+  baseStats.priceDAI = priceDAI;
+  baseStats.priceMIM = priceMIM;
+  baseStats.priceFRAX = priceFRAX;
+  baseStats.pricePTP = pricePTP;
+  baseStats.pricexPTP = pricexPTP;
+  baseStats.priceVTX = priceVTX;
+  baseStats.priceQI = priceQI;
+  baseStats.totalVePTP = totalVePTP;
+  baseStats.save();
 }

@@ -7,9 +7,10 @@ import {
   fetchVectorPool2TVL,
   fetchVectorPoolsTVL,
   fetchVtxAPR,
+  fetchPTPAPR,
 } from "./helpers";
 import {
-  AllPrice,
+  Stat,
   PoolStakedVTX,
   PoolLockedVTX,
   PoolStakedPTP,
@@ -74,23 +75,24 @@ export function feedPool(block: ethereum.Block): void {
   let pool2USDT = Pool2USDT.load(id) === null ? new Pool2USDT(id) : Pool2USDT.load(id);
   let poolWbtceAVAX = PoolWbtceAVAX.load(id) === null ? new PoolWbtceAVAX(id) : PoolWbtceAVAX.load(id);
   let poolWetheAVAX = PoolWetheAVAX.load(id) === null ? new PoolWetheAVAX(id) : PoolWetheAVAX.load(id);
-  let priceFeed = AllPrice.load(id) === null ? new AllPrice(id) : AllPrice.load(id);
+  let baseStats = Stat.load(id) === null ? new Stat(id) : Stat.load(id);
   let blockNumber = block.number;
-  if (priceFeed) {
+  if (baseStats) {
     let blockTimestamp = block.timestamp;
-    let priceAVAX = priceFeed.priceAVAX;
-    let pricePTP = priceFeed.pricePTP;
-    let pricexPTP = priceFeed.pricexPTP;
-    let priceJOE = priceFeed.priceJOE;
-    let priceVTX = priceFeed.priceVTX;
-    let priceDAI = priceFeed.priceDAI;
-    let priceUSDC = priceFeed.priceUSDC;
-    let priceUSDT = priceFeed.priceUSDT;
-    let priceUST = priceFeed.priceUST;
-    let priceMIM = priceFeed.priceMIM;
-    let priceFRAX = priceFeed.priceFRAX;
-    let priceSAVAX = priceFeed.priceSAVAX;
-    let priceQI = priceFeed.priceQI;
+    let priceAVAX = baseStats.priceAVAX;
+    let pricePTP = baseStats.pricePTP;
+    let pricexPTP = baseStats.pricexPTP;
+    let priceJOE = baseStats.priceJOE;
+    let priceVTX = baseStats.priceVTX;
+    let priceDAI = baseStats.priceDAI;
+    let priceUSDC = baseStats.priceUSDC;
+    let priceUSDT = baseStats.priceUSDT;
+    let priceUST = baseStats.priceUST;
+    let priceMIM = baseStats.priceMIM;
+    let priceFRAX = baseStats.priceFRAX;
+    let priceSAVAX = baseStats.priceSAVAX;
+    let priceQI = baseStats.priceQI;
+    let totalVePTP = baseStats.totalVePTP;
     // Allocations
     let vtxPerSec = masterChefVTX.bind(ALL_ADDRESSES.MASTER_CHEF_VTX).vtxPerSec();
     let totalPoint = masterChefVTX.bind(ALL_ADDRESSES.MASTER_CHEF_VTX).totalAllocPoint();
@@ -166,6 +168,7 @@ export function feedPool(block: ethereum.Block): void {
       pool2JOE.save();
     }
     // Platypus Main Pools
+    // USDT.e#0 USDC.e#1 DAI.e#2 USDC#4 USDT#5 FRAX#6 USDC_FRAX#7 UST#8 USDC_UST#9 MIM#10 USDC_MIM#11 AVAX#12 sAVAX#13
     if (poolMainDAIe) {
       let tvl = fetchPlatypusPoolsTVL(ALL_ADDRESSES.LP_Main_DAIe, priceDAI, 18); // 26 -> 8 Main pool DAI.e
       let vtxApr = fetchVtxAPR(ALL_ADDRESSES.LP_Main_DAIe, priceVTX, tvl, vtxPerSec, totalPoint);
@@ -179,41 +182,45 @@ export function feedPool(block: ethereum.Block): void {
     if (poolMainUSDC) {
       let tvl = fetchPlatypusPoolsTVL(ALL_ADDRESSES.LP_Main_USDC, priceUSDC, 6); // 14 -> 8 Main pool USDC
       let vtxApr = fetchVtxAPR(ALL_ADDRESSES.LP_Main_USDC, priceVTX, tvl, vtxPerSec, totalPoint);
+      let ptpApr = fetchPTPAPR(4, ALL_ADDRESSES.LP_PTP_USDC, pricePTP, totalVePTP, tvl);
       poolMainUSDC.blockNumber = blockNumber;
       poolMainUSDC.blockTimestamp = blockTimestamp;
       poolMainUSDC.tvl = tvl;
       poolMainUSDC.vtxApr = vtxApr;
-      // xxx ptpApr
+      poolMainUSDC.ptpApr = ptpApr;
       poolMainUSDC.save();
     }
     if (poolMainUSDCe) {
       let tvl = fetchPlatypusPoolsTVL(ALL_ADDRESSES.LP_Main_USDCe, priceUSDC, 6); // 14 -> 8 Main pool USDC.e
       let vtxApr = fetchVtxAPR(ALL_ADDRESSES.LP_Main_USDCe, priceVTX, tvl, vtxPerSec, totalPoint);
+      let ptpApr = fetchPTPAPR(1, ALL_ADDRESSES.LP_PTP_USDCe, pricePTP, totalVePTP, tvl);
       poolMainUSDCe.blockNumber = blockNumber;
       poolMainUSDCe.blockTimestamp = blockTimestamp;
       poolMainUSDCe.tvl = tvl;
       poolMainUSDCe.vtxApr = vtxApr;
-      // xxx ptpApr
+      poolMainUSDCe.ptpApr = ptpApr;
       poolMainUSDCe.save();
     }
     if (poolMainUSDT) {
       let tvl = fetchPlatypusPoolsTVL(ALL_ADDRESSES.LP_Main_USDT, priceUSDT, 6); // 14 -> 8 Main pool USDT
       let vtxApr = fetchVtxAPR(ALL_ADDRESSES.LP_Main_USDT, priceVTX, tvl, vtxPerSec, totalPoint);
+      let ptpApr = fetchPTPAPR(5, ALL_ADDRESSES.LP_PTP_USDt, pricePTP, totalVePTP, tvl);
       poolMainUSDT.blockNumber = blockNumber;
       poolMainUSDT.blockTimestamp = blockTimestamp;
       poolMainUSDT.tvl = tvl;
       poolMainUSDT.vtxApr = vtxApr;
-      // xxx ptpApr
+      poolMainUSDT.ptpApr = ptpApr;
       poolMainUSDT.save();
     }
     if (poolMainUSDTe) {
       let tvl = fetchPlatypusPoolsTVL(ALL_ADDRESSES.LP_Main_USDTe, priceUSDT, 6); // 14 -> 8 Main pool USDT.e
       let vtxApr = fetchVtxAPR(ALL_ADDRESSES.LP_Main_USDTe, priceVTX, tvl, vtxPerSec, totalPoint);
+      let ptpApr = fetchPTPAPR(0, ALL_ADDRESSES.LP_PTP_USDTe, pricePTP, totalVePTP, tvl);
       poolMainUSDTe.blockNumber = blockNumber;
       poolMainUSDTe.blockTimestamp = blockTimestamp;
       poolMainUSDTe.tvl = tvl;
       poolMainUSDTe.vtxApr = vtxApr;
-      // xxx ptpApr
+      poolMainUSDTe.ptpApr = ptpApr;
       poolMainUSDTe.save();
     }
     if (poolAltUSDCUST) {
@@ -223,6 +230,8 @@ export function feedPool(block: ethereum.Block): void {
       let vtxApr2 = fetchVtxAPR(ALL_ADDRESSES.LP_Alt_UST_USDC, priceVTX, tvl2, vtxPerSec, totalPoint);
       let ustApr1 = fetchPTPBonusApr("USDC", priceUST, priceUSDC);
       let ustApr2 = fetchPTPBonusApr("UST", priceUST, priceUST);
+      let ptpApr1 = fetchPTPAPR(9, ALL_ADDRESSES.LP_PTP_USDC_UST, pricePTP, totalVePTP, tvl1);
+      let ptpApr2 = fetchPTPAPR(8, ALL_ADDRESSES.LP_PTP_UST_UST, pricePTP, totalVePTP, tvl2);
       poolAltUSDCUST.blockNumber = blockNumber;
       poolAltUSDCUST.blockTimestamp = blockTimestamp;
       poolAltUSDCUST.tvl1 = tvl1;
@@ -231,7 +240,8 @@ export function feedPool(block: ethereum.Block): void {
       poolAltUSDCUST.vtxApr2 = vtxApr2;
       poolAltUSDCUST.ustApr1 = ustApr1;
       poolAltUSDCUST.ustApr2 = ustApr2;
-      // xxx apr = vtxApr ptpApr ustApr
+      poolAltUSDCUST.ptpApr1 = ptpApr1;
+      poolAltUSDCUST.ptpApr2 = ptpApr2;
       poolAltUSDCUST.save();
     }
     if (poolAltUSDCMIM) {
@@ -239,13 +249,17 @@ export function feedPool(block: ethereum.Block): void {
       let tvl2 = fetchPlatypusPoolsTVL(ALL_ADDRESSES.LP_Alt_MIM_USDC, priceMIM, 18); // 26 -> 8 Alt Pool MIM in USDC_MIM pool
       let vtxApr1 = fetchVtxAPR(ALL_ADDRESSES.LP_Alt_USDC_MIM, priceVTX, tvl1, vtxPerSec, totalPoint);
       let vtxApr2 = fetchVtxAPR(ALL_ADDRESSES.LP_Alt_MIM_USDC, priceVTX, tvl2, vtxPerSec, totalPoint);
+      let ptpApr1 = fetchPTPAPR(11, ALL_ADDRESSES.LP_PTP_USDC_MIM, pricePTP, totalVePTP, tvl1);
+      let ptpApr2 = fetchPTPAPR(10, ALL_ADDRESSES.LP_PTP_MIM_MIM, pricePTP, totalVePTP, tvl2);
+      poolAltUSDCMIM.blockNumber = blockNumber;
       poolAltUSDCMIM.blockNumber = blockNumber;
       poolAltUSDCMIM.blockTimestamp = blockTimestamp;
       poolAltUSDCMIM.tvl1 = tvl1;
       poolAltUSDCMIM.tvl2 = tvl2;
       poolAltUSDCMIM.vtxApr1 = vtxApr1;
       poolAltUSDCMIM.vtxApr2 = vtxApr2;
-      // xxx ptpApr
+      poolAltUSDCMIM.ptpApr1 = ptpApr1;
+      poolAltUSDCMIM.ptpApr2 = ptpApr2;
       poolAltUSDCMIM.save();
     }
     if (poolAltUSDCFRAX) {
@@ -253,13 +267,16 @@ export function feedPool(block: ethereum.Block): void {
       let tvl2 = fetchPlatypusPoolsTVL(ALL_ADDRESSES.LP_Alt_FRAX_USDC, priceFRAX, 18); // 26 -> 8 Alt Pool FRAX in USDC_FRAX pool
       let vtxApr1 = fetchVtxAPR(ALL_ADDRESSES.LP_Alt_USDC_FRAX, priceVTX, tvl1, vtxPerSec, totalPoint);
       let vtxApr2 = fetchVtxAPR(ALL_ADDRESSES.LP_Alt_FRAX_USDC, priceVTX, tvl2, vtxPerSec, totalPoint);
+      let ptpApr1 = fetchPTPAPR(7, ALL_ADDRESSES.LP_PTP_USDC_FRAX, pricePTP, totalVePTP, tvl1);
+      let ptpApr2 = fetchPTPAPR(6, ALL_ADDRESSES.LP_PTP_FRAX_FRAX, pricePTP, totalVePTP, tvl2);
       poolAltUSDCFRAX.blockNumber = blockNumber;
       poolAltUSDCFRAX.blockTimestamp = blockTimestamp;
       poolAltUSDCFRAX.tvl1 = tvl1;
       poolAltUSDCFRAX.tvl2 = tvl2;
       poolAltUSDCFRAX.vtxApr1 = vtxApr1;
       poolAltUSDCFRAX.vtxApr2 = vtxApr2;
-      // xxx ptpApr
+      poolAltUSDCFRAX.ptpApr1 = ptpApr1;
+      poolAltUSDCFRAX.ptpApr2 = ptpApr2;
       poolAltUSDCFRAX.save();
     }
     if (poolAlt2AVAX) {
@@ -267,6 +284,8 @@ export function feedPool(block: ethereum.Block): void {
       let tvl2 = fetchPlatypusPoolsTVL(ALL_ADDRESSES.LP_Alt_sAVAX, priceSAVAX, 18); // 26 -> 8 Alt Pool sAVAX in AVAX_sAVAX pool
       let vtxApr1 = fetchVtxAPR(ALL_ADDRESSES.LP_Alt_AVAX, priceVTX, tvl1, vtxPerSec, totalPoint);
       let vtxApr2 = fetchVtxAPR(ALL_ADDRESSES.LP_Alt_sAVAX, priceVTX, tvl2, vtxPerSec, totalPoint);
+      let ptpApr1 = fetchPTPAPR(12, ALL_ADDRESSES.LP_PTP_AVAX_AVAX, pricePTP, totalVePTP, tvl1);
+      let ptpApr2 = fetchPTPAPR(13, ALL_ADDRESSES.LP_PTP_SAVAX_AVAX, pricePTP, totalVePTP, tvl2);
       let qiApr1 = fetchPTPBonusApr("AVAX", priceQI, priceAVAX);
       let qiApr2 = fetchPTPBonusApr("sAVAX", priceQI, priceSAVAX);
       poolAlt2AVAX.blockNumber = blockNumber;
@@ -275,6 +294,8 @@ export function feedPool(block: ethereum.Block): void {
       poolAlt2AVAX.tvl2 = tvl2;
       poolAlt2AVAX.vtxApr1 = vtxApr1;
       poolAlt2AVAX.vtxApr2 = vtxApr2;
+      poolAlt2AVAX.ptpApr1 = ptpApr1;
+      poolAlt2AVAX.ptpApr2 = ptpApr2;
       poolAlt2AVAX.qiApr1 = qiApr1;
       poolAlt2AVAX.qiApr2 = qiApr2;
       // xxx ptpApr qiApr

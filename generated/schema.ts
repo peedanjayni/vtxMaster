@@ -11,7 +11,7 @@ import {
   BigDecimal
 } from "@graphprotocol/graph-ts";
 
-export class AllPrice extends Entity {
+export class Stat extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
@@ -31,22 +31,23 @@ export class AllPrice extends Entity {
     this.set("priceMIM", Value.fromBigInt(BigInt.zero()));
     this.set("priceFRAX", Value.fromBigInt(BigInt.zero()));
     this.set("priceQI", Value.fromBigInt(BigInt.zero()));
+    this.set("totalVePTP", Value.fromBigInt(BigInt.zero()));
   }
 
   save(): void {
     let id = this.get("id");
-    assert(id != null, "Cannot save AllPrice entity without an ID");
+    assert(id != null, "Cannot save Stat entity without an ID");
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        `Entities of type AllPrice must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        `Entities of type Stat must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
       );
-      store.set("AllPrice", id.toString(), this);
+      store.set("Stat", id.toString(), this);
     }
   }
 
-  static load(id: string): AllPrice | null {
-    return changetype<AllPrice | null>(store.get("AllPrice", id));
+  static load(id: string): Stat | null {
+    return changetype<Stat | null>(store.get("Stat", id));
   }
 
   get id(): string {
@@ -191,6 +192,15 @@ export class AllPrice extends Entity {
 
   set priceQI(value: BigInt) {
     this.set("priceQI", Value.fromBigInt(value));
+  }
+
+  get totalVePTP(): BigInt {
+    let value = this.get("totalVePTP");
+    return value!.toBigInt();
+  }
+
+  set totalVePTP(value: BigInt) {
+    this.set("totalVePTP", Value.fromBigInt(value));
   }
 }
 

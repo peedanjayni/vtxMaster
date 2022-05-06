@@ -22,6 +22,7 @@ class schema {
   MASTER_CHEF_JOE: Address;
   MAIN_STAKING_JOE: Address;
   MAIN_STAKING_PTP: Address;
+  PLATYPUSVENOM: Address;
   // Vector LPs
   LP_STAKED_VTX: Address;
   LP_LOCKED_VTX: Address;
@@ -71,6 +72,11 @@ class schema {
   VLP_TJ_BNB_AVAX: Address;
   VLP_TJ_USDT_AVAX: Address;
   // Platypus LPs
+  LP_PTP_USDTe: Address;
+  LP_PTP_USDCe: Address;
+  LP_PTP_DAIe: Address;
+  LP_PTP_USDC: Address;
+  LP_PTP_USDt: Address;
   LP_PTP_UST_UST: Address;
   LP_PTP_USDC_UST: Address;
   LP_PTP_MIM_MIM: Address;
@@ -114,6 +120,8 @@ export const ALL_ADDRESSES: schema = {
   // main staking
   MAIN_STAKING_JOE: Address.fromString("0x0e25c07748f727d6cccd7d2711fd7bd13d13422d"),
   MAIN_STAKING_PTP: Address.fromString("0x8B3d9F0017FA369cD8C164D0Cc078bf4cA588aE5"),
+  // vePTP
+  PLATYPUSVENOM: Address.fromString("0x5857019c749147EEE22b1Fe63500F237F3c1B692"),
   // Vector LPs
   LP_STAKED_VTX: Address.fromString("0x5817d4f0b62a59b17f75207da1848c2ce75e7af4"),
   LP_LOCKED_VTX: Address.fromString("0x574679Ec54972cf6d705E0a71467Bb5BB362919D"),
@@ -163,6 +171,11 @@ export const ALL_ADDRESSES: schema = {
   VLP_TJ_BNB_AVAX: Address.fromString("0xAC55A9Ad2256482771D545805732C818Dc38808c"),
   VLP_TJ_USDT_AVAX: Address.fromString("0x490cFC0F6849de81eB3Adb62332C682bF7A4e118"),
   // Platypus LPs
+  LP_PTP_USDTe: Address.fromString("0x0D26D103c91F63052Fbca88aAF01d5304Ae40015"),
+  LP_PTP_USDCe: Address.fromString("0x909B0ce4FaC1A0dCa78F8Ca7430bBAfeEcA12871"),
+  LP_PTP_DAIe: Address.fromString("0xc1Daa16E6979C2D1229cB1fd0823491eA44555Be"),
+  LP_PTP_USDC: Address.fromString("0xAEf735B1E7EcfAf8209ea46610585817Dc0a2E16"),
+  LP_PTP_USDt: Address.fromString("0x776628A5C37335608DD2a9538807b9bba3869E14"),
   LP_PTP_UST_UST: Address.fromString("0xc7388D98Fa86B6639d71A0A6d410D5cDfc63A1d0"),
   LP_PTP_USDC_UST: Address.fromString("0xFC95481F79eC965A535Ed8cef4630e1dd308d319"),
   LP_PTP_MIM_MIM: Address.fromString("0xF01cEA00598d87Cb9792a01B040d04b0bd8Ca781"),
@@ -171,6 +184,7 @@ export const ALL_ADDRESSES: schema = {
   LP_PTP_USDC_FRAX: Address.fromString("0x035D7D7F209B5d18e2AB5C2072E85B32e1D43760"),
   LP_PTP_AVAX_AVAX: Address.fromString("0xC73eeD4494382093C6a7C284426A9a00f6C79939"),
   LP_PTP_SAVAX_AVAX: Address.fromString("0xA2A7EE49750Ff12bb60b407da2531dB3c50A1789"),
+
   // Platypus bonus reward rewarder
   REWARDER_UST_UST: Address.fromString("0xF5990D0fF59A7F56300F3d1AE7F220854f2abc51"),
   REWARDER_USDC_UST: Address.fromString("0xc4Be2E0da31156745a7139c63fbCb0f8340ca692"),

@@ -1,5 +1,5 @@
 import { ethereum } from "@graphprotocol/graph-ts";
-import { feedPrice } from "./feedPrice";
+import { feedPrice } from "./feedStats";
 import { feedPool } from "./feedPool";
 
 export function handleBlock(block: ethereum.Block): void {
