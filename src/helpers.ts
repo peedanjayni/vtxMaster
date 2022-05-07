@@ -10,6 +10,7 @@ import { usdcToken } from "../generated/vtxMaster/usdcToken";
 import { wavaxToken } from "../generated/vtxMaster/wavaxToken";
 import { savaxToken } from "../generated/vtxMaster/savaxToken";
 import { ALL_ADDRESSES } from "./constants";
+import { TJPair } from "../generated/schema";
 
 export function mvDecimals(_inputInt: BigInt, _decimal: u8): BigInt {
   return _inputInt.div(BigInt.fromI32(10).pow(_decimal));
@@ -17,6 +18,10 @@ export function mvDecimals(_inputInt: BigInt, _decimal: u8): BigInt {
 
 export function addDecimals(_inputInt: BigInt, _decimal: u8): BigInt {
   return _inputInt.times(BigInt.fromI32(10).pow(_decimal));
+}
+
+export function to18Decimals(_inputInt: BigInt, _orignalDecimal: BigInt): BigInt {
+  return BigInt.fromI32(0);
 }
 
 export function fetchVectorPoolsTVL(_lpAddress: Address, _price: BigInt, _decimal: u8): BigInt {
@@ -202,4 +207,15 @@ export function fetchPTPAPR(_number: i32, _lp: Address, _ptpPrice: BigInt, _tota
   apr = apr.times(BigInt.fromI32(82)).div(BigInt.fromI32(100));
 
   return apr;
+}
+
+export function fetchTJlpApr(_lp: Address): BigInt {
+  let tjPair = TJPair.load(_lp.toString());
+  let lpApr = BigInt.fromI32(0);
+  if (tjPair) {
+    lpApr = tjPair.lpApr;
+    return lpApr;
+  } else {
+    return BigInt.fromI32(0);
+  }
 }

@@ -8,15 +8,13 @@ dataSources:
     source:
       address: "0x423D0FE33031aA4456a17b150804aA57fc157d97"
       abi: masterChefVTX
-      startBlock: 14351600
+      startBlock: 14366000
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
-        - PRICEFEED
-        - TVLFEED
-        - APRFEED
+        - Stat
       abis:
         - name: masterChefVTX
           file: ./abis/masterChefVTX.json
@@ -44,4 +42,26 @@ dataSources:
           file: ./abis/usdcToken.json
       blockHandlers:
         - handler: handleBlock
+      file: ./src/mapping.ts
+
+templates:
+  - kind: ethereum/contract
+    name: joePair
+    network: avalanche
+    source:
+      abi: joePair
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - joePair
+      abis:
+        - name: ERC20
+          file: ./abis/ERC20.json
+        - name: joePair
+          file: ./abis/joePair.json
+      eventHandlers:
+        - event: Swap(indexed address,uint256,uint256,uint256,uint256,indexed address)
+          handler: handleSwap
       file: ./src/mapping.ts

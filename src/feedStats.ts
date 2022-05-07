@@ -9,7 +9,7 @@ import { ALL_ADDRESSES } from "./constants";
 // feed price
 export function feedPrice(block: ethereum.Block): void {
   // load entity
-  let id = block.number.toHex();
+  let id = block.number.toString();
   let baseStats = Stat.load(id);
   if (!baseStats) {
     baseStats = new Stat(id);
@@ -18,7 +18,10 @@ export function feedPrice(block: ethereum.Block): void {
   let blockTimestamp = block.timestamp;
   // oracle price feed
   let priceAVAX = oracleFactory.bind(ALL_ADDRESSES.ORACLE_AVAX).latestAnswer(); // AVAX 8
-  let priceSAVAX = mvDecimals(oracleFactory.bind(ALL_ADDRESSES.ORACLE_sAVAX).latestAnswer(), 10); // sAVAX 18 -> 8
+  let priceSAVAX = mvDecimals(
+    oracleFactory.bind(ALL_ADDRESSES.ORACLE_sAVAX).latestAnswer(),
+    10
+  ); // sAVAX 18 -> 8
   let priceJOE = oracleFactory.bind(ALL_ADDRESSES.ORACLE_JOE).latestAnswer(); // JOE 8
   let priceUSDC = oracleFactory.bind(ALL_ADDRESSES.ORACLE_USDC).latestAnswer(); // USDC 8
   let priceUSDT = oracleFactory.bind(ALL_ADDRESSES.ORACLE_USDT).latestAnswer(); // USDT 8
@@ -44,7 +47,10 @@ export function feedPrice(block: ethereum.Block): void {
   let priceVTX = r1.times(priceAVAX).div(r0); // VTX 8
 
   // vePTP
-  let totalVePTP = mvDecimals(vePTP.bind(ALL_ADDRESSES.PLATYPUSVENOM).totalSupply(), 10); // 18->8
+  let totalVePTP = mvDecimals(
+    vePTP.bind(ALL_ADDRESSES.PLATYPUSVENOM).totalSupply(),
+    10
+  ); // 18->8
 
   // save
   baseStats.blockNumber = blockNumber;
