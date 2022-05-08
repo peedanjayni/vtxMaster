@@ -30,7 +30,6 @@ type TJPair @entity {
 # Arrange entities by Pool
 type Pool @entity {
   id: ID!
-  name: String!
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   tvl: BigInt!

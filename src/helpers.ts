@@ -34,7 +34,12 @@ export function fetchVectorPoolsTVL(_lpAddress: Address, _price: BigInt, _decima
   );
 }
 
-export function fetchVectorPool2TVL(_lpAddress: Address, _price: BigInt, _valueNumber: i32, _decimal: u8): BigInt {
+export function fetchVectorPool2TVL(
+  _lpAddress: Address,
+  _price: BigInt,
+  _valueNumber: i32,
+  _decimal: u8
+): BigInt {
   let x =
     _valueNumber === 0
       ? traderjoeLP.bind(_lpAddress).getReserves().value0
@@ -104,7 +109,11 @@ export function fetchVtxAPR(
   );
 }
 
-export function fetchPTPBonusApr(_symbol: string, _rewardTokenPrice: BigInt, _poolTokenPrice: BigInt): BigInt {
+export function fetchPTPBonusApr(
+  _symbol: string,
+  _rewardTokenPrice: BigInt,
+  _poolTokenPrice: BigInt
+): BigInt {
   let _rewarder = Address.zero(),
     _tvl = BigInt.zero();
 
@@ -160,7 +169,13 @@ export function fetchPTPBonusApr(_symbol: string, _rewardTokenPrice: BigInt, _po
 // sqrt(totalVePTP * totalTVL) = totalFactor
 // totalTVL = totalFactor^2 / totalVePTP
 
-export function fetchPTPAPR(_number: i32, _lp: Address, _ptpPrice: BigInt, _totalVePTP: BigInt, _tvl: BigInt): BigInt {
+export function fetchPTPAPR(
+  _number: i32,
+  _lp: Address,
+  _ptpPrice: BigInt,
+  _totalVePTP: BigInt,
+  _tvl: BigInt
+): BigInt {
   let _poolNumber = BigInt.fromI32(_number);
   let baseShare = masterChefPTP.bind(ALL_ADDRESSES.MASTER_CHEF_PTP).dialutingRepartition(); // 375 means .375
   let boostShare = masterChefPTP.bind(ALL_ADDRESSES.MASTER_CHEF_PTP).nonDialutingRepartition(); // 625 means .625
@@ -168,8 +183,11 @@ export function fetchPTPAPR(_number: i32, _lp: Address, _ptpPrice: BigInt, _tota
     .bind(ALL_ADDRESSES.MASTER_CHEF_PTP)
     .ptpPerSec()
     .times(BigInt.fromI32(31536000)); // 18
-  let adjustedAllocPoint = masterChefPTP.bind(ALL_ADDRESSES.MASTER_CHEF_PTP).poolInfo(_poolNumber).value7; // 18
-  let totalAdjustedAllocPoint = masterChefPTP.bind(ALL_ADDRESSES.MASTER_CHEF_PTP).totalAdjustedAllocPoint(); // 18
+  let adjustedAllocPoint = masterChefPTP.bind(ALL_ADDRESSES.MASTER_CHEF_PTP).poolInfo(_poolNumber)
+    .value7; // 18
+  let totalAdjustedAllocPoint = masterChefPTP
+    .bind(ALL_ADDRESSES.MASTER_CHEF_PTP)
+    .totalAdjustedAllocPoint(); // 18
   let userFactor = masterChefPTP
     .bind(ALL_ADDRESSES.MASTER_CHEF_PTP)
     .userInfo(_poolNumber, ALL_ADDRESSES.MAIN_STAKING_PTP).value2; // 18
@@ -210,7 +228,7 @@ export function fetchPTPAPR(_number: i32, _lp: Address, _ptpPrice: BigInt, _tota
 }
 
 export function fetchTJlpApr(_lp: Address): BigInt {
-  let tjPair = TJPair.load(_lp.toString());
+  let tjPair = TJPair.load(_lp.toHex());
   let lpApr = BigInt.fromI32(0);
   if (tjPair) {
     lpApr = tjPair.lpApr;
@@ -219,3 +237,79 @@ export function fetchTJlpApr(_lp: Address): BigInt {
     return BigInt.fromI32(0);
   }
 }
+// FarmLensV2 seems to be outdated and APRs doesn't match the official calculator
+export function fetchTJbaseApr(_poolNumber: i32, _joePrice: BigInt, _tvl: BigInt): BigInt {
+  let userAmount = masterChefJOE
+    .bind(ALL_ADDRESSES.MASTER_CHEF_JOE)
+    .userInfo(BigInt.fromI32(_poolNumber), ALL_ADDRESSES.MAIN_STAKING_JOE).value0;
+  let totalAmount = masterChefJOE
+    .bind(ALL_ADDRESSES.MASTER_CHEF_JOE)
+    .poolInfo(BigInt.fromI32(_poolNumber)).value8;
+  let allocPoint = masterChefJOE
+    .bind(ALL_ADDRESSES.MASTER_CHEF_JOE)
+    .poolInfo(BigInt.fromI32(_poolNumber)).value1;
+  let totalAllocPoint = masterChefJOE.bind(ALL_ADDRESSES.MASTER_CHEF_JOE).totalAllocPoint();
+  let veJoeShareBp = masterChefJOE
+    .bind(ALL_ADDRESSES.MASTER_CHEF_JOE)
+    .poolInfo(BigInt.fromI32(_poolNumber)).value6; // 5000 means 50%
+  let joeEmission = masterChefJOE
+    .bind(ALL_ADDRESSES.MASTER_CHEF_JOE)
+    .joePerSec()
+    .times(BigInt.fromI32(31536000)); // 18
+  // baseApr = (allocShare * lpShare * joeEmission * (1-veJoeShareBp)) // _tvl 8
+  // (1-veJoeShareBp)
+  let joeShare = BigInt.fromI32(10000).minus(veJoeShareBp);
+  let allocShare = addDecimals(allocPoint, 8).div(totalAllocPoint); // 8
+  let lpShare = addDecimals(userAmount, 8).div(totalAmount); // 8
+  let baseApr = mvDecimals(
+    allocShare
+      .times(lpShare)
+      .times(joeEmission)
+      .times(joeShare)
+      .div(BigInt.fromI32(10000))
+      .div(_tvl),
+    18
+  ); // 26-18=8
+  // platform fee 18%
+  baseApr = baseApr.times(BigInt.fromI32(82)).div(BigInt.fromI32(100));
+  return baseApr;
+}
+
+export function fetchTJboostApr(_poolNumber: i32, _joePrice: BigInt, _tvl: BigInt): BigInt {
+  let allocPoint = masterChefJOE
+    .bind(ALL_ADDRESSES.MASTER_CHEF_JOE)
+    .poolInfo(BigInt.fromI32(_poolNumber)).value1;
+  let totalAllocPoint = masterChefJOE.bind(ALL_ADDRESSES.MASTER_CHEF_JOE).totalAllocPoint();
+  let userFactor = masterChefJOE
+    .bind(ALL_ADDRESSES.MASTER_CHEF_JOE)
+    .userInfo(BigInt.fromI32(_poolNumber), ALL_ADDRESSES.MAIN_STAKING_JOE).value2;
+  let totalFactor = masterChefJOE
+    .bind(ALL_ADDRESSES.MASTER_CHEF_JOE)
+    .poolInfo(BigInt.fromI32(_poolNumber)).value7;
+  let veJoeShareBp = masterChefJOE
+    .bind(ALL_ADDRESSES.MASTER_CHEF_JOE)
+    .poolInfo(BigInt.fromI32(_poolNumber)).value6; // 5000 means 50%
+  let joeEmission = masterChefJOE
+    .bind(ALL_ADDRESSES.MASTER_CHEF_JOE)
+    .joePerSec()
+    .times(BigInt.fromI32(31536000)); // 18
+  // boostApr = (allocShare * factorShare * joeEmission * veJoeShareBp) // _tvl 8
+  let factorShare = addDecimals(userFactor, 8).div(totalFactor); // 8
+  let allocShare = addDecimals(allocPoint, 8).div(totalAllocPoint); // 8
+  let boostApr = mvDecimals(
+    allocShare
+      .times(factorShare)
+      .times(joeEmission)
+      .times(veJoeShareBp)
+      .div(BigInt.fromI32(10000))
+      .div(_tvl),
+    18
+  );
+  // 26-18 = 8
+  // platform fee 18%
+  boostApr = boostApr.times(BigInt.fromI32(82)).div(BigInt.fromI32(100));
+  return boostApr;
+}
+
+// fetch platform fees calc platform PTP/JOE revenue
+// return staked/lockedVTX APRs and staked PTP/JOE APRs

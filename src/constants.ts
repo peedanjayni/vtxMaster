@@ -28,7 +28,7 @@ class schema {
   LP_LOCKED_VTX: Address;
   LP_STAKED_PTP: Address;
   LP_STAKED_JOE: Address;
-  LP_VTX_AVAX: Address;
+  LP_Pool2_VTX: Address;
   LP_Pool2_xPTP: Address;
   LP_Pool2_zJOE: Address;
   LP_Main_DAIe: Address;
@@ -127,7 +127,7 @@ export const ALL_ADDRESSES: schema = {
   LP_LOCKED_VTX: Address.fromString("0x574679Ec54972cf6d705E0a71467Bb5BB362919D"),
   LP_STAKED_PTP: Address.fromString("0x060556209E507d30f2167a101bFC6D256Ed2f3e1"),
   LP_STAKED_JOE: Address.fromString("0x769bfeb9fAacD6Eb2746979a8dD0b7e9920aC2A4"),
-  LP_VTX_AVAX: Address.fromString("0x9EF0C12b787F90F59cBBE0b611B82D30CAB92929"),
+  LP_Pool2_VTX: Address.fromString("0x9EF0C12b787F90F59cBBE0b611B82D30CAB92929"),
   LP_Pool2_xPTP: Address.fromString("0xC4B7121b4FC065dECd26C33FB32e42C543E8850d"),
   LP_Pool2_zJOE: Address.fromString("0xcF80e302282c1E449Fd745fad1e43FAFfe480536"),
   LP_Main_DAIe: Address.fromString("0x2FdC25cEc50Dab4E1ECCFa1Be40509ae049cEaE0"),

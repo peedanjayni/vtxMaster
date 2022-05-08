@@ -13,7 +13,7 @@ export function handleBlock(block: ethereum.Block): void {
     feedPool(block);
   }
   // add event handlers for all joe pairs
-  if (block.number.toI32() == 14366001) {
+  if (block.number.toI32() == 14405001) {
     // change this number to deploy block
     joePairTemplate.create(ALL_ADDRESSES.LP_TJ_WBTCe_AVAX);
     joePairTemplate.create(ALL_ADDRESSES.LP_TJ_USDT_AVAX);

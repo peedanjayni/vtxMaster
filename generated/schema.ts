@@ -32,6 +32,8 @@ export class Stat extends Entity {
     this.set("priceFRAX", Value.fromBigInt(BigInt.zero()));
     this.set("priceQI", Value.fromBigInt(BigInt.zero()));
     this.set("totalVePTP", Value.fromBigInt(BigInt.zero()));
+    this.set("platformPtpRevenueAnually", Value.fromBigInt(BigInt.zero()));
+    this.set("platformJoeRevenueAnually", Value.fromBigInt(BigInt.zero()));
   }
 
   save(): void {
@@ -202,6 +204,24 @@ export class Stat extends Entity {
   set totalVePTP(value: BigInt) {
     this.set("totalVePTP", Value.fromBigInt(value));
   }
+
+  get platformPtpRevenueAnually(): BigInt {
+    let value = this.get("platformPtpRevenueAnually");
+    return value!.toBigInt();
+  }
+
+  set platformPtpRevenueAnually(value: BigInt) {
+    this.set("platformPtpRevenueAnually", Value.fromBigInt(value));
+  }
+
+  get platformJoeRevenueAnually(): BigInt {
+    let value = this.get("platformJoeRevenueAnually");
+    return value!.toBigInt();
+  }
+
+  set platformJoeRevenueAnually(value: BigInt) {
+    this.set("platformJoeRevenueAnually", Value.fromBigInt(value));
+  }
 }
 
 export class TJPair extends Entity {
@@ -302,7 +322,6 @@ export class Pool extends Entity {
     super();
     this.set("id", Value.fromString(id));
 
-    this.set("name", Value.fromString(""));
     this.set("blockNumber", Value.fromBigInt(BigInt.zero()));
     this.set("blockTimestamp", Value.fromBigInt(BigInt.zero()));
     this.set("tvl", Value.fromBigInt(BigInt.zero()));
@@ -349,15 +368,6 @@ export class Pool extends Entity {
 
   set id(value: string) {
     this.set("id", Value.fromString(value));
-  }
-
-  get name(): string {
-    let value = this.get("name");
-    return value!.toString();
-  }
-
-  set name(value: string) {
-    this.set("name", Value.fromString(value));
   }
 
   get blockNumber(): BigInt {

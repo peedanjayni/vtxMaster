@@ -38,7 +38,9 @@ export function feedTjPair(event: Swap): void {
         } else {
           // morning afternoon clear counter afternoon=0
           // calc lpApr = counter * 2 * 365 / reserve0
-          turnover = addDecimals(counter.times(BigInt.fromI32(730)), 8).div(reserve0);
+          turnover = addDecimals(counter.times(BigInt.fromI32(730)), 8)
+            .div(reserve0)
+            .div(BigInt.fromI32(2)); // 50% of total
           lpApr = turnover.times(BigInt.fromI32(25)).div(BigInt.fromI32(10000));
           // to 8 decimals
           counter = BigInt.fromI32(0);
@@ -57,7 +59,9 @@ export function feedTjPair(event: Swap): void {
         } else {
           // afternoon afternoon clear counter and afternoon=1
           // calc lpApr = counter * 2 * 365 / reserve0
-          turnover = addDecimals(counter.times(BigInt.fromI32(730)), 8).div(reserve0);
+          turnover = addDecimals(counter.times(BigInt.fromI32(730)), 8)
+            .div(reserve0)
+            .div(BigInt.fromI32(2)); // 50% of total
           lpApr = turnover.times(BigInt.fromI32(25)).div(BigInt.fromI32(10000));
           counter = BigInt.fromI32(0);
           counter = counter.plus(amount0);

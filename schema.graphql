@@ -17,6 +17,8 @@ type Stat @entity {
   priceFRAX: BigInt!
   priceQI: BigInt!
   totalVePTP: BigInt!
+  platformPtpRevenueAnually: BigInt!
+  platformJoeRevenueAnually: BigInt!
 }
 type TJPair @entity {
   id: ID! # by Address
@@ -30,7 +32,6 @@ type TJPair @entity {
 # Arrange entities by Pool
 type Pool @entity {
   id: ID!
-  name: String!
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   tvl: BigInt!

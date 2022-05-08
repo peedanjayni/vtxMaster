@@ -246,21 +246,13 @@ export class platypusAsset extends ethereum.SmartContract {
   }
 
   aggregateAccount(): Address {
-    let result = super.call(
-      "aggregateAccount",
-      "aggregateAccount():(address)",
-      []
-    );
+    let result = super.call("aggregateAccount", "aggregateAccount():(address)", []);
 
     return result[0].toAddress();
   }
 
   try_aggregateAccount(): ethereum.CallResult<Address> {
-    let result = super.tryCall(
-      "aggregateAccount",
-      "aggregateAccount():(address)",
-      []
-    );
+    let result = super.tryCall("aggregateAccount", "aggregateAccount():(address)", []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -269,21 +261,19 @@ export class platypusAsset extends ethereum.SmartContract {
   }
 
   allowance(owner: Address, spender: Address): BigInt {
-    let result = super.call(
-      "allowance",
-      "allowance(address,address):(uint256)",
-      [ethereum.Value.fromAddress(owner), ethereum.Value.fromAddress(spender)]
-    );
+    let result = super.call("allowance", "allowance(address,address):(uint256)", [
+      ethereum.Value.fromAddress(owner),
+      ethereum.Value.fromAddress(spender),
+    ]);
 
     return result[0].toBigInt();
   }
 
   try_allowance(owner: Address, spender: Address): ethereum.CallResult<BigInt> {
-    let result = super.tryCall(
-      "allowance",
-      "allowance(address,address):(uint256)",
-      [ethereum.Value.fromAddress(owner), ethereum.Value.fromAddress(spender)]
-    );
+    let result = super.tryCall("allowance", "allowance(address,address):(uint256)", [
+      ethereum.Value.fromAddress(owner),
+      ethereum.Value.fromAddress(spender),
+    ]);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -362,30 +352,19 @@ export class platypusAsset extends ethereum.SmartContract {
   }
 
   decreaseAllowance(spender: Address, subtractedValue: BigInt): boolean {
-    let result = super.call(
-      "decreaseAllowance",
-      "decreaseAllowance(address,uint256):(bool)",
-      [
-        ethereum.Value.fromAddress(spender),
-        ethereum.Value.fromUnsignedBigInt(subtractedValue),
-      ]
-    );
+    let result = super.call("decreaseAllowance", "decreaseAllowance(address,uint256):(bool)", [
+      ethereum.Value.fromAddress(spender),
+      ethereum.Value.fromUnsignedBigInt(subtractedValue),
+    ]);
 
     return result[0].toBoolean();
   }
 
-  try_decreaseAllowance(
-    spender: Address,
-    subtractedValue: BigInt
-  ): ethereum.CallResult<boolean> {
-    let result = super.tryCall(
-      "decreaseAllowance",
-      "decreaseAllowance(address,uint256):(bool)",
-      [
-        ethereum.Value.fromAddress(spender),
-        ethereum.Value.fromUnsignedBigInt(subtractedValue),
-      ]
-    );
+  try_decreaseAllowance(spender: Address, subtractedValue: BigInt): ethereum.CallResult<boolean> {
+    let result = super.tryCall("decreaseAllowance", "decreaseAllowance(address,uint256):(bool)", [
+      ethereum.Value.fromAddress(spender),
+      ethereum.Value.fromUnsignedBigInt(subtractedValue),
+    ]);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -394,30 +373,19 @@ export class platypusAsset extends ethereum.SmartContract {
   }
 
   increaseAllowance(spender: Address, addedValue: BigInt): boolean {
-    let result = super.call(
-      "increaseAllowance",
-      "increaseAllowance(address,uint256):(bool)",
-      [
-        ethereum.Value.fromAddress(spender),
-        ethereum.Value.fromUnsignedBigInt(addedValue),
-      ]
-    );
+    let result = super.call("increaseAllowance", "increaseAllowance(address,uint256):(bool)", [
+      ethereum.Value.fromAddress(spender),
+      ethereum.Value.fromUnsignedBigInt(addedValue),
+    ]);
 
     return result[0].toBoolean();
   }
 
-  try_increaseAllowance(
-    spender: Address,
-    addedValue: BigInt
-  ): ethereum.CallResult<boolean> {
-    let result = super.tryCall(
-      "increaseAllowance",
-      "increaseAllowance(address,uint256):(bool)",
-      [
-        ethereum.Value.fromAddress(spender),
-        ethereum.Value.fromUnsignedBigInt(addedValue),
-      ]
-    );
+  try_increaseAllowance(spender: Address, addedValue: BigInt): ethereum.CallResult<boolean> {
+    let result = super.tryCall("increaseAllowance", "increaseAllowance(address,uint256):(bool)", [
+      ethereum.Value.fromAddress(spender),
+      ethereum.Value.fromUnsignedBigInt(addedValue),
+    ]);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -539,10 +507,7 @@ export class platypusAsset extends ethereum.SmartContract {
     return result[0].toBoolean();
   }
 
-  try_transfer(
-    recipient: Address,
-    amount: BigInt
-  ): ethereum.CallResult<boolean> {
+  try_transfer(recipient: Address, amount: BigInt): ethereum.CallResult<boolean> {
     let result = super.tryCall("transfer", "transfer(address,uint256):(bool)", [
       ethereum.Value.fromAddress(recipient),
       ethereum.Value.fromUnsignedBigInt(amount),
@@ -555,15 +520,11 @@ export class platypusAsset extends ethereum.SmartContract {
   }
 
   transferFrom(sender: Address, recipient: Address, amount: BigInt): boolean {
-    let result = super.call(
-      "transferFrom",
-      "transferFrom(address,address,uint256):(bool)",
-      [
-        ethereum.Value.fromAddress(sender),
-        ethereum.Value.fromAddress(recipient),
-        ethereum.Value.fromUnsignedBigInt(amount),
-      ]
-    );
+    let result = super.call("transferFrom", "transferFrom(address,address,uint256):(bool)", [
+      ethereum.Value.fromAddress(sender),
+      ethereum.Value.fromAddress(recipient),
+      ethereum.Value.fromUnsignedBigInt(amount),
+    ]);
 
     return result[0].toBoolean();
   }
@@ -573,15 +534,11 @@ export class platypusAsset extends ethereum.SmartContract {
     recipient: Address,
     amount: BigInt
   ): ethereum.CallResult<boolean> {
-    let result = super.tryCall(
-      "transferFrom",
-      "transferFrom(address,address,uint256):(bool)",
-      [
-        ethereum.Value.fromAddress(sender),
-        ethereum.Value.fromAddress(recipient),
-        ethereum.Value.fromUnsignedBigInt(amount),
-      ]
-    );
+    let result = super.tryCall("transferFrom", "transferFrom(address,address,uint256):(bool)", [
+      ethereum.Value.fromAddress(sender),
+      ethereum.Value.fromAddress(recipient),
+      ethereum.Value.fromUnsignedBigInt(amount),
+    ]);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -590,21 +547,13 @@ export class platypusAsset extends ethereum.SmartContract {
   }
 
   underlyingToken(): Address {
-    let result = super.call(
-      "underlyingToken",
-      "underlyingToken():(address)",
-      []
-    );
+    let result = super.call("underlyingToken", "underlyingToken():(address)", []);
 
     return result[0].toAddress();
   }
 
   try_underlyingToken(): ethereum.CallResult<Address> {
-    let result = super.tryCall(
-      "underlyingToken",
-      "underlyingToken():(address)",
-      []
-    );
+    let result = super.tryCall("underlyingToken", "underlyingToken():(address)", []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -613,21 +562,13 @@ export class platypusAsset extends ethereum.SmartContract {
   }
 
   underlyingTokenBalance(): BigInt {
-    let result = super.call(
-      "underlyingTokenBalance",
-      "underlyingTokenBalance():(uint256)",
-      []
-    );
+    let result = super.call("underlyingTokenBalance", "underlyingTokenBalance():(uint256)", []);
 
     return result[0].toBigInt();
   }
 
   try_underlyingTokenBalance(): ethereum.CallResult<BigInt> {
-    let result = super.tryCall(
-      "underlyingTokenBalance",
-      "underlyingTokenBalance():(uint256)",
-      []
-    );
+    let result = super.tryCall("underlyingTokenBalance", "underlyingTokenBalance():(uint256)", []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
