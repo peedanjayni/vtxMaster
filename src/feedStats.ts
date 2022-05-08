@@ -5,9 +5,11 @@ import { traderjoeLP } from "../generated/vtxMaster/traderjoeLP";
 import { oracleFactory } from "../generated/vtxMaster/oracleFactory";
 import { vePTP } from "../generated/vtxMaster/vePTP";
 import { ALL_ADDRESSES } from "./constants";
+import { feedPlatformPtpRevenue } from "./feedPlatformPtpRevenue";
+import { feedPlatformJoeRevenue } from "./feedPlatformJoeRevenue";
 
 // feed price
-export function feedPrice(block: ethereum.Block): void {
+export function feedStats(block: ethereum.Block): void {
   // load entity
   let id = block.number.toString();
   let baseStats = Stat.load(id);
@@ -16,12 +18,10 @@ export function feedPrice(block: ethereum.Block): void {
   }
   let blockNumber = block.number;
   let blockTimestamp = block.timestamp;
+
   // oracle price feed
   let priceAVAX = oracleFactory.bind(ALL_ADDRESSES.ORACLE_AVAX).latestAnswer(); // AVAX 8
-  let priceSAVAX = mvDecimals(
-    oracleFactory.bind(ALL_ADDRESSES.ORACLE_sAVAX).latestAnswer(),
-    10
-  ); // sAVAX 18 -> 8
+  let priceSAVAX = mvDecimals(oracleFactory.bind(ALL_ADDRESSES.ORACLE_sAVAX).latestAnswer(), 10); // sAVAX 18 -> 8
   let priceJOE = oracleFactory.bind(ALL_ADDRESSES.ORACLE_JOE).latestAnswer(); // JOE 8
   let priceUSDC = oracleFactory.bind(ALL_ADDRESSES.ORACLE_USDC).latestAnswer(); // USDC 8
   let priceUSDT = oracleFactory.bind(ALL_ADDRESSES.ORACLE_USDT).latestAnswer(); // USDT 8
@@ -47,10 +47,11 @@ export function feedPrice(block: ethereum.Block): void {
   let priceVTX = r1.times(priceAVAX).div(r0); // VTX 8
 
   // vePTP
-  let totalVePTP = mvDecimals(
-    vePTP.bind(ALL_ADDRESSES.PLATYPUSVENOM).totalSupply(),
-    10
-  ); // 18->8
+  let totalVePTP = mvDecimals(vePTP.bind(ALL_ADDRESSES.PLATYPUSVENOM).totalSupply(), 10); // 18->8
+
+  // platformRevenueAnually
+  let platformPtpRevenueAnually = feedPlatformPtpRevenue(block);
+  let platformJoeRevenueAnually = feedPlatformJoeRevenue(block);
 
   // save
   baseStats.blockNumber = blockNumber;
@@ -69,5 +70,7 @@ export function feedPrice(block: ethereum.Block): void {
   baseStats.priceVTX = priceVTX;
   baseStats.priceQI = priceQI;
   baseStats.totalVePTP = totalVePTP;
+  baseStats.platformPtpRevenueAnually = platformPtpRevenueAnually;
+  baseStats.platformJoeRevenueAnually = platformJoeRevenueAnually;
   baseStats.save();
 }

@@ -1,4 +1,4 @@
-import { ethereum } from "@graphprotocol/graph-ts";
+import { BigInt, ethereum } from "@graphprotocol/graph-ts";
 import { ALL_ADDRESSES } from "./constants";
 import {
   fetcchTraderjoePoolsTVL,
@@ -11,72 +11,18 @@ import {
   fetchTJlpApr,
   fetchTJbaseApr,
   fetchTJboostApr,
+  addDecimals,
 } from "./helpers";
 import { Stat, Pool } from "../generated/schema";
 import { masterChefVTX } from "../generated/vtxMaster/masterChefVTX";
 
 export function feedPool(block: ethereum.Block): void {
-  // load entities
+  // load base stats
   let id = block.number.toString();
-  let poolStakedVTX =
-    Pool.load("poolStakedVTX") === null ? new Pool("poolStakedVTX") : Pool.load("poolStakedVTX");
-  let poolLockedVTX =
-    Pool.load("poolLockedVTX") === null ? new Pool("poolLockedVTX") : Pool.load("poolLockedVTX");
-  let poolStakedPTP =
-    Pool.load("poolStakedPTP") === null ? new Pool("poolStakedPTP") : Pool.load("poolStakedPTP");
-  let poolStakedJOE =
-    Pool.load("poolStakedJOE") === null ? new Pool("poolStakedJOE") : Pool.load("poolStakedJOE");
-  let pool2VTXAVAX =
-    Pool.load("pool2VTXAVAX") === null ? new Pool("pool2VTXAVAX") : Pool.load("pool2VTXAVAX");
-  let pool2PTP = Pool.load("pool2PTP") === null ? new Pool("pool2PTP") : Pool.load("pool2PTP");
-  let pool2JOE = Pool.load("pool2JOE") === null ? new Pool("pool2JOE") : Pool.load("pool2JOE");
-  let poolMainDAIe =
-    Pool.load("poolMainDAIe") === null ? new Pool("poolMainDAIe") : Pool.load("poolMainDAIe");
-  let poolMainUSDC =
-    Pool.load("poolMainUSDC") === null ? new Pool("poolMainUSDC") : Pool.load("poolMainUSDC");
-  let poolMainUSDCe =
-    Pool.load("poolMainUSDCe") === null ? new Pool("poolMainUSDCe") : Pool.load("poolMainUSDCe");
-  let poolMainUSDT =
-    Pool.load("poolMainUSDT") === null ? new Pool("poolMainUSDT") : Pool.load("poolMainUSDT");
-  let poolMainUSDTe =
-    Pool.load("poolMainUSDTe") === null ? new Pool("poolMainUSDTe") : Pool.load("poolMainUSDTe");
-  let poolAltUSDCUST =
-    Pool.load("poolAltUSDCUST") === null ? new Pool("poolAltUSDCUST") : Pool.load("poolAltUSDCUST");
-  let poolAltUSDCMIM =
-    Pool.load("poolAltUSDCMIM") === null ? new Pool("poolAltUSDCMIM") : Pool.load("poolAltUSDCMIM");
-  let poolAltUSDCFRAX =
-    Pool.load("poolAltUSDCFRAX") === null
-      ? new Pool("poolAltUSDCFRAX")
-      : Pool.load("poolAltUSDCFRAX");
-  let poolAlt2AVAX =
-    Pool.load("poolAlt2AVAX") === null ? new Pool("poolAlt2AVAX") : Pool.load("poolAlt2AVAX");
-  let poolBnbAVAX =
-    Pool.load("poolBnbAVAX") === null ? new Pool("poolBnbAVAX") : Pool.load("poolBnbAVAX");
-  let poolJoeAVAX =
-    Pool.load("poolJoeAVAX") === null ? new Pool("poolJoeAVAX") : Pool.load("poolJoeAVAX");
-  let poolJoeUSDC =
-    Pool.load("poolJoeUSDC") === null ? new Pool("poolJoeUSDC") : Pool.load("poolJoeUSDC");
-  let poolLinkeAVAX =
-    Pool.load("poolLinkeAVAX") === null ? new Pool("poolLinkeAVAX") : Pool.load("poolLinkeAVAX");
-  let poolMimAVAX =
-    Pool.load("poolMimAVAX") === null ? new Pool("poolMimAVAX") : Pool.load("poolMimAVAX");
-  let poolUsdcAVAX =
-    Pool.load("poolUsdcAVAX") === null ? new Pool("poolUsdcAVAX") : Pool.load("poolUsdcAVAX");
-  let poolUsdceAVAX =
-    Pool.load("poolUsdceAVAX") === null ? new Pool("poolUsdceAVAX") : Pool.load("poolUsdceAVAX");
-  let pool2USDC = Pool.load("pool2USDC") === null ? new Pool("pool2USDC") : Pool.load("pool2USDC");
-  let poolUsdteAVAX =
-    Pool.load("poolUsdteAVAX") === null ? new Pool("poolUsdteAVAX") : Pool.load("poolUsdteAVAX");
-  let poolUsdtAVAX =
-    Pool.load("poolUsdtAVAX") === null ? new Pool("poolUsdtAVAX") : Pool.load("poolUsdtAVAX");
-  let pool2USDT = Pool.load("pool2USDT") === null ? new Pool("pool2USDT") : Pool.load("pool2USDT");
-  let poolWbtceAVAX =
-    Pool.load("poolWbtceAVAX") === null ? new Pool("poolWbtceAVAX") : Pool.load("poolWbtceAVAX");
-  let poolWetheAVAX =
-    Pool.load("poolWetheAVAX") === null ? new Pool("poolWetheAVAX") : Pool.load("poolWetheAVAX");
   let baseStats = Stat.load(id) === null ? new Stat(id) : Stat.load(id);
   let blockNumber = block.number;
   if (baseStats) {
+    // stats
     let blockTimestamp = block.timestamp;
     let priceAVAX = baseStats.priceAVAX;
     let pricePTP = baseStats.pricePTP;
@@ -92,6 +38,69 @@ export function feedPool(block: ethereum.Block): void {
     let priceSAVAX = baseStats.priceSAVAX;
     let priceQI = baseStats.priceQI;
     let totalVePTP = baseStats.totalVePTP;
+    // load pools
+    let poolStakedVTX =
+      Pool.load("poolStakedVTX") === null ? new Pool("poolStakedVTX") : Pool.load("poolStakedVTX");
+    let poolLockedVTX =
+      Pool.load("poolLockedVTX") === null ? new Pool("poolLockedVTX") : Pool.load("poolLockedVTX");
+    let poolStakedPTP =
+      Pool.load("poolStakedPTP") === null ? new Pool("poolStakedPTP") : Pool.load("poolStakedPTP");
+    let poolStakedJOE =
+      Pool.load("poolStakedJOE") === null ? new Pool("poolStakedJOE") : Pool.load("poolStakedJOE");
+    let pool2VTXAVAX =
+      Pool.load("pool2VTXAVAX") === null ? new Pool("pool2VTXAVAX") : Pool.load("pool2VTXAVAX");
+    let pool2PTP = Pool.load("pool2PTP") === null ? new Pool("pool2PTP") : Pool.load("pool2PTP");
+    let pool2JOE = Pool.load("pool2JOE") === null ? new Pool("pool2JOE") : Pool.load("pool2JOE");
+    let poolMainDAIe =
+      Pool.load("poolMainDAIe") === null ? new Pool("poolMainDAIe") : Pool.load("poolMainDAIe");
+    let poolMainUSDC =
+      Pool.load("poolMainUSDC") === null ? new Pool("poolMainUSDC") : Pool.load("poolMainUSDC");
+    let poolMainUSDCe =
+      Pool.load("poolMainUSDCe") === null ? new Pool("poolMainUSDCe") : Pool.load("poolMainUSDCe");
+    let poolMainUSDT =
+      Pool.load("poolMainUSDT") === null ? new Pool("poolMainUSDT") : Pool.load("poolMainUSDT");
+    let poolMainUSDTe =
+      Pool.load("poolMainUSDTe") === null ? new Pool("poolMainUSDTe") : Pool.load("poolMainUSDTe");
+    let poolAltUSDCUST =
+      Pool.load("poolAltUSDCUST") === null
+        ? new Pool("poolAltUSDCUST")
+        : Pool.load("poolAltUSDCUST");
+    let poolAltUSDCMIM =
+      Pool.load("poolAltUSDCMIM") === null
+        ? new Pool("poolAltUSDCMIM")
+        : Pool.load("poolAltUSDCMIM");
+    let poolAltUSDCFRAX =
+      Pool.load("poolAltUSDCFRAX") === null
+        ? new Pool("poolAltUSDCFRAX")
+        : Pool.load("poolAltUSDCFRAX");
+    let poolAlt2AVAX =
+      Pool.load("poolAlt2AVAX") === null ? new Pool("poolAlt2AVAX") : Pool.load("poolAlt2AVAX");
+    let poolBnbAVAX =
+      Pool.load("poolBnbAVAX") === null ? new Pool("poolBnbAVAX") : Pool.load("poolBnbAVAX");
+    let poolJoeAVAX =
+      Pool.load("poolJoeAVAX") === null ? new Pool("poolJoeAVAX") : Pool.load("poolJoeAVAX");
+    let poolJoeUSDC =
+      Pool.load("poolJoeUSDC") === null ? new Pool("poolJoeUSDC") : Pool.load("poolJoeUSDC");
+    let poolLinkeAVAX =
+      Pool.load("poolLinkeAVAX") === null ? new Pool("poolLinkeAVAX") : Pool.load("poolLinkeAVAX");
+    let poolMimAVAX =
+      Pool.load("poolMimAVAX") === null ? new Pool("poolMimAVAX") : Pool.load("poolMimAVAX");
+    let poolUsdcAVAX =
+      Pool.load("poolUsdcAVAX") === null ? new Pool("poolUsdcAVAX") : Pool.load("poolUsdcAVAX");
+    let poolUsdceAVAX =
+      Pool.load("poolUsdceAVAX") === null ? new Pool("poolUsdceAVAX") : Pool.load("poolUsdceAVAX");
+    let pool2USDC =
+      Pool.load("pool2USDC") === null ? new Pool("pool2USDC") : Pool.load("pool2USDC");
+    let poolUsdteAVAX =
+      Pool.load("poolUsdteAVAX") === null ? new Pool("poolUsdteAVAX") : Pool.load("poolUsdteAVAX");
+    let poolUsdtAVAX =
+      Pool.load("poolUsdtAVAX") === null ? new Pool("poolUsdtAVAX") : Pool.load("poolUsdtAVAX");
+    let pool2USDT =
+      Pool.load("pool2USDT") === null ? new Pool("pool2USDT") : Pool.load("pool2USDT");
+    let poolWbtceAVAX =
+      Pool.load("poolWbtceAVAX") === null ? new Pool("poolWbtceAVAX") : Pool.load("poolWbtceAVAX");
+    let poolWetheAVAX =
+      Pool.load("poolWetheAVAX") === null ? new Pool("poolWetheAVAX") : Pool.load("poolWetheAVAX");
     // Allocations
     let vtxPerSec = masterChefVTX.bind(ALL_ADDRESSES.MASTER_CHEF_VTX).vtxPerSec();
     let totalPoint = masterChefVTX.bind(ALL_ADDRESSES.MASTER_CHEF_VTX).totalAllocPoint();
@@ -99,41 +108,67 @@ export function feedPool(block: ethereum.Block): void {
     if (poolStakedVTX) {
       let tvl = fetchVectorPoolsTVL(ALL_ADDRESSES.LP_STAKED_VTX, priceVTX, 18); // 26 -> 8 staked VTX;
       let vtxApr = fetchVtxAPR(ALL_ADDRESSES.LP_STAKED_VTX, priceVTX, tvl, vtxPerSec, totalPoint);
+      let xptpApr = addDecimals(
+        baseStats.platformPtpRevenueAnually.times(BigInt.fromI32(2)).div(BigInt.fromI32(18)),
+        8
+      ).div(tvl); // 2% out of 18%
+      let zjoeApr = addDecimals(
+        baseStats.platformJoeRevenueAnually.times(BigInt.fromI32(2)).div(BigInt.fromI32(18)),
+        8
+      ).div(tvl); // 2% out of 18%
       poolStakedVTX.blockNumber = blockNumber;
       poolStakedVTX.blockTimestamp = blockTimestamp;
       poolStakedVTX.tvl = tvl;
       poolStakedVTX.vtxApr = vtxApr;
-      // xxx xptpApr zjoeApr = TotalRevenue * fee%
+      poolStakedVTX.xptpApr = xptpApr;
+      poolStakedVTX.zjoeApr = zjoeApr;
       poolStakedVTX.save();
     }
     if (poolLockedVTX) {
       let tvl = fetchVectorPoolsTVL(ALL_ADDRESSES.LP_LOCKED_VTX, priceVTX, 18); // 26 -> 8 locked VTX
       let vtxApr = fetchVtxAPR(ALL_ADDRESSES.LP_LOCKED_VTX, priceVTX, tvl, vtxPerSec, totalPoint);
+      let xptpApr = addDecimals(
+        baseStats.platformPtpRevenueAnually.times(BigInt.fromI32(6)).div(BigInt.fromI32(18)),
+        8
+      ).div(tvl); // 6% out of 18%
+      let zjoeApr = addDecimals(
+        baseStats.platformJoeRevenueAnually.times(BigInt.fromI32(6)).div(BigInt.fromI32(18)),
+        8
+      ).div(tvl); // 6% out of 18%
       poolLockedVTX.blockNumber = blockNumber;
       poolLockedVTX.blockTimestamp = blockTimestamp;
       poolLockedVTX.tvl = tvl;
       poolLockedVTX.vtxApr = vtxApr;
-      // xxx xptpApr zjoeApr = TotalRevenue * fee%
+      poolLockedVTX.xptpApr = xptpApr;
+      poolLockedVTX.zjoeApr = zjoeApr;
       poolLockedVTX.save();
     }
     if (poolStakedPTP) {
       let tvl = fetchVectorPoolsTVL(ALL_ADDRESSES.LP_STAKED_PTP, pricexPTP, 18); // 26 -> 8 staked PTP
       let vtxApr = fetchVtxAPR(ALL_ADDRESSES.LP_STAKED_PTP, priceVTX, tvl, vtxPerSec, totalPoint);
+      let ptpApr = addDecimals(
+        baseStats.platformPtpRevenueAnually.times(BigInt.fromI32(12)).div(BigInt.fromI32(18)),
+        8
+      ).div(tvl); // 12% out of 18%
       poolStakedPTP.blockNumber = blockNumber;
       poolStakedPTP.blockTimestamp = blockTimestamp;
       poolStakedPTP.tvl = tvl;
       poolStakedPTP.vtxApr = vtxApr;
-      // xxx ptpApr = TotalRevenue * 82%
+      poolStakedPTP.ptpApr = ptpApr;
       poolStakedPTP.save();
     }
     if (poolStakedJOE) {
       let tvl = fetchVectorPoolsTVL(ALL_ADDRESSES.LP_STAKED_JOE, priceJOE, 18); // 26 -> 8 staked JOE
       let vtxApr = fetchVtxAPR(ALL_ADDRESSES.LP_STAKED_JOE, priceVTX, tvl, vtxPerSec, totalPoint);
+      let joeApr = addDecimals(
+        baseStats.platformJoeRevenueAnually.times(BigInt.fromI32(12)).div(BigInt.fromI32(18)),
+        8
+      ).div(tvl); // 12% out of 18%
       poolStakedJOE.blockNumber = blockNumber;
       poolStakedJOE.blockTimestamp = blockTimestamp;
       poolStakedJOE.tvl = tvl;
       poolStakedJOE.vtxApr = vtxApr;
-      // xxx joeApr = TotalRevenue * 82%
+      poolStakedJOE.joeApr = joeApr;
       poolStakedJOE.save();
     }
     if (pool2VTXAVAX) {
@@ -145,7 +180,6 @@ export function feedPool(block: ethereum.Block): void {
       pool2VTXAVAX.tvl = tvl;
       pool2VTXAVAX.vtxApr = vtxApr;
       pool2VTXAVAX.lpApr = lpApr;
-      // xxx lpApr need tj vol
       pool2VTXAVAX.save();
     }
     if (pool2PTP) {
@@ -157,7 +191,6 @@ export function feedPool(block: ethereum.Block): void {
       pool2PTP.tvl = tvl;
       pool2PTP.vtxApr = vtxApr;
       pool2PTP.lpApr = lpApr;
-      // xxx lpApr need tj vol
       pool2PTP.save();
     }
     if (pool2JOE) {
@@ -169,7 +202,6 @@ export function feedPool(block: ethereum.Block): void {
       pool2JOE.tvl = tvl;
       pool2JOE.vtxApr = vtxApr;
       pool2JOE.lpApr = lpApr;
-      // xxx lpApr need tj vol
       pool2JOE.save();
     }
     // Platypus Main Pools
@@ -363,7 +395,6 @@ export function feedPool(block: ethereum.Block): void {
       poolUsdcAVAX.lpApr = lpApr;
       poolUsdcAVAX.baseApr = baseApr;
       poolUsdcAVAX.boostApr = boostApr;
-      // xxx lpApr need tj vol baseApr boostApr
       poolUsdcAVAX.save();
     }
     // pool 1 WETH.e_AVAX
@@ -386,7 +417,6 @@ export function feedPool(block: ethereum.Block): void {
       poolWetheAVAX.lpApr = lpApr;
       poolWetheAVAX.baseApr = baseApr;
       poolWetheAVAX.boostApr = boostApr;
-      // xxx lpApr need tj vol baseApr boostApr
       poolWetheAVAX.save();
     }
     // pool 2 USDT.e_AVAX
@@ -409,7 +439,6 @@ export function feedPool(block: ethereum.Block): void {
       poolUsdteAVAX.lpApr = lpApr;
       poolUsdteAVAX.baseApr = baseApr;
       poolUsdteAVAX.boostApr = boostApr;
-      // xxx lpApr need tj vol baseApr boostApr
       poolUsdteAVAX.save();
     }
     // pool 3 USDC.e_AVAX
@@ -432,7 +461,6 @@ export function feedPool(block: ethereum.Block): void {
       poolUsdceAVAX.lpApr = lpApr;
       poolUsdceAVAX.baseApr = baseApr;
       poolUsdceAVAX.boostApr = boostApr;
-      // xxx lpApr need tj vol baseApr boostApr
       poolUsdceAVAX.save();
     }
     // pool 4 MIM_AVAX
@@ -449,7 +477,6 @@ export function feedPool(block: ethereum.Block): void {
       poolMimAVAX.lpApr = lpApr;
       poolMimAVAX.baseApr = baseApr;
       poolMimAVAX.boostApr = boostApr;
-      // xxx lpApr need tj vol baseApr boostApr
       poolMimAVAX.save();
     }
     // pool 5 WBTC.e_AVAX
@@ -472,7 +499,6 @@ export function feedPool(block: ethereum.Block): void {
       poolWbtceAVAX.lpApr = lpApr;
       poolWbtceAVAX.baseApr = baseApr;
       poolWbtceAVAX.boostApr = boostApr;
-      // xxx lpApr need tj vol baseApr boostApr
       poolWbtceAVAX.save();
     }
     // pool 6 JOE_AVAX
@@ -489,7 +515,6 @@ export function feedPool(block: ethereum.Block): void {
       poolJoeAVAX.lpApr = lpApr;
       poolJoeAVAX.baseApr = baseApr;
       poolJoeAVAX.boostApr = boostApr;
-      // xxx lpApr need tj vol baseApr boostApr
       poolJoeAVAX.save();
     }
     // pool 7 JOE_USDC
@@ -506,7 +531,6 @@ export function feedPool(block: ethereum.Block): void {
       poolJoeUSDC.lpApr = lpApr;
       poolJoeUSDC.baseApr = baseApr;
       poolJoeUSDC.boostApr = boostApr;
-      // xxx lpApr need tj vol baseApr boostApr
       poolJoeUSDC.save();
     }
     // pool 8 2USDC
@@ -523,7 +547,6 @@ export function feedPool(block: ethereum.Block): void {
       pool2USDC.lpApr = lpApr;
       pool2USDC.baseApr = baseApr;
       pool2USDC.boostApr = boostApr;
-      // xxx lpApr need tj vol baseApr boostApr
       pool2USDC.save();
     }
     // pool 9 2USDT
@@ -540,7 +563,6 @@ export function feedPool(block: ethereum.Block): void {
       pool2USDT.lpApr = lpApr;
       pool2USDT.baseApr = baseApr;
       pool2USDT.boostApr = boostApr;
-      // xxx lpApr need tj vol baseApr boostApr
       pool2USDT.save();
     }
     // pool 10 LINK.e_AVAX
@@ -563,7 +585,6 @@ export function feedPool(block: ethereum.Block): void {
       poolLinkeAVAX.lpApr = lpApr;
       poolLinkeAVAX.baseApr = baseApr;
       poolLinkeAVAX.boostApr = boostApr;
-      // xxx lpApr need tj vol baseApr boostApr
       poolLinkeAVAX.save();
     }
     // pool 11 BNB_AVAX
@@ -580,7 +601,6 @@ export function feedPool(block: ethereum.Block): void {
       poolBnbAVAX.lpApr = lpApr;
       poolBnbAVAX.baseApr = baseApr;
       poolBnbAVAX.boostApr = boostApr;
-      // xxx lpApr need tj vol baseApr boostApr
       poolBnbAVAX.save();
     }
     // pool 12 USDt_AVAX
@@ -603,7 +623,6 @@ export function feedPool(block: ethereum.Block): void {
       poolUsdtAVAX.lpApr = lpApr;
       poolUsdtAVAX.baseApr = baseApr;
       poolUsdtAVAX.boostApr = boostApr;
-      // xxx lpApr need tj vol baseApr boostApr
       poolUsdtAVAX.save();
     }
   }

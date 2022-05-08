@@ -311,5 +311,16 @@ export function fetchTJboostApr(_poolNumber: i32, _joePrice: BigInt, _tvl: BigIn
   return boostApr;
 }
 
-// fetch platform fees calc platform PTP/JOE revenue
-// return staked/lockedVTX APRs and staked PTP/JOE APRs
+// fetch platform fees
+// export function fetchXptpFee1():BigInt {
+
+// }
+// export function fetchXptpFee2():BigInt {
+
+// }
+// export function fetchZjoeFee1():BigInt {
+
+// }
+// export function fetchZjoeFee2():BigInt {
+
+// }
