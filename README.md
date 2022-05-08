@@ -18,7 +18,7 @@ https://documenter.getpostman.com/view/20430465/UyxdLpa6
 
 3. Fee rates are set as constants for now.
 
-4. FarmLensV2 have lower APRs and doesn't match the official calculator the official calculator(https://www.vejoeboostcalculator.com).Not using FarmLensV2 for now.
+4. FarmLensV2 have lower APRs and doesn't match the official calculator the official calculator(https://www.vejoeboostcalculator.com)Not using FarmLensV2 for now.
 
 5. Traderjoe Volume calculated from half a day, may not be so accurate,need optimization.
 
